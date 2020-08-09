@@ -245,7 +245,9 @@
 			"spackenmobs:drachenlord/say25",
 			"spackenmobs:drachenlord/say26",
 			"spackenmobs:drachenlord/say27",
-			"spackenmobs:drachenlord/say28"
+			"spackenmobs:drachenlord/say28",
+			"spackenmobs:drachenlord/say29",
+			"spackenmobs:drachenlord/say30"
 		]
 	},
 	"entities.drachenlord.angry": {
@@ -259,7 +261,17 @@
 			"spackenmobs:drachenlord/angry7",
 			"spackenmobs:drachenlord/angry8",
 			"spackenmobs:drachenlord/angry9",
-			"spackenmobs:drachenlord/angry10"
+			"spackenmobs:drachenlord/angry10",
+			"spackenmobs:drachenlord/angry11",
+			"spackenmobs:drachenlord/angry12",
+			"spackenmobs:drachenlord/angry13",
+			"spackenmobs:drachenlord/angry14",
+			"spackenmobs:drachenlord/angry15",
+			"spackenmobs:drachenlord/angry16",
+			"spackenmobs:drachenlord/angry17",
+			"spackenmobs:drachenlord/angry18",
+			"spackenmobs:drachenlord/angry19",
+			"spackenmobs:drachenlord/angry20"
 		]
 	},
 	"entities.drachenlord.death": {
@@ -272,7 +284,8 @@
 			"spackenmobs:drachenlord/hurt1",
 			"spackenmobs:drachenlord/hurt2",
 			"spackenmobs:drachenlord/hurt3",
-			"spackenmobs:drachenlord/hurt4"
+			"spackenmobs:drachenlord/hurt4",
+			"spackenmobs:drachenlord/hurt5"
 		]
 	},
 	"entities.schalker.ambient": {
@@ -316,12 +329,25 @@
 			"spackenmobs:jens/say3",
 			"spackenmobs:jens/say4",
 			"spackenmobs:jens/say5",
-			"spackenmobs:jens/say6"
+			"spackenmobs:jens/say6",
+			"spackenmobs:jens/say7",
+			"spackenmobs:jens/say8",
+			"spackenmobs:jens/say9",
+			"spackenmobs:jens/say10",
+			"spackenmobs:jens/say11",
+			"spackenmobs:jens/say12",
+			"spackenmobs:jens/say13",
+			"spackenmobs:jens/say14"
 		]
 	},
 	"entities.jens.death": {
 		"sounds": [
-			"spackenmobs:jens/death1"
+			"spackenmobs:jens/death1",
+			"spackenmobs:jens/death2",
+			"spackenmobs:jens/death3",
+			"spackenmobs:jens/death4",
+			"spackenmobs:jens/death5",
+			"spackenmobs:jens/death6"
 		]
 	},
 	"entities.jens.hurt": {
@@ -331,7 +357,11 @@
 			"spackenmobs:jens/hurt3",
 			"spackenmobs:jens/hurt4",
 			"spackenmobs:jens/hurt5",
-			"spackenmobs:jens/hurt6"
+			"spackenmobs:jens/hurt6",
+			"spackenmobs:jens/hurt7",
+			"spackenmobs:jens/hurt8",
+			"spackenmobs:jens/hurt9",
+			"spackenmobs:jens/hurt10"
 		]
 	}
 }

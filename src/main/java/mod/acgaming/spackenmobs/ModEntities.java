@@ -34,9 +34,10 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ModEntities {
-
-    public static void init() {
+public class ModEntities
+{
+    public static void init()
+    {
     	int id = 1;
 		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:smava_creeper"), EntitySmavaCreeper.class, "smava_creeper", id++, Spackenmobs.instance, 64, 1, true, 7649828, 11053224);
 		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:marcell_davis"), EntityMarcellDAvis.class, "marcell_davis", id++, Spackenmobs.instance, 64, 1, true, 15759, 16777215);
