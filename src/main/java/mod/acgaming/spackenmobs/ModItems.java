@@ -8,7 +8,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ModItems
 {
     @GameRegistry.ObjectHolder("spackenmobs:ram")
-    public static ItemRAM itemRAM;
+    public static ItemRAM ram;
     
     @GameRegistry.ObjectHolder("spackenmobs:ram_on_a_stick")
     public static ItemRAMOnAStick ram_on_a_stick;
@@ -16,7 +16,7 @@ public class ModItems
     @SideOnly(Side.CLIENT)
     public static void initModels()
     {
-        itemRAM.initModel();
+        ram.initModel();
         ram_on_a_stick.initModel();
     }
 }

@@ -1,5 +1,6 @@
 package mod.acgaming.spackenmobs.entities;
 import java.util.UUID;
+
 import javax.annotation.Nullable;
 
 import mod.acgaming.spackenmobs.Spackenmobs;
@@ -15,7 +16,6 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

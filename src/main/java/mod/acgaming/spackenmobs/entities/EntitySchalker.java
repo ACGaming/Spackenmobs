@@ -1,12 +1,13 @@
 package mod.acgaming.spackenmobs.entities;
+import java.util.List;
+import java.util.UUID;
+
+import javax.annotation.Nullable;
+
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 
 import mod.acgaming.spackenmobs.Spackenmobs;
-
-import java.util.List;
-import java.util.UUID;
-import javax.annotation.Nullable;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.BlockPistonExtension;
 import net.minecraft.block.material.Material;

@@ -1,16 +1,10 @@
 package mod.acgaming.spackenmobs.render;
 import mod.acgaming.spackenmobs.entities.EntityMarcellDAvis;
-import mod.acgaming.spackenmobs.entities.EntitySmavaCreeper;
-import mod.acgaming.spackenmobs.render.RenderSmavaCreeper.Factory;
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelZombie;
 import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderBiped;
-import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderZombie;
 import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;

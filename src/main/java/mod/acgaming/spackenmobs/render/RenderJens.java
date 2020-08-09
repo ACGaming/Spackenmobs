@@ -1,7 +1,6 @@
 package mod.acgaming.spackenmobs.render;
 import mod.acgaming.spackenmobs.entities.EntityJens;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.model.ModelZombie;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.client.renderer.entity.RenderManager;

@@ -4,7 +4,6 @@ import java.util.Set;
 import com.google.common.collect.Sets;
 
 import mod.acgaming.spackenmobs.Spackenmobs;
-import mod.acgaming.spackenmobs.proxy.CommonProxy;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.ai.EntityAIFollowParent;
 import net.minecraft.entity.ai.EntityAILookIdle;
