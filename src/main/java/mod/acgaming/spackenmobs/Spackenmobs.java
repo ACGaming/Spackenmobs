@@ -1,20 +1,24 @@
 package mod.acgaming.spackenmobs;
-import mod.acgaming.spackenmobs.proxy.CommonProxy;
+import mod.acgaming.spackenmobs.entities.ModEntities;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Mod(modid = "spackenmobs", version = "1.0", acceptedMinecraftVersions = "[1.12.2]")
 public class Spackenmobs
 {
 	public static final String MODID = "spackenmobs";
 	public static final String VERSION = "1.0";
+	
+	public static final CreativeTabs SPACKENMOBS_TAB = new SpackenmobsTab();
 	
 	public static final SoundEvent ENTITY_SMAVACREEPER_FUSE = new SoundEvent(new ResourceLocation("spackenmobs:entities.smava_creeper.fuse"));
 	public static final SoundEvent ENTITY_SMAVACREEPER_BLOW = new SoundEvent(new ResourceLocation("spackenmobs:entities.smava_creeper.blow"));
@@ -52,28 +56,26 @@ public class Spackenmobs
 	public static final SoundEvent ENTITY_JENS_AMBIENT = new SoundEvent(new ResourceLocation("spackenmobs:entities.jens.ambient"));
 	public static final SoundEvent ENTITY_JENS_HURT = new SoundEvent(new ResourceLocation("spackenmobs:entities.jens.hurt"));
 	public static final SoundEvent ENTITY_JENS_DEATH = new SoundEvent(new ResourceLocation("spackenmobs:entities.jens.death"));
-
-	@SidedProxy(clientSide = "mod.acgaming.spackenmobs.proxy.ClientProxy", serverSide = "mod.acgaming.spackenmobs.proxy.CommonProxy")
-	public static CommonProxy proxy;
 	
 	@Instance
 	public static Spackenmobs instance;
 	
+	@SideOnly(Side.CLIENT)
 	@EventHandler
-	public void preInit(FMLPreInitializationEvent e)
+	public void preInit(FMLPreInitializationEvent event)
 	{
-		proxy.preInit(e);
+		ModEntities.initModels();
 	}
 	
 	@EventHandler
-	public void init(FMLInitializationEvent e)
+	public void init(FMLInitializationEvent event)
 	{
-		proxy.init(e);
+		
 	}
 	
 	@EventHandler
-	public void postInit(FMLPostInitializationEvent e)
+	public void postInit(FMLPostInitializationEvent event)
 	{
-		proxy.postInit(e);
+		
 	}
 }

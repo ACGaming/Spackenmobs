@@ -7,7 +7,10 @@ import net.minecraft.client.renderer.entity.layers.LayerCreeperCharge;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class RenderSmavaCreeper extends RenderCreeper
 {
     private static final ResourceLocation SMAVA_TEXTURE = new ResourceLocation("spackenmobs:textures/entities/smava_creeper.png");

@@ -1,28 +1,86 @@
-package mod.acgaming.spackenmobs.proxy;
-import mod.acgaming.spackenmobs.ModEntities;
+package mod.acgaming.spackenmobs.reg;
 import mod.acgaming.spackenmobs.Spackenmobs;
-import mod.acgaming.spackenmobs.items.ItemRAM;
-import mod.acgaming.spackenmobs.items.ItemRAMOnAStick;
+import mod.acgaming.spackenmobs.entities.BiomeHelper;
+import mod.acgaming.spackenmobs.entities.EntityApoRed;
+import mod.acgaming.spackenmobs.entities.EntityDrachenlord;
+import mod.acgaming.spackenmobs.entities.EntityIslamist;
+import mod.acgaming.spackenmobs.entities.EntityJens;
+import mod.acgaming.spackenmobs.entities.EntityMarcellDAvis;
+import mod.acgaming.spackenmobs.entities.EntityMrBean;
+import mod.acgaming.spackenmobs.entities.EntitySchalker;
+import mod.acgaming.spackenmobs.entities.EntitySmavaCreeper;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.monster.EntityPigZombie;
+import net.minecraft.entity.monster.EntityShulker;
+import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.EntityEntry;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 
-@EventBusSubscriber
-public class CommonProxy
-{	
-	public void preInit(FMLPreInitializationEvent e)
+@EventBusSubscriber(modid = Spackenmobs.MODID)
+public class RegHandler
+{
+	@SubscribeEvent
+	public static void registerItems(Register<Item> event)
 	{
-		ModEntities.init();
+		final Item[] items = {
+			new Item().setRegistryName(Spackenmobs.MODID, "ram").setUnlocalizedName(Spackenmobs.MODID + "." + "ram").setCreativeTab(CreativeTabs.MISC),
+			new Item().setRegistryName(Spackenmobs.MODID, "ram_on_a_stick").setUnlocalizedName(Spackenmobs.MODID + "." + "ram_on_a_stick").setCreativeTab(CreativeTabs.MISC)
+		};
+		event.getRegistry().registerAll(items);
 	}
 	
 	@SubscribeEvent
-	public static void registerSounds(RegistryEvent.Register<SoundEvent> event)
+	public static void registerEntities(Register<EntityEntry> event)
+	{
+    	int id = 1;
+    	
+    	// Smava Creeper
+		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:smava_creeper"), EntitySmavaCreeper.class, "smava_creeper", id++, Spackenmobs.instance, 64, 1, true, 7649828, 11053224);
+		EntityRegistry.addSpawn(EntitySmavaCreeper.class, 25, 1, 4, EnumCreatureType.MONSTER, BiomeHelper.getBiomesWithMonster(EntityCreeper.class));
+		
+		// Marcell D'Avis
+		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:marcell_davis"), EntityMarcellDAvis.class, "marcell_davis", id++, Spackenmobs.instance, 64, 1, true, 15759, 16777215);
+		EntityRegistry.addSpawn(EntityMarcellDAvis.class, 50, 1, 4, EnumCreatureType.MONSTER, BiomeHelper.getBiomesWithMonster(EntityZombie.class));
+		
+		// Islamist		
+		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:islamist"), EntityIslamist.class, "islamist", id++, Spackenmobs.instance, 64, 1, true, 15263976, 15211548);
+		EntityRegistry.addSpawn(EntityIslamist.class, 50, 1, 4, EnumCreatureType.MONSTER, BiomeHelper.getBiomesWithMonster(EntityCreeper.class));
+		
+		// ApoRed
+		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:apored"), EntityApoRed.class, "apored", id++, Spackenmobs.instance, 64, 1, true, 15263976, 15211548);
+		EntityRegistry.addSpawn(EntityApoRed.class, 50, 1, 4, EnumCreatureType.MONSTER, BiomeHelper.getBiomesWithMonster(EntitySkeleton.class));
+		
+		// Mr. Bean
+		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:mr_bean"), EntityMrBean.class, "mr_bean", id++, Spackenmobs.instance, 64, 1, true, 15263976, 15211548);
+		EntityRegistry.addSpawn(EntityMrBean.class, 50, 1, 4, EnumCreatureType.MONSTER, BiomeHelper.getBiomesWithMonster(EntityZombie.class));
+		
+		// Drachenlord		
+		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:drachenlord"), EntityDrachenlord.class, "drachenlord", id++, Spackenmobs.instance, 64, 1, true, 15263976, 15211548);		
+		EntityRegistry.addSpawn(EntityDrachenlord.class, 50, 1, 4, EnumCreatureType.MONSTER, BiomeHelper.getBiomesWithMonster(EntityPigZombie.class));
+		
+		// Schalker
+		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:schalker"), EntitySchalker.class, "schalker", id++, Spackenmobs.instance, 64, 1, true, 15263976, 15211548);
+		EntityRegistry.addSpawn(EntitySchalker.class, 50, 1, 4, EnumCreatureType.MONSTER, BiomeHelper.getBiomesWithMonster(EntityShulker.class));
+		
+		// Jens
+		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:jens"), EntityJens.class, "jens", id++, Spackenmobs.instance, 64, 1, true, 15263976, 15211548);
+		EntityRegistry.addSpawn(EntityJens.class, 50, 1, 4, EnumCreatureType.CREATURE, BiomeHelper.getBiomesWithCreature(EntityPig.class));
+        
+        //LootTableList.register(EntityJens.LOOT);
+	}
+	
+	@SubscribeEvent
+	public static void registerSounds(Register<SoundEvent> event)
 	{
 		/*
 		 * CREEPERS
@@ -110,17 +168,4 @@ public class CommonProxy
 		Spackenmobs.ENTITY_JENS_DEATH.setRegistryName(new ResourceLocation("spackenmobs:entities.jens.death"));
 		event.getRegistry().register((SoundEvent)Spackenmobs.ENTITY_JENS_DEATH);
 	}
-	
-	public void init(FMLInitializationEvent e) {}
-	
-	public void postInit(FMLPostInitializationEvent e) {}
-	
-	@SubscribeEvent
-	public static void registerItems(RegistryEvent.Register<Item> event)
-	{
-		event.getRegistry().register(new ItemRAM());
-		event.getRegistry().register(new ItemRAMOnAStick());
-	}
-	
-	public class Events {}
 }

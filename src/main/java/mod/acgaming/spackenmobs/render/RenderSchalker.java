@@ -16,6 +16,7 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class RenderSchalker extends RenderLiving<EntitySchalker>
 {
     public static final ResourceLocation[] SCHALKER_TEXTURE = new ResourceLocation[] {new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png")};

@@ -10,7 +10,10 @@ import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
 import net.minecraft.entity.monster.AbstractSkeleton;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class RenderApoRed extends RenderSkeleton
 {
     private static final ResourceLocation APORED_TEXTURES = new ResourceLocation("spackenmobs:textures/entities/apored.png");
