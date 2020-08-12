@@ -16,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderApoRed extends RenderSkeleton
 {
-    private static final ResourceLocation APORED_TEXTURES = new ResourceLocation("spackenmobs:textures/entities/apored.png");
+    private static final ResourceLocation APORED_TEXTURE = new ResourceLocation("spackenmobs:textures/entities/apored.png");
     public static final Factory FACTORY = new Factory();
 
     public RenderApoRed(RenderManager renderManagerIn)
@@ -40,7 +40,7 @@ public class RenderApoRed extends RenderSkeleton
     
     protected ResourceLocation getEntityTexture(AbstractSkeleton entity)
     {
-        return APORED_TEXTURES;
+        return APORED_TEXTURE;
     }
     
     public static class Factory implements IRenderFactory<EntityApoRed>

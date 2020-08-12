@@ -14,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderMrBean extends RenderZombie
 {
-    private static final ResourceLocation MRBEAN_TEXTURES = new ResourceLocation("spackenmobs:textures/entities/mr_bean.png");
+    private static final ResourceLocation MRBEAN_TEXTURE = new ResourceLocation("spackenmobs:textures/entities/mr_bean.png");
     public static final Factory FACTORY = new Factory();
 
     public RenderMrBean(RenderManager renderManagerIn)
@@ -33,7 +33,7 @@ public class RenderMrBean extends RenderZombie
     
     protected ResourceLocation getEntityTexture(EntityZombie entity)
     {
-        return MRBEAN_TEXTURES;
+        return MRBEAN_TEXTURE;
     }
     
     public static class Factory implements IRenderFactory<EntityMrBean>

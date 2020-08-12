@@ -82,9 +82,6 @@ public class RegHandler
 	@SubscribeEvent
 	public static void registerSounds(Register<SoundEvent> event)
 	{
-		/*
-		 * CREEPERS
-		 */
 		// Smava Creeper
 		Spackenmobs.ENTITY_SMAVACREEPER_FUSE.setRegistryName(new ResourceLocation("spackenmobs:entities.smava_creeper.fuse"));
 		event.getRegistry().register((SoundEvent)Spackenmobs.ENTITY_SMAVACREEPER_FUSE);
@@ -101,9 +98,6 @@ public class RegHandler
 		Spackenmobs.ENTITY_ISLAMIST_HURT.setRegistryName(new ResourceLocation("spackenmobs:entities.islamist.hurt"));
 		event.getRegistry().register((SoundEvent)Spackenmobs.ENTITY_ISLAMIST_HURT);
 		
-		/*
-		 * ZOMBIES
-		 */
 		// Marcell D'Avis
 		Spackenmobs.ENTITY_MARCELLDAVIS_AMBIENT.setRegistryName(new ResourceLocation("spackenmobs:entities.marcell_davis.ambient"));
 		event.getRegistry().register((SoundEvent)Spackenmobs.ENTITY_MARCELLDAVIS_AMBIENT);
@@ -119,10 +113,7 @@ public class RegHandler
 		event.getRegistry().register((SoundEvent)Spackenmobs.ENTITY_MRBEAN_HURT);
 		Spackenmobs.ENTITY_MRBEAN_DEATH.setRegistryName(new ResourceLocation("spackenmobs:entities.mr_bean.death"));
 		event.getRegistry().register((SoundEvent)Spackenmobs.ENTITY_MRBEAN_DEATH);
-		
-		/*
-		 * SKELETONS
-		 */
+
 		// ApoRed
 		Spackenmobs.ENTITY_APORED_AMBIENT.setRegistryName(new ResourceLocation("spackenmobs:entities.apored.ambient"));
 		event.getRegistry().register((SoundEvent)Spackenmobs.ENTITY_APORED_AMBIENT);
@@ -130,10 +121,7 @@ public class RegHandler
 		event.getRegistry().register((SoundEvent)Spackenmobs.ENTITY_APORED_HURT);
 		Spackenmobs.ENTITY_APORED_DEATH.setRegistryName(new ResourceLocation("spackenmobs:entities.apored.death"));
 		event.getRegistry().register((SoundEvent)Spackenmobs.ENTITY_APORED_DEATH);
-		
-		/*
-		 * ZOMBIE PIGMEN
-		 */
+
 		// Drachenlord
 		Spackenmobs.ENTITY_DRACHENLORD_AMBIENT.setRegistryName(new ResourceLocation("spackenmobs:entities.drachenlord.ambient"));
 		event.getRegistry().register((SoundEvent)Spackenmobs.ENTITY_DRACHENLORD_AMBIENT);
@@ -143,10 +131,8 @@ public class RegHandler
 		event.getRegistry().register((SoundEvent)Spackenmobs.ENTITY_DRACHENLORD_DEATH);
 		Spackenmobs.ENTITY_DRACHENLORD_ANGRY.setRegistryName(new ResourceLocation("spackenmobs:entities.drachenlord.angry"));
 		event.getRegistry().register((SoundEvent)Spackenmobs.ENTITY_DRACHENLORD_ANGRY);
-		
-		/*
-		 * SHULKER
-		 */
+
+		// Schalker
 		Spackenmobs.ENTITY_SCHALKER_AMBIENT.setRegistryName(new ResourceLocation("spackenmobs:entities.schalker.ambient"));
 		event.getRegistry().register((SoundEvent)Spackenmobs.ENTITY_SCHALKER_AMBIENT);
 		Spackenmobs.ENTITY_SCHALKER_HURT.setRegistryName(new ResourceLocation("spackenmobs:entities.schalker.hurt"));
@@ -157,15 +143,15 @@ public class RegHandler
 		event.getRegistry().register((SoundEvent)Spackenmobs.ENTITY_SCHALKER_OPEN);
 		Spackenmobs.ENTITY_SCHALKER_SHOOT.setRegistryName(new ResourceLocation("spackenmobs:entities.schalker.shoot"));
 		event.getRegistry().register((SoundEvent)Spackenmobs.ENTITY_SCHALKER_SHOOT);
-		
-		/*
-		 * BIPEDS
-		 */
+
+		// Jens
 		Spackenmobs.ENTITY_JENS_AMBIENT.setRegistryName(new ResourceLocation("spackenmobs:entities.jens.ambient"));
 		event.getRegistry().register((SoundEvent)Spackenmobs.ENTITY_JENS_AMBIENT);
 		Spackenmobs.ENTITY_JENS_HURT.setRegistryName(new ResourceLocation("spackenmobs:entities.jens.hurt"));
 		event.getRegistry().register((SoundEvent)Spackenmobs.ENTITY_JENS_HURT);
 		Spackenmobs.ENTITY_JENS_DEATH.setRegistryName(new ResourceLocation("spackenmobs:entities.jens.death"));
 		event.getRegistry().register((SoundEvent)Spackenmobs.ENTITY_JENS_DEATH);
+		Spackenmobs.ENTITY_JENS_EAT.setRegistryName(new ResourceLocation("spackenmobs:entities.jens.eat"));
+		event.getRegistry().register((SoundEvent)Spackenmobs.ENTITY_JENS_EAT);
 	}
 }

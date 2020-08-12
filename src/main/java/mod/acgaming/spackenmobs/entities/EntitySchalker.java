@@ -77,11 +77,7 @@ public class EntitySchalker extends EntityGolem implements IMob
         this.currentAttachmentPosition = null;
         this.experienceValue = 5;
     }
-
-    /**
-     * Called only once on an entity when first time spawned, via egg, mob spawner, natural spawning etc, but not called
-     * when entity is reloaded from nbt. Mainly used for initializing attributes and inventory
-     */
+    
     @Nullable
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata)
     {
@@ -104,11 +100,7 @@ public class EntitySchalker extends EntityGolem implements IMob
         this.targetTasks.addTask(2, new EntitySchalker.AIAttackNearest(this));
         this.targetTasks.addTask(3, new EntitySchalker.AIDefenseAttack(this));
     }
-
-    /**
-     * returns if this entity triggers Block.onEntityWalking on the blocks they walk on. used for spiders and wolves to
-     * prevent them from trampling crops
-     */
+    
     protected boolean canTriggerWalking()
     {
         return false;
@@ -123,10 +115,7 @@ public class EntitySchalker extends EntityGolem implements IMob
     {
         return Spackenmobs.ENTITY_SCHALKER_AMBIENT;
     }
-
-    /**
-     * Plays living's sound at its position
-     */
+    
     public void playLivingSound()
     {
         if (!this.isClosed())
@@ -142,7 +131,7 @@ public class EntitySchalker extends EntityGolem implements IMob
 
     protected SoundEvent getHurtSound(DamageSource damageSourceIn)
     {
-        return this.isClosed() ? SoundEvents.ENTITY_SHULKER_HURT_CLOSED : Spackenmobs.ENTITY_SCHALKER_HURT;
+        return this.isClosed() ? SoundEvents.ENTITY_SHULKER_HURT_CLOSED : SoundEvents.ENTITY_SHULKER_HURT;
     }
 
     protected void entityInit()
@@ -169,10 +158,7 @@ public class EntitySchalker extends EntityGolem implements IMob
     {
         EntityLiving.registerFixesMob(fixer, EntitySchalker.class);
     }
-
-    /**
-     * (abstract) Protected helper method to read subclass entity data from NBT.
-     */
+    
     public void readEntityFromNBT(NBTTagCompound compound)
     {
         super.readEntityFromNBT(compound);
@@ -192,10 +178,7 @@ public class EntitySchalker extends EntityGolem implements IMob
             this.dataManager.set(ATTACHED_BLOCK_POS, Optional.absent());
         }
     }
-
-    /**
-     * (abstract) Protected helper method to write subclass entity data to NBT.
-     */
+    
     public void writeEntityToNBT(NBTTagCompound compound)
     {
         super.writeEntityToNBT(compound);
@@ -211,10 +194,7 @@ public class EntitySchalker extends EntityGolem implements IMob
             compound.setInteger("APZ", blockpos.getZ());
         }
     }
-
-    /**
-     * Called to update the entity's position/logic.
-     */
+    
     public void onUpdate()
     {
         super.onUpdate();
@@ -395,10 +375,7 @@ public class EntitySchalker extends EntityGolem implements IMob
             }
         }
     }
-
-    /**
-     * Tries to move the entity towards the specified location.
-     */
+    
     public void move(MoverType type, double x, double y, double z)
     {
         if (type == MoverType.SHULKER_BOX)
@@ -410,10 +387,7 @@ public class EntitySchalker extends EntityGolem implements IMob
             super.move(type, x, y, z);
         }
     }
-
-    /**
-     * Sets the x,y,z of the entity from the given parameters. Also seems to set up a bounding box.
-     */
+    
     public void setPosition(double x, double y, double z)
     {
         super.setPosition(x, y, z);
@@ -481,11 +455,7 @@ public class EntitySchalker extends EntityGolem implements IMob
             return true;
         }
     }
-
-    /**
-     * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons
-     * use this to react to sunlight and start to burn.
-     */
+    
     public void onLivingUpdate()
     {
         super.onLivingUpdate();
@@ -528,19 +498,13 @@ public class EntitySchalker extends EntityGolem implements IMob
 
         super.notifyDataManagerChange(key);
     }
-
-    /**
-     * Set the position and rotation values directly without any clamping.
-     */
+    
     @SideOnly(Side.CLIENT)
     public void setPositionAndRotationDirect(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean teleport)
     {
         this.newPosRotationIncrements = 0;
     }
-
-    /**
-     * Called when the entity is attacked.
-     */
+    
     public boolean attackEntityFrom(DamageSource source, float amount)
     {
         if (this.isClosed())
@@ -572,15 +536,7 @@ public class EntitySchalker extends EntityGolem implements IMob
     {
         return this.getPeekTick() == 0;
     }
-
-    /**
-     * Returns the <b>solid</b> collision bounding box for this entity. Used to make (e.g.) boats solid. Return null if
-     * this entity is not solid.
-     *  
-     * For general purposes, use {@link #width} and {@link #height}.
-     *  
-     * @see getEntityBoundingBox
-     */
+    
     @Nullable
     public AxisAlignedBB getCollisionBoundingBox()
     {
@@ -607,10 +563,7 @@ public class EntitySchalker extends EntityGolem implements IMob
     {
         return ((Byte)this.dataManager.get(PEEK_TICK)).byteValue();
     }
-
-    /**
-     * Applies or removes armor modifier
-     */
+    
     public void updateArmorModifier(int p_184691_1_)
     {
         if (!this.world.isRemote)
@@ -653,11 +606,7 @@ public class EntitySchalker extends EntityGolem implements IMob
     {
         return 0.5F;
     }
-
-    /**
-     * The speed it takes to move the entityliving's rotationPitch through the faceEntity method. This is only currently
-     * use in wolves.
-     */
+    
     public int getVerticalFaceSpeed()
     {
         return 180;
@@ -667,10 +616,7 @@ public class EntitySchalker extends EntityGolem implements IMob
     {
         return 180;
     }
-
-    /**
-     * Applies a velocity to the entities, to push them away from eachother.
-     */
+    
     public void applyEntityCollision(Entity entityIn)
     {
     }
@@ -707,9 +653,6 @@ public class EntitySchalker extends EntityGolem implements IMob
             this.setMutexBits(3);
         }
 
-        /**
-         * Returns whether the EntityAIBase should begin execution.
-         */
         public boolean shouldExecute()
         {
             EntityLivingBase entitylivingbase = EntitySchalker.this.getAttackTarget();
@@ -724,26 +667,17 @@ public class EntitySchalker extends EntityGolem implements IMob
             }
         }
 
-        /**
-         * Execute a one shot task or start executing a continuous task
-         */
         public void startExecuting()
         {
             this.attackTime = 20;
             EntitySchalker.this.updateArmorModifier(100);
         }
 
-        /**
-         * Reset the task's internal state. Called when this task is interrupted by another one
-         */
         public void resetTask()
         {
         	EntitySchalker.this.updateArmorModifier(0);
         }
 
-        /**
-         * Keep ticking a continuous task that has already been started
-         */
         public void updateTask()
         {
             if (EntitySchalker.this.world.getDifficulty() != EnumDifficulty.PEACEFUL)
@@ -780,9 +714,6 @@ public class EntitySchalker extends EntityGolem implements IMob
             super(schalker, EntityPlayer.class, true);
         }
 
-        /**
-         * Returns whether the EntityAIBase should begin execution.
-         */
         public boolean shouldExecute()
         {
             return EntitySchalker.this.world.getDifficulty() == EnumDifficulty.PEACEFUL ? false : super.shouldExecute();
@@ -816,9 +747,6 @@ public class EntitySchalker extends EntityGolem implements IMob
                 });
             }
 
-            /**
-             * Returns whether the EntityAIBase should begin execution.
-             */
             public boolean shouldExecute()
             {
                 return this.taskOwner.getTeam() == null ? false : super.shouldExecute();
@@ -847,34 +775,22 @@ public class EntitySchalker extends EntityGolem implements IMob
         {
         }
 
-        /**
-         * Returns whether the EntityAIBase should begin execution.
-         */
         public boolean shouldExecute()
         {
             return EntitySchalker.this.getAttackTarget() == null && EntitySchalker.this.rand.nextInt(40) == 0;
         }
 
-        /**
-         * Returns whether an in-progress EntityAIBase should continue executing
-         */
         public boolean shouldContinueExecuting()
         {
             return EntitySchalker.this.getAttackTarget() == null && this.peekTime > 0;
         }
 
-        /**
-         * Execute a one shot task or start executing a continuous task
-         */
         public void startExecuting()
         {
             this.peekTime = 20 * (1 + EntitySchalker.this.rand.nextInt(3));
             EntitySchalker.this.updateArmorModifier(30);
         }
 
-        /**
-         * Reset the task's internal state. Called when this task is interrupted by another one
-         */
         public void resetTask()
         {
             if (EntitySchalker.this.getAttackTarget() == null)
@@ -883,9 +799,6 @@ public class EntitySchalker extends EntityGolem implements IMob
             }
         }
 
-        /**
-         * Keep ticking a continuous task that has already been started
-         */
         public void updateTask()
         {
             --this.peekTime;
@@ -899,9 +812,6 @@ public class EntitySchalker extends EntityGolem implements IMob
             super(theEntity);
         }
 
-        /**
-         * Update the Head and Body rendenring angles
-         */
         public void updateRenderAngles()
         {
         }

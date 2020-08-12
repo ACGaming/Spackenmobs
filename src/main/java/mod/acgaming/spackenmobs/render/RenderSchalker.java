@@ -21,21 +21,18 @@ public class RenderSchalker extends RenderLiving<EntitySchalker>
 {
     public static final ResourceLocation[] SCHALKER_TEXTURE = new ResourceLocation[] {new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png"), new ResourceLocation("spackenmobs:textures/entities/schalker.png")};
     public static final Factory FACTORY = new Factory();
-
+    
     public RenderSchalker(RenderManager p_i47194_1_)
     {
         super(p_i47194_1_, new ModelShulker(), 0.0F);
         this.addLayer(new RenderSchalker.HeadLayer());
     }
-
+    
     public ModelShulker getMainModel()
     {
         return (ModelShulker)super.getMainModel();
     }
-
-    /**
-     * Renders the desired {@code T} type Entity.
-     */
+    
     public void doRender(EntitySchalker entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
         int i = entity.getClientTeleportInterp();
@@ -56,7 +53,7 @@ public class RenderSchalker extends RenderLiving<EntitySchalker>
             super.doRender(entity, x, y, z, entityYaw, partialTicks);
         }
     }
-
+    
     public boolean shouldRender(EntitySchalker livingEntity, ICamera camera, double camX, double camY, double camZ)
     {
         if (super.shouldRender(livingEntity, camera, camX, camY, camZ))
@@ -81,15 +78,12 @@ public class RenderSchalker extends RenderLiving<EntitySchalker>
             return false;
         }
     }
-
-    /**
-     * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
-     */
+    
     protected ResourceLocation getEntityTexture(EntitySchalker entity)
     {
         return SCHALKER_TEXTURE[entity.getColor().getMetadata()];
     }
-
+    
     protected void applyRotations(EntitySchalker entityLiving, float p_77043_2_, float rotationYaw, float partialTicks)
     {
         super.applyRotations(entityLiving, p_77043_2_, rotationYaw, partialTicks);
@@ -123,23 +117,20 @@ public class RenderSchalker extends RenderLiving<EntitySchalker>
                 GlStateManager.rotate(180.0F, 1.0F, 0.0F, 0.0F);
         }
     }
-
-    /**
-     * Allows the render to do state modifications necessary before the model is rendered.
-     */
+    
     protected void preRenderCallback(EntitySchalker entitylivingbaseIn, float partialTickTime)
     {
         float f = 0.999F;
         GlStateManager.scale(0.999F, 0.999F, 0.999F);
     }
-
+    
     @SideOnly(Side.CLIENT)
     class HeadLayer implements LayerRenderer<EntitySchalker>
     {
         private HeadLayer()
         {
         }
-
+        
         public void doRenderLayer(EntitySchalker entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale)
         {
             GlStateManager.pushMatrix();
@@ -182,7 +173,7 @@ public class RenderSchalker extends RenderLiving<EntitySchalker>
             modelrenderer.render(scale);
             GlStateManager.popMatrix();
         }
-
+        
         public boolean shouldCombineTextures()
         {
             return false;

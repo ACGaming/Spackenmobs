@@ -4,6 +4,8 @@ import java.util.Set;
 import com.google.common.collect.Sets;
 
 import mod.acgaming.spackenmobs.Spackenmobs;
+import mod.acgaming.spackenmobs.items.ModItems;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.ai.EntityAIFollowParent;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -15,7 +17,6 @@ import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -24,12 +25,12 @@ import net.minecraft.world.World;
 
 public class EntityJens extends EntityPig
 {
-	private static final Set<Item> TEMPTATION_ITEMS = Sets.newHashSet(Items.CARROT, Items.POTATO, Items.BEETROOT);
+	private static final Set<Item> TEMPTATION_ITEMS = Sets.newHashSet(ModItems.RAM);
 	
     public EntityJens(World worldIn)
     {
         super(worldIn);
-        setSize(0.6F, 1.8F);
+        setSize(0.6F, 2.2F);
     }
     
     protected void initEntityAI()
@@ -37,7 +38,7 @@ public class EntityJens extends EntityPig
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new EntityAIPanic(this, 1.25D));
         this.tasks.addTask(3, new EntityAIMate(this, 1.0D));
-        this.tasks.addTask(4, new EntityAITempt(this, 1.2D, Items.CARROT_ON_A_STICK, false));
+        this.tasks.addTask(4, new EntityAITempt(this, 1.2D, ModItems.RAM_ON_A_STICK, false));
         this.tasks.addTask(4, new EntityAITempt(this, 1.2D, false, TEMPTATION_ITEMS));
         this.tasks.addTask(5, new EntityAIFollowParent(this, 1.1D));
         this.tasks.addTask(6, new EntityAIWanderAvoidWater(this, 1.0D));
@@ -48,6 +49,21 @@ public class EntityJens extends EntityPig
     public boolean isBreedingItem(ItemStack stack)
     {
         return TEMPTATION_ITEMS.contains(stack.getItem());
+    }
+    
+    public boolean canBeSteered()
+    {
+        Entity entity = this.getControllingPassenger();
+
+        if (!(entity instanceof EntityPlayer))
+        {
+            return false;
+        }
+        else
+        {
+            EntityPlayer entityplayer = (EntityPlayer)entity;
+            return entityplayer.getHeldItemMainhand().getItem() == ModItems.RAM_ON_A_STICK || entityplayer.getHeldItemOffhand().getItem() == ModItems.RAM_ON_A_STICK;
+        }
     }
     
     public EntityJens createChild(EntityAgeable ageable)

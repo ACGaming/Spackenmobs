@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderIslamist extends RenderCreeper
 {
-    private static final ResourceLocation ISLAMIST_TEXTURES = new ResourceLocation("spackenmobs:textures/entities/islamist.png");
+    private static final ResourceLocation ISLAMIST_TEXTURE = new ResourceLocation("spackenmobs:textures/entities/islamist.png");
     public static final Factory FACTORY = new Factory();
 
     public RenderIslamist(RenderManager renderManagerIn)
@@ -24,7 +24,7 @@ public class RenderIslamist extends RenderCreeper
     
     protected ResourceLocation getEntityTexture(EntityCreeper entity)
     {
-        return ISLAMIST_TEXTURES;
+        return ISLAMIST_TEXTURE;
     }
     
     public static class Factory implements IRenderFactory<EntityIslamist>

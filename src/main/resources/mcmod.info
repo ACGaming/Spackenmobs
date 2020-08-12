@@ -1,14 +1,14 @@
 [
 	{
-		"modid": "smava",
-		"name": "Smava Creeper",
-		"description": "Wenn Kredit, dann...?",
+		"modid": "spackenmobs",
+		"name": "Spackenmobs",
+		"description": "The most important mobs in the history of Minecraft!",
 		"version": "1.0",
 		"mcversion": "1.12.2",
 		"url": "https://acgaming.github.io",
 		"updateUrl": "",
 		"authorList": ["ACGaming"],
-		"credits": "Code inspired by Akrivus.",
+		"credits": "",
 		"logoFile": "",
 		"screenshots": [],
 		"dependencies": []
