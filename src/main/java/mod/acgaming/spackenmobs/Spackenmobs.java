@@ -57,6 +57,7 @@ public class Spackenmobs
 	public static final SoundEvent ENTITY_JENS_HURT = new SoundEvent(new ResourceLocation("spackenmobs:entities.jens.hurt"));
 	public static final SoundEvent ENTITY_JENS_DEATH = new SoundEvent(new ResourceLocation("spackenmobs:entities.jens.death"));
 	public static final SoundEvent ENTITY_JENS_EAT = new SoundEvent(new ResourceLocation("spackenmobs:entities.jens.eat"));
+	public static final SoundEvent ENTITY_JENS_POOP = new SoundEvent(new ResourceLocation("spackenmobs:entities.jens.poop"));
 	
 	@Instance
 	public static Spackenmobs instance;

@@ -154,5 +154,7 @@ public class RegHandler
 		event.getRegistry().register((SoundEvent)Spackenmobs.ENTITY_JENS_DEATH);
 		Spackenmobs.ENTITY_JENS_EAT.setRegistryName(new ResourceLocation("spackenmobs:entities.jens.eat"));
 		event.getRegistry().register((SoundEvent)Spackenmobs.ENTITY_JENS_EAT);
+		Spackenmobs.ENTITY_JENS_POOP.setRegistryName(new ResourceLocation("spackenmobs:entities.jens.poop"));
+		event.getRegistry().register((SoundEvent)Spackenmobs.ENTITY_JENS_POOP);
 	}
 }

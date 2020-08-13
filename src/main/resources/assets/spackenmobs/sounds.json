@@ -838,5 +838,10 @@
 		"sounds": [{
 			"name": "spackenmobs:jens/eat"
 		}]
+	},
+		"entities.jens.poop": {
+		"sounds": [{
+			"name": "spackenmobs:jens/poop"
+		}]
 	}
 }
