@@ -8,4 +8,5 @@ public class ModItems
 {
     public static final Item RAM = null;
     public static final Item RAM_ON_A_STICK = null;
+    public static final Item SURSTROEMMING = null;
 }

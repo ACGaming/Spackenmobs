@@ -34,7 +34,8 @@ public class RegHandler
 	{
 		final Item[] items = {
 			new Item().setRegistryName(Spackenmobs.MODID, "ram").setUnlocalizedName(Spackenmobs.MODID + "." + "ram").setCreativeTab(CreativeTabs.MISC),
-			new Item().setRegistryName(Spackenmobs.MODID, "ram_on_a_stick").setUnlocalizedName(Spackenmobs.MODID + "." + "ram_on_a_stick").setCreativeTab(CreativeTabs.MISC)
+			new Item().setRegistryName(Spackenmobs.MODID, "ram_on_a_stick").setUnlocalizedName(Spackenmobs.MODID + "." + "ram_on_a_stick").setCreativeTab(CreativeTabs.MISC),
+			new Item().setRegistryName(Spackenmobs.MODID, "surstroemming").setUnlocalizedName(Spackenmobs.MODID + "." + "surstroemming").setCreativeTab(CreativeTabs.MISC)
 		};
 		event.getRegistry().registerAll(items);
 	}
@@ -57,23 +58,23 @@ public class RegHandler
 		EntityRegistry.addSpawn(EntityIslamist.class, 50, 1, 4, EnumCreatureType.MONSTER, BiomeHelper.getBiomesWithMonster(EntityCreeper.class));
 		
 		// ApoRed
-		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:apored"), EntityApoRed.class, "apored", id++, Spackenmobs.instance, 64, 1, true, 15263976, 15211548);
+		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:apored"), EntityApoRed.class, "apored", id++, Spackenmobs.instance, 64, 1, true, 2039583, 16711680);
 		EntityRegistry.addSpawn(EntityApoRed.class, 50, 1, 4, EnumCreatureType.MONSTER, BiomeHelper.getBiomesWithMonster(EntitySkeleton.class));
 		
 		// Mr. Bean
-		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:mr_bean"), EntityMrBean.class, "mr_bean", id++, Spackenmobs.instance, 64, 1, true, 15263976, 15211548);
+		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:mr_bean"), EntityMrBean.class, "mr_bean", id++, Spackenmobs.instance, 64, 1, true, 4802350, 3220238);
 		EntityRegistry.addSpawn(EntityMrBean.class, 50, 1, 4, EnumCreatureType.MONSTER, BiomeHelper.getBiomesWithMonster(EntityZombie.class));
 		
 		// Drachenlord		
-		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:drachenlord"), EntityDrachenlord.class, "drachenlord", id++, Spackenmobs.instance, 64, 1, true, 15263976, 15211548);		
+		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:drachenlord"), EntityDrachenlord.class, "drachenlord", id++, Spackenmobs.instance, 64, 1, true, 15256745, 8738878);		
 		EntityRegistry.addSpawn(EntityDrachenlord.class, 50, 1, 4, EnumCreatureType.MONSTER, BiomeHelper.getBiomesWithMonster(EntityPigZombie.class));
 		
 		// Schalker
-		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:schalker"), EntitySchalker.class, "schalker", id++, Spackenmobs.instance, 64, 1, true, 15263976, 15211548);
+		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:schalker"), EntitySchalker.class, "schalker", id++, Spackenmobs.instance, 64, 1, true, 24745, 16777215);
 		EntityRegistry.addSpawn(EntitySchalker.class, 50, 1, 4, EnumCreatureType.MONSTER, BiomeHelper.getBiomesWithMonster(EntityShulker.class));
 		
 		// Jens
-		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:jens"), EntityJens.class, "jens", id++, Spackenmobs.instance, 64, 1, true, 15263976, 15211548);
+		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:jens"), EntityJens.class, "jens", id++, Spackenmobs.instance, 64, 1, true, 6704526, 6767911);
 		EntityRegistry.addSpawn(EntityJens.class, 50, 1, 4, EnumCreatureType.CREATURE, BiomeHelper.getBiomesWithCreature(EntityPig.class));
         
         //LootTableList.register(EntityJens.LOOT);

@@ -17,6 +17,7 @@ public class ModelRegHandler
 	{
 		registerModel(ModItems.RAM, 0);
 		registerModel(ModItems.RAM_ON_A_STICK, 0);
+		registerModel(ModItems.SURSTROEMMING, 0);
 	}
 
 	private static void registerModel(Item item, int meta)
