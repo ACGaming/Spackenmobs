@@ -1,5 +1,5 @@
 package mod.acgaming.spackenmobs.entities;
-import mod.acgaming.spackenmobs.Spackenmobs;
+import mod.acgaming.spackenmobs.misc.ModSoundEvents;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
@@ -15,16 +15,16 @@ public class EntityMarcellDAvis extends EntityZombie
 	
     protected SoundEvent getAmbientSound()
     {
-        return Spackenmobs.ENTITY_MARCELLDAVIS_AMBIENT;
+        return ModSoundEvents.ENTITY_MARCELLDAVIS_AMBIENT;
     }
 
     protected SoundEvent getHurtSound(DamageSource damageSourceIn)
     {
-        return Spackenmobs.ENTITY_MARCELLDAVIS_HURT;
+        return ModSoundEvents.ENTITY_MARCELLDAVIS_HURT;
     }
 
     protected SoundEvent getDeathSound()
     {
-        return Spackenmobs.ENTITY_MARCELLDAVIS_DEATH;
+        return ModSoundEvents.ENTITY_MARCELLDAVIS_DEATH;
     }
 }

@@ -1,5 +1,5 @@
 package mod.acgaming.spackenmobs;
-import mod.acgaming.spackenmobs.items.ModItems;
+import mod.acgaming.spackenmobs.misc.ModItems;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;

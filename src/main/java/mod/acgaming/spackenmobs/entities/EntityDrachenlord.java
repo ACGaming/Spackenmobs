@@ -3,7 +3,7 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import mod.acgaming.spackenmobs.Spackenmobs;
+import mod.acgaming.spackenmobs.misc.ModSoundEvents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
@@ -87,7 +87,7 @@ public class EntityDrachenlord extends EntityZombie
 
         if (this.randomSoundDelay > 0 && --this.randomSoundDelay == 0)
         {
-            this.playSound(Spackenmobs.ENTITY_DRACHENLORD_ANGRY, this.getSoundVolume() * 2.0F, 1.0F);
+            this.playSound(ModSoundEvents.ENTITY_DRACHENLORD_ANGRY, this.getSoundVolume() * 2.0F, 1.0F);
         }
 
         if (this.angerLevel > 0 && this.angerTargetUUID != null && this.getRevengeTarget() == null)
@@ -188,17 +188,17 @@ public class EntityDrachenlord extends EntityZombie
 
     protected SoundEvent getAmbientSound()
     {
-        return Spackenmobs.ENTITY_DRACHENLORD_AMBIENT;
+        return ModSoundEvents.ENTITY_DRACHENLORD_AMBIENT;
     }
 
     protected SoundEvent getHurtSound(DamageSource damageSourceIn)
     {
-        return Spackenmobs.ENTITY_DRACHENLORD_HURT;
+        return ModSoundEvents.ENTITY_DRACHENLORD_HURT;
     }
 
     protected SoundEvent getDeathSound()
     {
-        return Spackenmobs.ENTITY_DRACHENLORD_DEATH;
+        return ModSoundEvents.ENTITY_DRACHENLORD_DEATH;
     }
 
     @Nullable

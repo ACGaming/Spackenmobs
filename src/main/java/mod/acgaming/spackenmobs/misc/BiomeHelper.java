@@ -1,4 +1,4 @@
-package mod.acgaming.spackenmobs.entities;
+package mod.acgaming.spackenmobs.misc;
 import java.util.ArrayList;
 import java.util.List;
 

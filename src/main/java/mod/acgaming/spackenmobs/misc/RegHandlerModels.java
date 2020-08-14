@@ -1,6 +1,5 @@
-package mod.acgaming.spackenmobs.reg;
+package mod.acgaming.spackenmobs.misc;
 import mod.acgaming.spackenmobs.Spackenmobs;
-import mod.acgaming.spackenmobs.items.ModItems;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -10,7 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
 @EventBusSubscriber(value = Side.CLIENT, modid = Spackenmobs.MODID)
-public class ModelRegHandler
+public class RegHandlerModels
 {
 	@SubscribeEvent
 	public static void registerModels(ModelRegistryEvent event)

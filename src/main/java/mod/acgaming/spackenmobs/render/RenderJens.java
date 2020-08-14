@@ -25,7 +25,7 @@ public class RenderJens extends RenderBiped<EntityJens>
         return JENS_TEXTURE;
     }
     
-    public static class Factory implements IRenderFactory<EntityJens>
+    private static class Factory implements IRenderFactory<EntityJens>
     {
     	@Override
     	public Render<? super EntityJens> createRenderFor(RenderManager manager)

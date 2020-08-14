@@ -1,5 +1,5 @@
 package mod.acgaming.spackenmobs.entities;
-import mod.acgaming.spackenmobs.Spackenmobs;
+import mod.acgaming.spackenmobs.misc.ModSoundEvents;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
@@ -14,16 +14,16 @@ public class EntityApoRed extends EntitySkeleton
 	
     protected SoundEvent getAmbientSound()
     {
-        return Spackenmobs.ENTITY_APORED_AMBIENT;
+        return ModSoundEvents.ENTITY_APORED_AMBIENT;
     }
 
     protected SoundEvent getHurtSound(DamageSource damageSourceIn)
     {
-        return Spackenmobs.ENTITY_APORED_HURT;
+        return ModSoundEvents.ENTITY_APORED_HURT;
     }
 
     protected SoundEvent getDeathSound()
     {
-        return Spackenmobs.ENTITY_APORED_DEATH;
+        return ModSoundEvents.ENTITY_APORED_DEATH;
     }
 }

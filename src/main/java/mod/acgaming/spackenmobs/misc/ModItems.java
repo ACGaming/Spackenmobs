@@ -1,4 +1,4 @@
-package mod.acgaming.spackenmobs.items;
+package mod.acgaming.spackenmobs.misc;
 import mod.acgaming.spackenmobs.Spackenmobs;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;

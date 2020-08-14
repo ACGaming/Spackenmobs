@@ -3,8 +3,8 @@ import java.util.Set;
 
 import com.google.common.collect.Sets;
 
-import mod.acgaming.spackenmobs.Spackenmobs;
-import mod.acgaming.spackenmobs.items.ModItems;
+import mod.acgaming.spackenmobs.misc.ModItems;
+import mod.acgaming.spackenmobs.misc.ModSoundEvents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.ai.EntityAIFollowParent;
@@ -15,26 +15,22 @@ import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.passive.EntityPig;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
-public class EntityJens extends EntityPig
+public class EntityJens extends EntityAnimal
 {
 	private static final Set<Item> TEMPTATION_ITEMS = Sets.newHashSet(ModItems.RAM);
-	private static final DataParameter<Integer> Cooldown = EntityDataManager.createKey(EntityJens.class, DataSerializers.VARINT);
-	private boolean yummy_in_tummy = false;
-	private int timeUntilSurstroemming = 0;
+	public boolean yummy_in_tummy = false;
+	public int time_until_surstroemming = 0;
 	
     public EntityJens(World worldIn)
     {
@@ -86,12 +82,12 @@ public class EntityJens extends EntityPig
         ItemStack itemstack = player.getHeldItem(hand);
         EnumParticleTypes enumparticletypes = EnumParticleTypes.HEART;
 
-        if (itemstack.getItem() == Items.FISH && !this.isChild() && this.yummy_in_tummy == false)
+        if (itemstack.getItem() == Items.FISH && !player.capabilities.isCreativeMode && !this.isChild() && this.yummy_in_tummy == false)
         {
-            player.playSound(Spackenmobs.ENTITY_JENS_EAT, 1.0F, 1.0F);
+            player.playSound(ModSoundEvents.ENTITY_JENS_EAT, 1.0F, 1.0F);
             itemstack.shrink(1);
             this.yummy_in_tummy = true;
-            this.timeUntilSurstroemming = 100;
+            this.time_until_surstroemming = 100;
             
             for (int i = 0; i < 7; ++i)
             {
@@ -104,7 +100,7 @@ public class EntityJens extends EntityPig
         }
         else
         {
-    		return this.processInteract(player, hand);
+            return super.processInteract(player, hand);
         }
     }
     
@@ -112,32 +108,32 @@ public class EntityJens extends EntityPig
     {
         super.onLivingUpdate();
         
-        if (!this.world.isRemote && this.yummy_in_tummy == true && this.timeUntilSurstroemming > 0)
+        if (!this.world.isRemote && this.yummy_in_tummy == true && this.time_until_surstroemming > 0)
         {
-        	this.timeUntilSurstroemming--;
+        	this.time_until_surstroemming--;
         }
         
-        if (!this.world.isRemote && this.yummy_in_tummy == true && this.timeUntilSurstroemming <= 0)
+        if (!this.world.isRemote && this.yummy_in_tummy == true && this.time_until_surstroemming <= 0)
         {
-            this.playSound(Spackenmobs.ENTITY_JENS_POOP, 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
+            this.playSound(ModSoundEvents.ENTITY_JENS_POOP, 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
             this.dropItem(ModItems.SURSTROEMMING, 1);
             this.yummy_in_tummy = false;
-            this.timeUntilSurstroemming = 0;
+            this.time_until_surstroemming = 0;
         }
     }
     
     protected SoundEvent getAmbientSound()
     {
-        return Spackenmobs.ENTITY_JENS_AMBIENT;
+        return ModSoundEvents.ENTITY_JENS_AMBIENT;
     }
 
     protected SoundEvent getHurtSound(DamageSource damageSourceIn)
     {
-        return Spackenmobs.ENTITY_JENS_HURT;
+        return ModSoundEvents.ENTITY_JENS_HURT;
     }
 
     protected SoundEvent getDeathSound()
     {
-        return Spackenmobs.ENTITY_JENS_DEATH;
+        return ModSoundEvents.ENTITY_JENS_DEATH;
     }
 }

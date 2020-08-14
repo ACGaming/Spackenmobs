@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 
-import mod.acgaming.spackenmobs.Spackenmobs;
+import mod.acgaming.spackenmobs.misc.ModSoundEvents;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.BlockPistonExtension;
 import net.minecraft.block.material.Material;
@@ -29,7 +29,6 @@ import net.minecraft.entity.monster.EntityGolem;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.entity.projectile.EntityShulkerBullet;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumDyeColor;
@@ -113,7 +112,7 @@ public class EntitySchalker extends EntityGolem implements IMob
 
     protected SoundEvent getAmbientSound()
     {
-        return Spackenmobs.ENTITY_SCHALKER_AMBIENT;
+        return ModSoundEvents.ENTITY_SCHALKER_AMBIENT;
     }
     
     public void playLivingSound()
@@ -126,7 +125,7 @@ public class EntitySchalker extends EntityGolem implements IMob
 
     protected SoundEvent getDeathSound()
     {
-        return Spackenmobs.ENTITY_SCHALKER_DEATH;
+        return ModSoundEvents.ENTITY_SCHALKER_DEATH;
     }
 
     protected SoundEvent getHurtSound(DamageSource damageSourceIn)
@@ -154,7 +153,7 @@ public class EntitySchalker extends EntityGolem implements IMob
         return new EntitySchalker.BodyHelper(this);
     }
 
-    public static void registerFixesShulker(DataFixer fixer)
+    public static void registerFixesSchalker(DataFixer fixer)
     {
         EntityLiving.registerFixesMob(fixer, EntitySchalker.class);
     }
@@ -577,7 +576,7 @@ public class EntitySchalker extends EntityGolem implements IMob
             }
             else
             {
-                this.playSound(Spackenmobs.ENTITY_SCHALKER_OPEN, 1.0F, 1.0F);
+                this.playSound(ModSoundEvents.ENTITY_SCHALKER_OPEN, 1.0F, 1.0F);
             }
         }
 
@@ -692,9 +691,9 @@ public class EntitySchalker extends EntityGolem implements IMob
                     if (this.attackTime <= 0)
                     {
                         this.attackTime = 20 + EntitySchalker.this.rand.nextInt(10) * 20 / 2;
-                        EntityShulkerBullet entityshulkerbullet = new EntityShulkerBullet(EntitySchalker.this.world, EntitySchalker.this, entitylivingbase, EntitySchalker.this.getAttachmentFacing().getAxis());
-                        EntitySchalker.this.world.spawnEntity(entityshulkerbullet);
-                        EntitySchalker.this.playSound(Spackenmobs.ENTITY_SCHALKER_SHOOT, 2.0F, (EntitySchalker.this.rand.nextFloat() - EntitySchalker.this.rand.nextFloat()) * 0.2F + 1.0F);
+                        EntitySchalkerBullet entityschalkerbullet = new EntitySchalkerBullet(EntitySchalker.this.world, EntitySchalker.this, entitylivingbase, EntitySchalker.this.getAttachmentFacing().getAxis());
+                        EntitySchalker.this.world.spawnEntity(entityschalkerbullet);
+                        EntitySchalker.this.playSound(ModSoundEvents.ENTITY_SCHALKER_SHOOT, 2.0F, (EntitySchalker.this.rand.nextFloat() - EntitySchalker.this.rand.nextFloat()) * 0.2F + 1.0F);
                     }
                 }
                 else
@@ -736,9 +735,9 @@ public class EntitySchalker extends EntityGolem implements IMob
 
     static class AIDefenseAttack extends EntityAINearestAttackableTarget<EntityLivingBase>
         {
-            public AIDefenseAttack(EntitySchalker shulker)
+            public AIDefenseAttack(EntitySchalker schalker)
             {
-                super(shulker, EntityLivingBase.class, 10, true, false, new Predicate<EntityLivingBase>()
+                super(schalker, EntityLivingBase.class, 10, true, false, new Predicate<EntityLivingBase>()
                 {
                     public boolean apply(@Nullable EntityLivingBase p_apply_1_)
                     {

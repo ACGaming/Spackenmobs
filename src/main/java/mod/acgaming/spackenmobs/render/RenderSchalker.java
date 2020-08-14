@@ -1,7 +1,6 @@
 package mod.acgaming.spackenmobs.render;
 import mod.acgaming.spackenmobs.entities.EntitySchalker;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.model.ModelShulker;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.client.renderer.entity.Render;
@@ -24,13 +23,13 @@ public class RenderSchalker extends RenderLiving<EntitySchalker>
     
     public RenderSchalker(RenderManager p_i47194_1_)
     {
-        super(p_i47194_1_, new ModelShulker(), 0.0F);
+        super(p_i47194_1_, new ModelSchalker(), 0.0F);
         this.addLayer(new RenderSchalker.HeadLayer());
     }
     
-    public ModelShulker getMainModel()
+    public ModelSchalker getMainModel()
     {
-        return (ModelShulker)super.getMainModel();
+        return (ModelSchalker)super.getMainModel();
     }
     
     public void doRender(EntitySchalker entity, double x, double y, double z, float entityYaw, float partialTicks)

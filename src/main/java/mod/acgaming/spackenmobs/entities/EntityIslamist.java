@@ -1,5 +1,5 @@
 package mod.acgaming.spackenmobs.entities;
-import mod.acgaming.spackenmobs.Spackenmobs;
+import mod.acgaming.spackenmobs.misc.ModSoundEvents;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
@@ -33,7 +33,7 @@ public class EntityIslamist extends EntityCreeper
 			
 			if (i > 0 && this.timeSinceIgnited == 0)
 			{
-				this.playSound(Spackenmobs.ENTITY_ISLAMIST_FUSE, 1.0F, 0.5F);
+				this.playSound(ModSoundEvents.ENTITY_ISLAMIST_FUSE, 1.0F, 0.5F);
 			}
 			
 			this.timeSinceIgnited += i;
@@ -60,7 +60,7 @@ public class EntityIslamist extends EntityCreeper
             boolean flag = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.world, this);
             float f = this.getPowered() ? 2.0F : 1.0F;
             this.dead = true;
-            this.world.playSound(null, getPosition(), Spackenmobs.ENTITY_ISLAMIST_BLOW, getSoundCategory(), 1.0F, 1.0F);
+            this.world.playSound(null, getPosition(), ModSoundEvents.ENTITY_ISLAMIST_BLOW, getSoundCategory(), 1.0F, 1.0F);
             this.world.createExplosion(this, this.posX, this.posY, this.posZ, (float)this.explosionRadius * f, flag);
             this.setDead();
         }
@@ -68,11 +68,11 @@ public class EntityIslamist extends EntityCreeper
 
     protected SoundEvent getHurtSound(DamageSource damageSourceIn)
     {
-        return Spackenmobs.ENTITY_ISLAMIST_HURT;
+        return ModSoundEvents.ENTITY_ISLAMIST_HURT;
     }
     
     protected SoundEvent getAmbientSound()
     {
-        return Spackenmobs.ENTITY_ISLAMIST_AMBIENT;
+        return ModSoundEvents.ENTITY_ISLAMIST_AMBIENT;
     }
 }
