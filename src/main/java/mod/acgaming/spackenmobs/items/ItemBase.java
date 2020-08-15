@@ -7,13 +7,13 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemSurstroemming extends Item
+public class ItemBase extends Item
 {
-    public ItemSurstroemming()
+    public ItemBase(String name, CreativeTabs tab)
     {
-        setRegistryName("surstroemming");
-        setUnlocalizedName(Spackenmobs.MODID + ".surstroemming");
-        setCreativeTab(CreativeTabs.MISC);
+        setRegistryName(name);
+        setUnlocalizedName(Spackenmobs.MODID + "." + name);
+        setCreativeTab(tab);
     }
     
     @SideOnly(Side.CLIENT)
