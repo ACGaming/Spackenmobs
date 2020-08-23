@@ -126,9 +126,6 @@ public class EntityWolfMZTE extends EntityWolf
 			this.wolf = wolfIn;
 		}
 
-		/**
-		 * Returns whether the EntityAIBase should begin execution.
-		 */
 		@Override
 		public boolean shouldExecute()
 		{
@@ -147,9 +144,6 @@ public class EntityWolfMZTE extends EntityWolf
 			return p_190854_1_.getStrength() >= EntityWolfMZTE.this.rand.nextInt(5);
 		}
 
-		/**
-		 * Execute a one shot task or start executing a continuous task
-		 */
 		@Override
 		public void startExecuting()
 		{
@@ -157,9 +151,6 @@ public class EntityWolfMZTE extends EntityWolf
 			super.startExecuting();
 		}
 
-		/**
-		 * Keep ticking a continuous task that has already been started
-		 */
 		@Override
 		public void updateTask()
 		{

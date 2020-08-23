@@ -3,6 +3,7 @@ package mod.acgaming.spackenmobs.entities;
 import java.util.List;
 import java.util.Random;
 
+import mod.acgaming.spackenmobs.misc.ModConfigs;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -14,7 +15,7 @@ public class EntityAIEatDroppedFish extends EntityAIBase
 	private EntityJens jens;
 	private Random rand = new Random();
 	private World world = null;
-	double searchDistance = 10.0D;
+	double searchDistance = ModConfigs.Jens_search_distance;
 
 	public EntityAIEatDroppedFish(EntityJens jens)
 	{
@@ -45,10 +46,10 @@ public class EntityAIEatDroppedFish extends EntityAIBase
 	@Override
 	public boolean shouldExecute()
 	{
-		EntityItem getNearbyFood = getNearbyFood();
-		if (getNearbyFood != null && !this.jens.isChild() && this.jens.yummy_in_tummy == false && this.jens.isFishItem(getNearbyFood.getItem()))
+		EntityItem nearbyFood = getNearbyFood();
+		if (nearbyFood != null && !this.jens.isChild() && this.jens.yummy_in_tummy == false && this.jens.isFishItem(nearbyFood.getItem()))
 		{
-			execute(this.jens, getNearbyFood);
+			execute(this.jens, nearbyFood);
 		}
 		return false;
 	}

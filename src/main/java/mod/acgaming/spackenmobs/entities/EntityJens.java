@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.Sets;
 
+import mod.acgaming.spackenmobs.misc.ModConfigs;
 import mod.acgaming.spackenmobs.misc.ModItems;
 import mod.acgaming.spackenmobs.misc.ModLootTableList;
 import mod.acgaming.spackenmobs.misc.ModSoundEvents;
@@ -39,6 +40,8 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityJens extends EntityPig
 {
@@ -53,6 +56,7 @@ public class EntityJens extends EntityPig
 	public boolean yummy_in_tummy = false;
 	public int time_until_surstroemming = 0;
 
+	@SideOnly(Side.CLIENT)
 	Minecraft MINECRAFT = Minecraft.getMinecraft();
 
 	public EntityJens(World worldIn)
@@ -203,7 +207,7 @@ public class EntityJens extends EntityPig
 		if (!super.processInteract(player, hand))
 		{
 			ItemStack itemstack = player.getHeldItem(hand);
-			if (itemstack.getItem() == Items.FISH && !player.capabilities.isCreativeMode && !this.isChild() && this.yummy_in_tummy == false)
+			if (itemstack.getItem() == Items.FISH && !this.isChild() && this.yummy_in_tummy == false)
 			{
 				itemstack.shrink(1);
 				digestFish();
@@ -270,7 +274,7 @@ public class EntityJens extends EntityPig
 		this.playSound(ModSoundEvents.ENTITY_JENS_EAT, 1.0F, 1.0F);
 
 		this.yummy_in_tummy = true;
-		this.time_until_surstroemming = 200;
+		this.time_until_surstroemming = (ModConfigs.Jens_digest_time * 20);
 
 		for (int i = 0; i < 7; ++i)
 		{

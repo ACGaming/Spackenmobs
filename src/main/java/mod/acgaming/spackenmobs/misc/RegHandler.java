@@ -51,43 +51,82 @@ public class RegHandler
 
 		// Smava Creeper
 		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:smava_creeper"), EntitySmavaCreeper.class, "smava_creeper", id++, Spackenmobs.instance, 64, 1, true, 7649828, 11053224);
-		EntityRegistry.addSpawn(EntitySmavaCreeper.class, 25, 1, 4, EnumCreatureType.MONSTER, BiomeHelper.getBiomesWithMonster(EntityCreeper.class));
+		if (ModConfigs.SmavaCreeper_spawn == true)
+		{
+			EntityRegistry.addSpawn(EntitySmavaCreeper.class, ModConfigs.SmavaCreeper_weight, ModConfigs.SmavaCreeper_min, ModConfigs.SmavaCreeper_max, EnumCreatureType.MONSTER,
+					BiomeHelper.getBiomesWithMonster(EntityCreeper.class));
+		}
 
 		// Marcell D'Avis
 		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:marcell_davis"), EntityMarcellDAvis.class, "marcell_davis", id++, Spackenmobs.instance, 64, 1, true, 15759, 16777215);
-		EntityRegistry.addSpawn(EntityMarcellDAvis.class, 50, 1, 4, EnumCreatureType.MONSTER, BiomeHelper.getBiomesWithMonster(EntityZombie.class));
+		if (ModConfigs.MarcellDAvis_spawn == true)
+		{
+			EntityRegistry.addSpawn(EntityMarcellDAvis.class, ModConfigs.MarcellDAvis_weight, ModConfigs.MarcellDAvis_min, ModConfigs.MarcellDAvis_max, EnumCreatureType.MONSTER,
+					BiomeHelper.getBiomesWithMonster(EntityZombie.class));
+		}
 
 		// Islamist
 		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:islamist"), EntityIslamist.class, "islamist", id++, Spackenmobs.instance, 64, 1, true, 15263976, 15211548);
-		EntityRegistry.addSpawn(EntityIslamist.class, 50, 1, 4, EnumCreatureType.MONSTER, BiomeHelper.getBiomesWithMonster(EntityCreeper.class));
+		if (ModConfigs.Islamist_spawn == true)
+		{
+			EntityRegistry.addSpawn(EntityIslamist.class, ModConfigs.Islamist_weight, ModConfigs.Islamist_min, ModConfigs.Islamist_max, EnumCreatureType.MONSTER,
+					BiomeHelper.getBiomesWithMonster(EntityCreeper.class));
+		}
 
 		// ApoRed
 		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:apored"), EntityApoRed.class, "apored", id++, Spackenmobs.instance, 64, 1, true, 2039583, 16711680);
-		EntityRegistry.addSpawn(EntityApoRed.class, 50, 1, 4, EnumCreatureType.MONSTER, BiomeHelper.getBiomesWithMonster(EntitySkeleton.class));
+		if (ModConfigs.ApoRed_spawn == true)
+		{
+			EntityRegistry.addSpawn(EntityApoRed.class, ModConfigs.ApoRed_weight, ModConfigs.ApoRed_min, ModConfigs.ApoRed_max, EnumCreatureType.MONSTER,
+					BiomeHelper.getBiomesWithMonster(EntitySkeleton.class));
+		}
 
 		// Mr. Bean
 		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:mr_bean"), EntityMrBean.class, "mr_bean", id++, Spackenmobs.instance, 64, 1, true, 4802350, 3220238);
-		EntityRegistry.addSpawn(EntityMrBean.class, 50, 1, 4, EnumCreatureType.MONSTER, BiomeHelper.getBiomesWithMonster(EntityZombie.class));
+		if (ModConfigs.MrBean_spawn == true)
+		{
+			EntityRegistry.addSpawn(EntityMrBean.class, ModConfigs.MrBean_weight, ModConfigs.MrBean_min, ModConfigs.MrBean_max, EnumCreatureType.MONSTER,
+					BiomeHelper.getBiomesWithMonster(EntityZombie.class));
+		}
 
 		// Drachenlord
 		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:drachenlord"), EntityDrachenlord.class, "drachenlord", id++, Spackenmobs.instance, 64, 1, true, 15256745, 8738878);
-		EntityRegistry.addSpawn(EntityDrachenlord.class, 50, 1, 4, EnumCreatureType.MONSTER, BiomeHelper.getBiomesWithMonster(EntityPigZombie.class));
+		if (ModConfigs.Drachenlord_spawn == true)
+		{
+			EntityRegistry.addSpawn(EntityDrachenlord.class, ModConfigs.Drachenlord_weight, ModConfigs.Drachenlord_min, ModConfigs.Drachenlord_max, EnumCreatureType.MONSTER,
+					BiomeHelper.getBiomesWithMonster(EntityPigZombie.class));
+		}
 
 		// Schalker
 		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:schalker"), EntitySchalker.class, "schalker", id++, Spackenmobs.instance, 64, 1, true, 24745, 16777215);
-		EntityRegistry.addSpawn(EntitySchalker.class, 50, 1, 4, EnumCreatureType.MONSTER, BiomeHelper.getBiomesWithMonster(EntityShulker.class));
+		if (ModConfigs.Schalker_spawn == true)
+		{
+			EntityRegistry.addSpawn(EntitySchalker.class, ModConfigs.Schalker_weight, ModConfigs.Schalker_min, ModConfigs.Schalker_max, EnumCreatureType.MONSTER,
+					BiomeHelper.getBiomesWithMonster(EntityShulker.class));
+		}
 
 		// Jens
 		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:jens"), EntityJens.class, "jens", id++, Spackenmobs.instance, 64, 1, true, 6704526, 6767911);
-		EntityRegistry.addSpawn(EntityJens.class, 25, 1, 4, EnumCreatureType.CREATURE, BiomeHelper.getBiomesWithCreature(EntityPig.class));
+		if (ModConfigs.Jens_spawn == true)
+		{
+			EntityRegistry.addSpawn(EntityJens.class, ModConfigs.Jens_weight, ModConfigs.Jens_min, ModConfigs.Jens_max, EnumCreatureType.CREATURE, BiomeHelper.getBiomesWithCreature(EntityPig.class));
+		}
 
 		// WolfMZTE
 		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:wolfmzte"), EntityWolfMZTE.class, "wolfmzte", id++, Spackenmobs.instance, 64, 1, true, 16711680, 0);
-		EntityRegistry.addSpawn(EntityJens.class, 50, 1, 4, EnumCreatureType.CREATURE, BiomeHelper.getBiomesWithCreature(EntityWolf.class));
+		if (ModConfigs.WolfMZTE_spawn == true)
+		{
+			EntityRegistry.addSpawn(EntityJens.class, ModConfigs.WolfMZTE_weight, ModConfigs.WolfMZTE_min, ModConfigs.WolfMZTE_max, EnumCreatureType.CREATURE,
+					BiomeHelper.getBiomesWithCreature(EntityWolf.class));
+		}
 
 		// Holzstammhuhn
 		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:holzstammhuhn"), EntityHolzstammhuhn.class, "holzstammhuhn", id++, Spackenmobs.instance, 64, 1, true, 12096347, 5295899);
-		EntityRegistry.addSpawn(EntityJens.class, 50, 1, 4, EnumCreatureType.CREATURE, BiomeHelper.getBiomesWithCreature(EntityChicken.class));
+		if (ModConfigs.Holzstammhuhn_spawn == true)
+		{
+			EntityRegistry.addSpawn(EntityJens.class, ModConfigs.Holzstammhuhn_weight, ModConfigs.Holzstammhuhn_min, ModConfigs.Holzstammhuhn_max, EnumCreatureType.CREATURE,
+					BiomeHelper.getBiomesWithCreature(EntityChicken.class));
+		}
 	}
 
 	@SubscribeEvent

@@ -12,3 +12,4 @@ item.spackenmobs.ram.name=RAM
 item.spackenmobs.ram_on_a_stick.name=RAM on a Stick
 item.spackenmobs.surstroemming.name=Surströmming
 itemGroup.spackenmobs.tabSpackenmobs=Spackenmobs
+spackenmobs.config.title=Spackenmobs settings
