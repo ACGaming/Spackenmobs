@@ -13,32 +13,38 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderMarcellDAvis extends RenderZombie {
-    private static final ResourceLocation MARCELLDAVIS_TEXTURE = new ResourceLocation(
-	    "spackenmobs:textures/entities/marcell_davis.png");
-    public static final Factory FACTORY = new Factory();
+public class RenderMarcellDAvis extends RenderZombie
+{
+	private static final ResourceLocation MARCELLDAVIS_TEXTURE = new ResourceLocation("spackenmobs:textures/entities/marcell_davis.png");
+	public static final Factory FACTORY = new Factory();
 
-    public RenderMarcellDAvis(RenderManager renderManagerIn) {
-	super(renderManagerIn);
-	LayerBipedArmor layerbipedarmor = new LayerBipedArmor(this) {
-	    @Override
-	    protected void initArmor() {
-		this.modelLeggings = new ModelZombie(0.5F, true);
-		this.modelArmor = new ModelZombie(1.0F, true);
-	    }
-	};
-	this.addLayer(layerbipedarmor);
-    }
-
-    @Override
-    protected ResourceLocation getEntityTexture(EntityZombie entity) {
-	return MARCELLDAVIS_TEXTURE;
-    }
-
-    public static class Factory implements IRenderFactory<EntityMarcellDAvis> {
-	@Override
-	public Render<? super EntityMarcellDAvis> createRenderFor(RenderManager manager) {
-	    return new RenderMarcellDAvis(manager);
+	public RenderMarcellDAvis(RenderManager renderManagerIn)
+	{
+		super(renderManagerIn);
+		LayerBipedArmor layerbipedarmor = new LayerBipedArmor(this)
+		{
+			@Override
+			protected void initArmor()
+			{
+				this.modelLeggings = new ModelZombie(0.5F, true);
+				this.modelArmor = new ModelZombie(1.0F, true);
+			}
+		};
+		this.addLayer(layerbipedarmor);
 	}
-    }
+
+	@Override
+	protected ResourceLocation getEntityTexture(EntityZombie entity)
+	{
+		return MARCELLDAVIS_TEXTURE;
+	}
+
+	public static class Factory implements IRenderFactory<EntityMarcellDAvis>
+	{
+		@Override
+		public Render<? super EntityMarcellDAvis> createRenderFor(RenderManager manager)
+		{
+			return new RenderMarcellDAvis(manager);
+		}
+	}
 }

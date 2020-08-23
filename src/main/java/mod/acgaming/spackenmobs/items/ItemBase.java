@@ -8,15 +8,18 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemBase extends Item {
-    public ItemBase(String name, CreativeTabs tab) {
-	setRegistryName(name);
-	setUnlocalizedName(Spackenmobs.MODID + "." + name);
-	setCreativeTab(tab);
-    }
+public class ItemBase extends Item
+{
+	public ItemBase(String name, CreativeTabs tab)
+	{
+		setRegistryName(name);
+		setUnlocalizedName(Spackenmobs.MODID + "." + name);
+		setCreativeTab(tab);
+	}
 
-    @SideOnly(Side.CLIENT)
-    public void initModel() {
-	ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-    }
+	@SideOnly(Side.CLIENT)
+	public void initModel()
+	{
+		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+	}
 }

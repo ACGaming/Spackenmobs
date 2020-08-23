@@ -13,31 +13,37 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderDrachenlord extends RenderZombie {
-    private static final ResourceLocation DRACHENLORD_TEXTURE = new ResourceLocation(
-	    "spackenmobs:textures/entities/drachenlord.png");
-    public static final Factory FACTORY = new Factory();
+public class RenderDrachenlord extends RenderZombie
+{
+	private static final ResourceLocation DRACHENLORD_TEXTURE = new ResourceLocation("spackenmobs:textures/entities/drachenlord.png");
+	public static final Factory FACTORY = new Factory();
 
-    public RenderDrachenlord(RenderManager renderManagerIn) {
-	super(renderManagerIn);
-	this.addLayer(new LayerBipedArmor(this) {
-	    @Override
-	    protected void initArmor() {
-		this.modelLeggings = new ModelZombie(0.5F, true);
-		this.modelArmor = new ModelZombie(1.0F, true);
-	    }
-	});
-    }
-
-    @Override
-    protected ResourceLocation getEntityTexture(EntityZombie entity) {
-	return DRACHENLORD_TEXTURE;
-    }
-
-    public static class Factory implements IRenderFactory<EntityDrachenlord> {
-	@Override
-	public Render<? super EntityDrachenlord> createRenderFor(RenderManager manager) {
-	    return new RenderDrachenlord(manager);
+	public RenderDrachenlord(RenderManager renderManagerIn)
+	{
+		super(renderManagerIn);
+		this.addLayer(new LayerBipedArmor(this)
+		{
+			@Override
+			protected void initArmor()
+			{
+				this.modelLeggings = new ModelZombie(0.5F, true);
+				this.modelArmor = new ModelZombie(1.0F, true);
+			}
+		});
 	}
-    }
+
+	@Override
+	protected ResourceLocation getEntityTexture(EntityZombie entity)
+	{
+		return DRACHENLORD_TEXTURE;
+	}
+
+	public static class Factory implements IRenderFactory<EntityDrachenlord>
+	{
+		@Override
+		public Render<? super EntityDrachenlord> createRenderFor(RenderManager manager)
+		{
+			return new RenderDrachenlord(manager);
+		}
+	}
 }
