@@ -11,10 +11,10 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod(modid = "spackenmobs", version = "1.0", acceptedMinecraftVersions = "[1.12.2]")
+@Mod(modid = "spackenmobs", version = "RC1", acceptedMinecraftVersions = "[1.12.2]")
 public class Spackenmobs {
     public static final String MODID = "spackenmobs";
-    public static final String VERSION = "1.0";
+    public static final String VERSION = "RC1";
 
     public static final CreativeTabs SPACKENMOBS_TAB = new SpackenmobsTab();
 
