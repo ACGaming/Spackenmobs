@@ -53,8 +53,8 @@ public class EntityJens extends EntityPig
 	private boolean boosting;
 	private int boostTime;
 	private int totalBoostTime;
-	public boolean yummy_in_tummy = false;
-	public int time_until_surstroemming = 0;
+	public boolean digesting = false;
+	public int digest_time = 0;
 
 	@SideOnly(Side.CLIENT)
 	Minecraft MINECRAFT = Minecraft.getMinecraft();
@@ -207,7 +207,7 @@ public class EntityJens extends EntityPig
 		if (!super.processInteract(player, hand))
 		{
 			ItemStack itemstack = player.getHeldItem(hand);
-			if (itemstack.getItem() == Items.FISH && !this.isChild() && this.yummy_in_tummy == false)
+			if (itemstack.getItem() == Items.FISH && !this.isChild() && this.digesting == false)
 			{
 				itemstack.shrink(1);
 				digestFish();
@@ -247,12 +247,12 @@ public class EntityJens extends EntityPig
 	{
 		super.onLivingUpdate();
 
-		if (!this.world.isRemote && this.yummy_in_tummy == true && this.time_until_surstroemming > 0)
+		if (!this.world.isRemote && this.digesting == true && this.digest_time > 0)
 		{
-			this.time_until_surstroemming--;
+			this.digest_time--;
 		}
 
-		if (!this.world.isRemote && this.yummy_in_tummy == true && this.time_until_surstroemming <= 0)
+		if (!this.world.isRemote && this.digesting == true && this.digest_time <= 0)
 		{
 			for (int i = 0; i < 7; ++i)
 			{
@@ -264,8 +264,8 @@ public class EntityJens extends EntityPig
 			}
 			this.playSound(ModSoundEvents.ENTITY_JENS_POOP, 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
 			this.dropItem(ModItems.SURSTROEMMING, 1);
-			this.yummy_in_tummy = false;
-			this.time_until_surstroemming = 0;
+			this.digesting = false;
+			this.digest_time = 0;
 		}
 	}
 
@@ -273,8 +273,8 @@ public class EntityJens extends EntityPig
 	{
 		this.playSound(ModSoundEvents.ENTITY_JENS_EAT, 1.0F, 1.0F);
 
-		this.yummy_in_tummy = true;
-		this.time_until_surstroemming = (ModConfigs.Jens_digest_time * 20);
+		this.digesting = true;
+		this.digest_time = (ModConfigs.Jens_digest_time * 20);
 
 		for (int i = 0; i < 7; ++i)
 		{

@@ -47,7 +47,7 @@ public class EntityAIEatDroppedFish extends EntityAIBase
 	public boolean shouldExecute()
 	{
 		EntityItem nearbyFood = getNearbyFood();
-		if (nearbyFood != null && !this.jens.isChild() && this.jens.yummy_in_tummy == false && this.jens.isFishItem(nearbyFood.getItem()))
+		if (nearbyFood != null && !this.jens.isChild() && this.jens.digesting == false && this.jens.isFishItem(nearbyFood.getItem()))
 		{
 			execute(this.jens, nearbyFood);
 		}

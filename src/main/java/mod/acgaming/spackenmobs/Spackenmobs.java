@@ -1,7 +1,9 @@
 package mod.acgaming.spackenmobs;
 
+import mod.acgaming.spackenmobs.events.SurstroemmingSmellsBadEvent;
 import mod.acgaming.spackenmobs.misc.ModEntities;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -38,7 +40,7 @@ public class Spackenmobs
 	@EventHandler
 	public void init(FMLInitializationEvent event)
 	{
-
+		MinecraftForge.EVENT_BUS.register(new SurstroemmingSmellsBadEvent());
 	}
 
 	@EventHandler

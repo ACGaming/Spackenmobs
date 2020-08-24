@@ -34,9 +34,6 @@ public class ModLootTableList
 		}
 	}
 
-	/**
-	 * An unmodifiable set is returned
-	 */
 	public static Set<ResourceLocation> getAll()
 	{
 		return READ_ONLY_LOOT_TABLES;
