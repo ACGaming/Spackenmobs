@@ -42,25 +42,25 @@ import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityIslamist extends EntityCreeper
+public class EntityBakaMitaiCreeper extends EntityCreeper
 {
-	private static final DataParameter<Integer> STATE = EntityDataManager.<Integer>createKey(EntityIslamist.class, DataSerializers.VARINT);
-	private static final DataParameter<Boolean> POWERED = EntityDataManager.<Boolean>createKey(EntityIslamist.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> IGNITED = EntityDataManager.<Boolean>createKey(EntityIslamist.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Integer> STATE = EntityDataManager.<Integer>createKey(EntityBakaMitaiCreeper.class, DataSerializers.VARINT);
+	private static final DataParameter<Boolean> POWERED = EntityDataManager.<Boolean>createKey(EntityBakaMitaiCreeper.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> IGNITED = EntityDataManager.<Boolean>createKey(EntityBakaMitaiCreeper.class, DataSerializers.BOOLEAN);
 
-	public static void registerFixesIslamist(DataFixer fixer)
+	public static void registerFixesCreeper(DataFixer fixer)
 	{
-		EntityLiving.registerFixesMob(fixer, EntityIslamist.class);
+		EntityLiving.registerFixesMob(fixer, EntityBakaMitaiCreeper.class);
 	}
 
 	private int lastActiveTime;
 	private int timeSinceIgnited;
-	private int fuseTime = 30;
-	private int explosionRadius = 6;
+	private int fuseTime = 100;
+	private int explosionRadius = 12;
 
 	private int droppedSkulls;
 
-	public EntityIslamist(World worldIn)
+	public EntityBakaMitaiCreeper(World worldIn)
 	{
 		super(worldIn);
 		this.setSize(0.6F, 1.7F);
@@ -101,7 +101,7 @@ public class EntityIslamist extends EntityCreeper
 			boolean flag = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.world, this);
 			float f = this.getPowered() ? 2.0F : 1.0F;
 			this.dead = true;
-			this.world.playSound(null, getPosition(), ModSoundEvents.ENTITY_ISLAMIST_BLOW, getSoundCategory(), 2.0F, 1.0F);
+			this.world.playSound(null, getPosition(), ModSoundEvents.ENTITY_BAKAMITAICREEPER_BLOW, getSoundCategory(), 1.0F, 1.0F);
 			this.world.createExplosion(this, this.posX, this.posY, this.posZ, this.explosionRadius * f, flag);
 			this.setDead();
 			this.spawnLingeringCloud();
@@ -121,12 +121,6 @@ public class EntityIslamist extends EntityCreeper
 	}
 
 	@Override
-	protected SoundEvent getAmbientSound()
-	{
-		return ModSoundEvents.ENTITY_ISLAMIST_AMBIENT;
-	}
-
-	@Override
 	@SideOnly(Side.CLIENT)
 	public float getCreeperFlashIntensity(float p_70831_1_)
 	{
@@ -140,9 +134,15 @@ public class EntityIslamist extends EntityCreeper
 	}
 
 	@Override
+	protected SoundEvent getDeathSound()
+	{
+		return SoundEvents.ENTITY_CREEPER_DEATH;
+	}
+
+	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn)
 	{
-		return ModSoundEvents.ENTITY_ISLAMIST_HURT;
+		return SoundEvents.ENTITY_CREEPER_HURT;
 	}
 
 	@Override
@@ -210,10 +210,10 @@ public class EntityIslamist extends EntityCreeper
 				int k = i + this.rand.nextInt(j - i + 1);
 				this.dropItem(Item.getItemById(k), 1);
 			}
-			else if (cause.getTrueSource() instanceof EntityIslamist && cause.getTrueSource() != this && ((EntityIslamist) cause.getTrueSource()).getPowered()
-					&& ((EntityIslamist) cause.getTrueSource()).ableToCauseSkullDrop())
+			else if (cause.getTrueSource() instanceof EntityBakaMitaiCreeper && cause.getTrueSource() != this && ((EntityBakaMitaiCreeper) cause.getTrueSource()).getPowered()
+					&& ((EntityBakaMitaiCreeper) cause.getTrueSource()).ableToCauseSkullDrop())
 			{
-				((EntityIslamist) cause.getTrueSource()).incrementDroppedSkulls();
+				((EntityBakaMitaiCreeper) cause.getTrueSource()).incrementDroppedSkulls();
 				this.entityDropItem(new ItemStack(Items.SKULL, 1, 4), 0.0F);
 			}
 		}
@@ -242,7 +242,7 @@ public class EntityIslamist extends EntityCreeper
 
 			if (i > 0 && this.timeSinceIgnited == 0)
 			{
-				this.playSound(ModSoundEvents.ENTITY_ISLAMIST_FUSE, 1.0F, 0.5F);
+				this.playSound(ModSoundEvents.ENTITY_BAKAMITAICREEPER_FUSE, 1.0F, 1.0F);
 			}
 
 			this.timeSinceIgnited += i;

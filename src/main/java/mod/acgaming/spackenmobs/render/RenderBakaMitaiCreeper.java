@@ -1,6 +1,6 @@
 package mod.acgaming.spackenmobs.render;
 
-import mod.acgaming.spackenmobs.entities.EntitySmavaCreeper;
+import mod.acgaming.spackenmobs.entities.EntityBakaMitaiCreeper;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderCreeper;
@@ -14,28 +14,28 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderSmavaCreeper extends RenderCreeper
+public class RenderBakaMitaiCreeper extends RenderCreeper
 {
-	public static class Factory implements IRenderFactory<EntitySmavaCreeper>
+	public static class Factory implements IRenderFactory<EntityBakaMitaiCreeper>
 	{
 		@Override
-		public Render<? super EntitySmavaCreeper> createRenderFor(RenderManager manager)
+		public Render<? super EntityBakaMitaiCreeper> createRenderFor(RenderManager manager)
 		{
-			return new RenderSmavaCreeper(manager);
+			return new RenderBakaMitaiCreeper(manager);
 		}
 	}
 
-	private static final ResourceLocation SMAVA_TEXTURE = new ResourceLocation("spackenmobs:textures/entities/smava_creeper.png");
+	private static final ResourceLocation CREEPER_TEXTURE = new ResourceLocation("textures/entity/creeper/creeper.png");
 
 	public static final Factory FACTORY = new Factory();
 
-	public RenderSmavaCreeper(RenderManager renderManagerIn)
+	public RenderBakaMitaiCreeper(RenderManager renderManagerIn)
 	{
 		super(renderManagerIn);
 		this.addLayer(new LayerCreeperCharge(this));
 	}
 
-	protected int getColorMultiplier(EntitySmavaCreeper entitylivingbaseIn, float lightBrightness, float partialTickTime)
+	protected int getColorMultiplier(EntityBakaMitaiCreeper entitylivingbaseIn, float lightBrightness, float partialTickTime)
 	{
 		float f = entitylivingbaseIn.getCreeperFlashIntensity(partialTickTime);
 
@@ -54,10 +54,10 @@ public class RenderSmavaCreeper extends RenderCreeper
 	@Override
 	protected ResourceLocation getEntityTexture(EntityCreeper entity)
 	{
-		return SMAVA_TEXTURE;
+		return CREEPER_TEXTURE;
 	}
 
-	protected void preRenderCallback(EntitySmavaCreeper entitylivingbaseIn, float partialTickTime)
+	protected void preRenderCallback(EntityBakaMitaiCreeper entitylivingbaseIn, float partialTickTime)
 	{
 		float f = entitylivingbaseIn.getCreeperFlashIntensity(partialTickTime);
 		float f1 = 1.0F + MathHelper.sin(f * 100.0F) * f * 0.01F;

@@ -15,21 +15,25 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderWolfMZTE extends RenderWolf
 {
+	public static class Factory implements IRenderFactory<EntityWolfMZTE>
+	{
+		@Override
+		public Render<? super EntityWolfMZTE> createRenderFor(RenderManager manager)
+		{
+			return new RenderWolfMZTE(manager);
+		}
+	}
+
 	private static final ResourceLocation WOLFMZTE_TEXTURE = new ResourceLocation("spackenmobs:textures/entities/wolfmzte.png");
 	private static final ResourceLocation TAMED_WOLFMZTE_TEXTURE = new ResourceLocation("spackenmobs:textures/entities/wolfmzte_tame.png");
 	private static final ResourceLocation ANRGY_WOLFMZTE_TEXTURE = new ResourceLocation("spackenmobs:textures/entities/wolfmzte_angry.png");
+
 	public static final Factory FACTORY = new Factory();
 
 	public RenderWolfMZTE(RenderManager renderManagerIn)
 	{
 		super(renderManagerIn);
 		this.addLayer(new LayerWolfCollar(this));
-	}
-
-	@Override
-	protected float handleRotationFloat(EntityWolf livingBase, float partialTicks)
-	{
-		return livingBase.getTailRotation();
 	}
 
 	@Override
@@ -57,12 +61,9 @@ public class RenderWolfMZTE extends RenderWolf
 		}
 	}
 
-	public static class Factory implements IRenderFactory<EntityWolfMZTE>
+	@Override
+	protected float handleRotationFloat(EntityWolf livingBase, float partialTicks)
 	{
-		@Override
-		public Render<? super EntityWolfMZTE> createRenderFor(RenderManager manager)
-		{
-			return new RenderWolfMZTE(manager);
-		}
+		return livingBase.getTailRotation();
 	}
 }

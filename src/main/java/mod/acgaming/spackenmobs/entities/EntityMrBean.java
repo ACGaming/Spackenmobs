@@ -21,14 +21,14 @@ public class EntityMrBean extends EntityZombie
 	}
 
 	@Override
-	protected SoundEvent getHurtSound(DamageSource damageSourceIn)
-	{
-		return ModSoundEvents.ENTITY_MRBEAN_HURT;
-	}
-
-	@Override
 	protected SoundEvent getDeathSound()
 	{
 		return ModSoundEvents.ENTITY_MRBEAN_DEATH;
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(DamageSource damageSourceIn)
+	{
+		return ModSoundEvents.ENTITY_MRBEAN_HURT;
 	}
 }

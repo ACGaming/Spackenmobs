@@ -12,16 +12,16 @@ import net.minecraftforge.fml.relauncher.Side;
 @EventBusSubscriber(value = Side.CLIENT, modid = Spackenmobs.MODID)
 public class RegHandlerModels
 {
+	private static void registerModel(Item item, int meta)
+	{
+		ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName(), "inventory"));
+	}
+
 	@SubscribeEvent
 	public static void registerModels(ModelRegistryEvent event)
 	{
 		registerModel(ModItems.RAM, 0);
 		registerModel(ModItems.RAM_ON_A_STICK, 0);
 		registerModel(ModItems.SURSTROEMMING, 0);
-	}
-
-	private static void registerModel(Item item, int meta)
-	{
-		ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 	}
 }

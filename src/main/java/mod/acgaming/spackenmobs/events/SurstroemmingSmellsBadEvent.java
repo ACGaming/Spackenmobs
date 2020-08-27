@@ -15,7 +15,7 @@ public class SurstroemmingSmellsBadEvent
 	{
 		if (event.player instanceof EntityPlayer)
 		{
-			EntityPlayer player = (EntityPlayer) event.player;
+			EntityPlayer player = event.player;
 			if (player.inventory.hasItemStack(new ItemStack(ModItems.SURSTROEMMING)))
 			{
 				player.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 100));

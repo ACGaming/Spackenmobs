@@ -24,19 +24,6 @@ public class Spackenmobs
 	@Instance
 	public static Spackenmobs instance;
 
-	@SideOnly(Side.CLIENT)
-	@EventHandler
-	public void preInitClient(FMLPreInitializationEvent event)
-	{
-		ModEntities.initModels();
-	}
-
-	@EventHandler
-	public void preInit(FMLPreInitializationEvent event)
-	{
-
-	}
-
 	@EventHandler
 	public void init(FMLInitializationEvent event)
 	{
@@ -47,5 +34,18 @@ public class Spackenmobs
 	public void postInit(FMLPostInitializationEvent event)
 	{
 
+	}
+
+	@EventHandler
+	public void preInit(FMLPreInitializationEvent event)
+	{
+
+	}
+
+	@SideOnly(Side.CLIENT)
+	@EventHandler
+	public void preInitClient(FMLPreInitializationEvent event)
+	{
+		ModEntities.initModels();
 	}
 }

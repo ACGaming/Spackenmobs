@@ -39,6 +39,30 @@ public class EntityHolzstammhuhn extends EntityChicken
 	}
 
 	@Override
+	public EntityHolzstammhuhn createChild(EntityAgeable ageable)
+	{
+		return new EntityHolzstammhuhn(this.world);
+	}
+
+	@Override
+	protected SoundEvent getAmbientSound()
+	{
+		return SoundEvents.BLOCK_WOOD_PLACE;
+	}
+
+	@Override
+	protected SoundEvent getDeathSound()
+	{
+		return SoundEvents.BLOCK_WOOD_BREAK;
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(DamageSource damageSourceIn)
+	{
+		return SoundEvents.BLOCK_WOOD_HIT;
+	}
+
+	@Override
 	protected void initEntityAI()
 	{
 		this.tasks.addTask(0, new EntityAISwimming(this));
@@ -58,32 +82,8 @@ public class EntityHolzstammhuhn extends EntityChicken
 	}
 
 	@Override
-	protected SoundEvent getAmbientSound()
-	{
-		return SoundEvents.BLOCK_WOOD_PLACE;
-	}
-
-	@Override
-	protected SoundEvent getHurtSound(DamageSource damageSourceIn)
-	{
-		return SoundEvents.BLOCK_WOOD_HIT;
-	}
-
-	@Override
-	protected SoundEvent getDeathSound()
-	{
-		return SoundEvents.BLOCK_WOOD_BREAK;
-	}
-
-	@Override
 	protected void playStepSound(BlockPos pos, Block blockIn)
 	{
 		this.playSound(SoundEvents.BLOCK_WOOD_STEP, 0.15F, 1.0F);
-	}
-
-	@Override
-	public EntityHolzstammhuhn createChild(EntityAgeable ageable)
-	{
-		return new EntityHolzstammhuhn(this.world);
 	}
 }

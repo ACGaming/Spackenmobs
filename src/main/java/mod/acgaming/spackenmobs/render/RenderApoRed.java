@@ -17,7 +17,17 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderApoRed extends RenderSkeleton
 {
+	public static class Factory implements IRenderFactory<EntityApoRed>
+	{
+		@Override
+		public Render<? super EntityApoRed> createRenderFor(RenderManager manager)
+		{
+			return new RenderApoRed(manager);
+		}
+	}
+
 	private static final ResourceLocation APORED_TEXTURE = new ResourceLocation("spackenmobs:textures/entities/apored.png");
+
 	public static final Factory FACTORY = new Factory();
 
 	public RenderApoRed(RenderManager renderManagerIn)
@@ -36,23 +46,14 @@ public class RenderApoRed extends RenderSkeleton
 	}
 
 	@Override
-	public void transformHeldFull3DItemLayer()
-	{
-		GlStateManager.translate(0.09375F, 0.1875F, 0.0F);
-	}
-
-	@Override
 	protected ResourceLocation getEntityTexture(AbstractSkeleton entity)
 	{
 		return APORED_TEXTURE;
 	}
 
-	public static class Factory implements IRenderFactory<EntityApoRed>
+	@Override
+	public void transformHeldFull3DItemLayer()
 	{
-		@Override
-		public Render<? super EntityApoRed> createRenderFor(RenderManager manager)
-		{
-			return new RenderApoRed(manager);
-		}
+		GlStateManager.translate(0.09375F, 0.1875F, 0.0F);
 	}
 }

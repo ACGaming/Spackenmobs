@@ -54,12 +54,6 @@ public class EntitySchalkerBullet extends Entity
 		this.noClip = true;
 	}
 
-	@Override
-	public SoundCategory getSoundCategory()
-	{
-		return SoundCategory.HOSTILE;
-	}
-
 	@SideOnly(Side.CLIENT)
 	public EntitySchalkerBullet(World worldIn, double x, double y, double z, double motionXIn, double motionYIn, double motionZIn)
 	{
@@ -85,71 +79,53 @@ public class EntitySchalkerBullet extends Entity
 	}
 
 	/**
-	 * (abstract) Protected helper method to write subclass entity data to NBT.
+	 * Called when the entity is attacked.
 	 */
 	@Override
-	protected void writeEntityToNBT(NBTTagCompound compound)
+	public boolean attackEntityFrom(DamageSource source, float amount)
 	{
-		if (this.owner != null)
+		if (!this.world.isRemote)
 		{
-			BlockPos blockpos = new BlockPos(this.owner);
-			NBTTagCompound nbttagcompound = NBTUtil.createUUIDTag(this.owner.getUniqueID());
-			nbttagcompound.setInteger("X", blockpos.getX());
-			nbttagcompound.setInteger("Y", blockpos.getY());
-			nbttagcompound.setInteger("Z", blockpos.getZ());
-			compound.setTag("Owner", nbttagcompound);
+			this.playSound(SoundEvents.ENTITY_SHULKER_BULLET_HURT, 1.0F, 1.0F);
+			((WorldServer) this.world).spawnParticle(EnumParticleTypes.CRIT, this.posX, this.posY, this.posZ, 15, 0.2D, 0.2D, 0.2D, 0.0D);
+			this.setDead();
 		}
 
-		if (this.target != null)
+		return true;
+	}
+
+	protected void bulletHit(RayTraceResult result)
+	{
+		if (result.entityHit == null)
 		{
-			BlockPos blockpos1 = new BlockPos(this.target);
-			NBTTagCompound nbttagcompound1 = NBTUtil.createUUIDTag(this.target.getUniqueID());
-			nbttagcompound1.setInteger("X", blockpos1.getX());
-			nbttagcompound1.setInteger("Y", blockpos1.getY());
-			nbttagcompound1.setInteger("Z", blockpos1.getZ());
-			compound.setTag("Target", nbttagcompound1);
+			((WorldServer) this.world).spawnParticle(EnumParticleTypes.EXPLOSION_LARGE, this.posX, this.posY, this.posZ, 2, 0.2D, 0.2D, 0.2D, 0.0D);
+			this.playSound(SoundEvents.ENTITY_SHULKER_BULLET_HIT, 1.0F, 1.0F);
+		}
+		else
+		{
+			boolean flag = result.entityHit.attackEntityFrom(DamageSource.causeIndirectDamage(this, this.owner).setProjectile(), 4.0F);
+
+			if (flag)
+			{
+				this.applyEnchantments(this.owner, result.entityHit);
+
+				if (result.entityHit instanceof EntityLivingBase)
+				{
+					((EntityLivingBase) result.entityHit).addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 200));
+				}
+			}
 		}
 
-		if (this.direction != null)
-		{
-			compound.setInteger("Dir", this.direction.getIndex());
-		}
-
-		compound.setInteger("Steps", this.steps);
-		compound.setDouble("TXD", this.targetDeltaX);
-		compound.setDouble("TYD", this.targetDeltaY);
-		compound.setDouble("TZD", this.targetDeltaZ);
+		this.setDead();
 	}
 
 	/**
-	 * (abstract) Protected helper method to read subclass entity data from NBT.
+	 * Returns true if other Entities should be prevented from moving through this Entity.
 	 */
 	@Override
-	protected void readEntityFromNBT(NBTTagCompound compound)
+	public boolean canBeCollidedWith()
 	{
-		this.steps = compound.getInteger("Steps");
-		this.targetDeltaX = compound.getDouble("TXD");
-		this.targetDeltaY = compound.getDouble("TYD");
-		this.targetDeltaZ = compound.getDouble("TZD");
-
-		if (compound.hasKey("Dir", 99))
-		{
-			this.direction = EnumFacing.getFront(compound.getInteger("Dir"));
-		}
-
-		if (compound.hasKey("Owner", 10))
-		{
-			NBTTagCompound nbttagcompound = compound.getCompoundTag("Owner");
-			this.ownerUniqueId = NBTUtil.getUUIDFromTag(nbttagcompound);
-			this.ownerBlockPos = new BlockPos(nbttagcompound.getInteger("X"), nbttagcompound.getInteger("Y"), nbttagcompound.getInteger("Z"));
-		}
-
-		if (compound.hasKey("Target", 10))
-		{
-			NBTTagCompound nbttagcompound1 = compound.getCompoundTag("Target");
-			this.targetUniqueId = NBTUtil.getUUIDFromTag(nbttagcompound1);
-			this.targetBlockPos = new BlockPos(nbttagcompound1.getInteger("X"), nbttagcompound1.getInteger("Y"), nbttagcompound1.getInteger("Z"));
-		}
+		return true;
 	}
 
 	@Override
@@ -157,114 +133,45 @@ public class EntitySchalkerBullet extends Entity
 	{
 	}
 
-	private void setDirection(@Nullable
-	EnumFacing directionIn)
+	/**
+	 * Gets how bright this entity is.
+	 */
+	@Override
+	public float getBrightness()
 	{
-		this.direction = directionIn;
+		return 1.0F;
 	}
 
-	private void selectNextMoveDirection(@Nullable
-	EnumFacing.Axis p_184569_1_)
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int getBrightnessForRender()
 	{
-		double d0 = 0.5D;
-		BlockPos blockpos;
+		return 15728880;
+	}
 
-		if (this.target == null)
-		{
-			blockpos = (new BlockPos(this)).down();
-		}
-		else
-		{
-			d0 = this.target.height * 0.5D;
-			blockpos = new BlockPos(this.target.posX, this.target.posY + d0, this.target.posZ);
-		}
+	@Override
+	public SoundCategory getSoundCategory()
+	{
+		return SoundCategory.HOSTILE;
+	}
 
-		double d1 = blockpos.getX() + 0.5D;
-		double d2 = blockpos.getY() + d0;
-		double d3 = blockpos.getZ() + 0.5D;
-		EnumFacing enumfacing = null;
+	/**
+	 * Returns true if the entity is on fire. Used by render to add the fire effect on rendering.
+	 */
+	@Override
+	public boolean isBurning()
+	{
+		return false;
+	}
 
-		if (blockpos.distanceSqToCenter(this.posX, this.posY, this.posZ) >= 4.0D)
-		{
-			BlockPos blockpos1 = new BlockPos(this);
-			List<EnumFacing> list = Lists.<EnumFacing>newArrayList();
-
-			if (p_184569_1_ != EnumFacing.Axis.X)
-			{
-				if (blockpos1.getX() < blockpos.getX() && this.world.isAirBlock(blockpos1.east()))
-				{
-					list.add(EnumFacing.EAST);
-				}
-				else if (blockpos1.getX() > blockpos.getX() && this.world.isAirBlock(blockpos1.west()))
-				{
-					list.add(EnumFacing.WEST);
-				}
-			}
-
-			if (p_184569_1_ != EnumFacing.Axis.Y)
-			{
-				if (blockpos1.getY() < blockpos.getY() && this.world.isAirBlock(blockpos1.up()))
-				{
-					list.add(EnumFacing.UP);
-				}
-				else if (blockpos1.getY() > blockpos.getY() && this.world.isAirBlock(blockpos1.down()))
-				{
-					list.add(EnumFacing.DOWN);
-				}
-			}
-
-			if (p_184569_1_ != EnumFacing.Axis.Z)
-			{
-				if (blockpos1.getZ() < blockpos.getZ() && this.world.isAirBlock(blockpos1.south()))
-				{
-					list.add(EnumFacing.SOUTH);
-				}
-				else if (blockpos1.getZ() > blockpos.getZ() && this.world.isAirBlock(blockpos1.north()))
-				{
-					list.add(EnumFacing.NORTH);
-				}
-			}
-
-			enumfacing = EnumFacing.random(this.rand);
-
-			if (list.isEmpty())
-			{
-				for (int i = 5; !this.world.isAirBlock(blockpos1.offset(enumfacing)) && i > 0; --i)
-				{
-					enumfacing = EnumFacing.random(this.rand);
-				}
-			}
-			else
-			{
-				enumfacing = list.get(this.rand.nextInt(list.size()));
-			}
-
-			d1 = this.posX + enumfacing.getFrontOffsetX();
-			d2 = this.posY + enumfacing.getFrontOffsetY();
-			d3 = this.posZ + enumfacing.getFrontOffsetZ();
-		}
-
-		this.setDirection(enumfacing);
-		double d6 = d1 - this.posX;
-		double d7 = d2 - this.posY;
-		double d4 = d3 - this.posZ;
-		double d5 = MathHelper.sqrt(d6 * d6 + d7 * d7 + d4 * d4);
-
-		if (d5 == 0.0D)
-		{
-			this.targetDeltaX = 0.0D;
-			this.targetDeltaY = 0.0D;
-			this.targetDeltaZ = 0.0D;
-		}
-		else
-		{
-			this.targetDeltaX = d6 / d5 * 0.15D;
-			this.targetDeltaY = d7 / d5 * 0.15D;
-			this.targetDeltaZ = d4 / d5 * 0.15D;
-		}
-
-		this.isAirBorne = true;
-		this.steps = 10 + this.rand.nextInt(5) * 10;
+	/**
+	 * Checks if the entity is in range to render.
+	 */
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean isInRangeToRenderDist(double distance)
+	{
+		return distance < 16384.0D;
 	}
 
 	/**
@@ -382,87 +289,180 @@ public class EntitySchalkerBullet extends Entity
 	}
 
 	/**
-	 * Returns true if the entity is on fire. Used by render to add the fire effect on rendering.
+	 * (abstract) Protected helper method to read subclass entity data from NBT.
 	 */
 	@Override
-	public boolean isBurning()
+	protected void readEntityFromNBT(NBTTagCompound compound)
 	{
-		return false;
-	}
+		this.steps = compound.getInteger("Steps");
+		this.targetDeltaX = compound.getDouble("TXD");
+		this.targetDeltaY = compound.getDouble("TYD");
+		this.targetDeltaZ = compound.getDouble("TZD");
 
-	/**
-	 * Checks if the entity is in range to render.
-	 */
-	@Override
-	@SideOnly(Side.CLIENT)
-	public boolean isInRangeToRenderDist(double distance)
-	{
-		return distance < 16384.0D;
-	}
-
-	/**
-	 * Gets how bright this entity is.
-	 */
-	@Override
-	public float getBrightness()
-	{
-		return 1.0F;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public int getBrightnessForRender()
-	{
-		return 15728880;
-	}
-
-	protected void bulletHit(RayTraceResult result)
-	{
-		if (result.entityHit == null)
+		if (compound.hasKey("Dir", 99))
 		{
-			((WorldServer) this.world).spawnParticle(EnumParticleTypes.EXPLOSION_LARGE, this.posX, this.posY, this.posZ, 2, 0.2D, 0.2D, 0.2D, 0.0D);
-			this.playSound(SoundEvents.ENTITY_SHULKER_BULLET_HIT, 1.0F, 1.0F);
+			this.direction = EnumFacing.getFront(compound.getInteger("Dir"));
+		}
+
+		if (compound.hasKey("Owner", 10))
+		{
+			NBTTagCompound nbttagcompound = compound.getCompoundTag("Owner");
+			this.ownerUniqueId = NBTUtil.getUUIDFromTag(nbttagcompound);
+			this.ownerBlockPos = new BlockPos(nbttagcompound.getInteger("X"), nbttagcompound.getInteger("Y"), nbttagcompound.getInteger("Z"));
+		}
+
+		if (compound.hasKey("Target", 10))
+		{
+			NBTTagCompound nbttagcompound1 = compound.getCompoundTag("Target");
+			this.targetUniqueId = NBTUtil.getUUIDFromTag(nbttagcompound1);
+			this.targetBlockPos = new BlockPos(nbttagcompound1.getInteger("X"), nbttagcompound1.getInteger("Y"), nbttagcompound1.getInteger("Z"));
+		}
+	}
+
+	private void selectNextMoveDirection(@Nullable
+	EnumFacing.Axis p_184569_1_)
+	{
+		double d0 = 0.5D;
+		BlockPos blockpos;
+
+		if (this.target == null)
+		{
+			blockpos = (new BlockPos(this)).down();
 		}
 		else
 		{
-			boolean flag = result.entityHit.attackEntityFrom(DamageSource.causeIndirectDamage(this, this.owner).setProjectile(), 4.0F);
+			d0 = this.target.height * 0.5D;
+			blockpos = new BlockPos(this.target.posX, this.target.posY + d0, this.target.posZ);
+		}
 
-			if (flag)
+		double d1 = blockpos.getX() + 0.5D;
+		double d2 = blockpos.getY() + d0;
+		double d3 = blockpos.getZ() + 0.5D;
+		EnumFacing enumfacing = null;
+
+		if (blockpos.distanceSqToCenter(this.posX, this.posY, this.posZ) >= 4.0D)
+		{
+			BlockPos blockpos1 = new BlockPos(this);
+			List<EnumFacing> list = Lists.<EnumFacing>newArrayList();
+
+			if (p_184569_1_ != EnumFacing.Axis.X)
 			{
-				this.applyEnchantments(this.owner, result.entityHit);
-
-				if (result.entityHit instanceof EntityLivingBase)
+				if (blockpos1.getX() < blockpos.getX() && this.world.isAirBlock(blockpos1.east()))
 				{
-					((EntityLivingBase) result.entityHit).addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 200));
+					list.add(EnumFacing.EAST);
+				}
+				else if (blockpos1.getX() > blockpos.getX() && this.world.isAirBlock(blockpos1.west()))
+				{
+					list.add(EnumFacing.WEST);
 				}
 			}
+
+			if (p_184569_1_ != EnumFacing.Axis.Y)
+			{
+				if (blockpos1.getY() < blockpos.getY() && this.world.isAirBlock(blockpos1.up()))
+				{
+					list.add(EnumFacing.UP);
+				}
+				else if (blockpos1.getY() > blockpos.getY() && this.world.isAirBlock(blockpos1.down()))
+				{
+					list.add(EnumFacing.DOWN);
+				}
+			}
+
+			if (p_184569_1_ != EnumFacing.Axis.Z)
+			{
+				if (blockpos1.getZ() < blockpos.getZ() && this.world.isAirBlock(blockpos1.south()))
+				{
+					list.add(EnumFacing.SOUTH);
+				}
+				else if (blockpos1.getZ() > blockpos.getZ() && this.world.isAirBlock(blockpos1.north()))
+				{
+					list.add(EnumFacing.NORTH);
+				}
+			}
+
+			enumfacing = EnumFacing.random(this.rand);
+
+			if (list.isEmpty())
+			{
+				for (int i = 5; !this.world.isAirBlock(blockpos1.offset(enumfacing)) && i > 0; --i)
+				{
+					enumfacing = EnumFacing.random(this.rand);
+				}
+			}
+			else
+			{
+				enumfacing = list.get(this.rand.nextInt(list.size()));
+			}
+
+			d1 = this.posX + enumfacing.getFrontOffsetX();
+			d2 = this.posY + enumfacing.getFrontOffsetY();
+			d3 = this.posZ + enumfacing.getFrontOffsetZ();
 		}
 
-		this.setDead();
-	}
+		this.setDirection(enumfacing);
+		double d6 = d1 - this.posX;
+		double d7 = d2 - this.posY;
+		double d4 = d3 - this.posZ;
+		double d5 = MathHelper.sqrt(d6 * d6 + d7 * d7 + d4 * d4);
 
-	/**
-	 * Returns true if other Entities should be prevented from moving through this Entity.
-	 */
-	@Override
-	public boolean canBeCollidedWith()
-	{
-		return true;
-	}
-
-	/**
-	 * Called when the entity is attacked.
-	 */
-	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount)
-	{
-		if (!this.world.isRemote)
+		if (d5 == 0.0D)
 		{
-			this.playSound(SoundEvents.ENTITY_SHULKER_BULLET_HURT, 1.0F, 1.0F);
-			((WorldServer) this.world).spawnParticle(EnumParticleTypes.CRIT, this.posX, this.posY, this.posZ, 15, 0.2D, 0.2D, 0.2D, 0.0D);
-			this.setDead();
+			this.targetDeltaX = 0.0D;
+			this.targetDeltaY = 0.0D;
+			this.targetDeltaZ = 0.0D;
+		}
+		else
+		{
+			this.targetDeltaX = d6 / d5 * 0.15D;
+			this.targetDeltaY = d7 / d5 * 0.15D;
+			this.targetDeltaZ = d4 / d5 * 0.15D;
 		}
 
-		return true;
+		this.isAirBorne = true;
+		this.steps = 10 + this.rand.nextInt(5) * 10;
+	}
+
+	private void setDirection(@Nullable
+	EnumFacing directionIn)
+	{
+		this.direction = directionIn;
+	}
+
+	/**
+	 * (abstract) Protected helper method to write subclass entity data to NBT.
+	 */
+	@Override
+	protected void writeEntityToNBT(NBTTagCompound compound)
+	{
+		if (this.owner != null)
+		{
+			BlockPos blockpos = new BlockPos(this.owner);
+			NBTTagCompound nbttagcompound = NBTUtil.createUUIDTag(this.owner.getUniqueID());
+			nbttagcompound.setInteger("X", blockpos.getX());
+			nbttagcompound.setInteger("Y", blockpos.getY());
+			nbttagcompound.setInteger("Z", blockpos.getZ());
+			compound.setTag("Owner", nbttagcompound);
+		}
+
+		if (this.target != null)
+		{
+			BlockPos blockpos1 = new BlockPos(this.target);
+			NBTTagCompound nbttagcompound1 = NBTUtil.createUUIDTag(this.target.getUniqueID());
+			nbttagcompound1.setInteger("X", blockpos1.getX());
+			nbttagcompound1.setInteger("Y", blockpos1.getY());
+			nbttagcompound1.setInteger("Z", blockpos1.getZ());
+			compound.setTag("Target", nbttagcompound1);
+		}
+
+		if (this.direction != null)
+		{
+			compound.setInteger("Dir", this.direction.getIndex());
+		}
+
+		compound.setInteger("Steps", this.steps);
+		compound.setDouble("TXD", this.targetDeltaX);
+		compound.setDouble("TYD", this.targetDeltaY);
+		compound.setDouble("TZD", this.targetDeltaZ);
 	}
 }

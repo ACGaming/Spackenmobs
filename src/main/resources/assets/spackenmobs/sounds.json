@@ -852,5 +852,15 @@
 		"sounds": [{
 			"name": "spackenmobs:jens/poop"
 		}]
+	},
+		"entities.bakamitai_creeper.fuse": {
+		"sounds": [{
+			"name": "spackenmobs:bakamitai_creeper/fuse"
+		}]
+	},
+	"entities.bakamitai_creeper.blow": {
+		"sounds": [{
+			"name": "spackenmobs:bakamitai_creeper/blow"
+		}]
 	}
 }

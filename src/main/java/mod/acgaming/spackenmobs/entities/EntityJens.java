@@ -50,10 +50,16 @@ public class EntityJens extends EntityPig
 	private static final Set<Item> TEMPTATION_ITEMS = Sets.newHashSet(ModItems.RAM);
 	private static final Set<Item> FISH_ITEMS = Sets.newHashSet(Items.FISH);
 
+	public static void registerFixesJens(DataFixer fixer)
+	{
+		EntityLiving.registerFixesMob(fixer, EntityJens.class);
+	}
+
 	private boolean boosting;
 	private int boostTime;
 	private int totalBoostTime;
 	public boolean digesting = false;
+
 	public int digest_time = 0;
 
 	@SideOnly(Side.CLIENT)
@@ -66,21 +72,6 @@ public class EntityJens extends EntityPig
 	}
 
 	@Override
-	protected void initEntityAI()
-	{
-		this.tasks.addTask(0, new EntityAISwimming(this));
-		this.tasks.addTask(1, new EntityAIPanic(this, 1.25D));
-		this.tasks.addTask(2, new EntityAIEatDroppedFish(this));
-		this.tasks.addTask(3, new EntityAIMate(this, 1.0D));
-		this.tasks.addTask(4, new EntityAITempt(this, 1.2D, false, TEMPTATION_ITEMS));
-		this.tasks.addTask(4, new EntityAITempt(this, 1.2D, ModItems.RAM_ON_A_STICK, false));
-		this.tasks.addTask(5, new EntityAIFollowParent(this, 1.1D));
-		this.tasks.addTask(6, new EntityAIWanderAvoidWater(this, 1.0D));
-		this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
-		this.tasks.addTask(8, new EntityAILookIdle(this));
-	}
-
-	@Override
 	protected void applyEntityAttributes()
 	{
 		super.applyEntityAttributes();
@@ -89,10 +80,20 @@ public class EntityJens extends EntityPig
 	}
 
 	@Override
-	@Nullable
-	public Entity getControllingPassenger()
+	public boolean boost()
 	{
-		return this.getPassengers().isEmpty() ? null : (Entity) this.getPassengers().get(0);
+		if (this.boosting)
+		{
+			return false;
+		}
+		else
+		{
+			this.boosting = true;
+			this.boostTime = 0;
+			this.totalBoostTime = this.getRNG().nextInt(841) + 140;
+			this.getDataManager().set(BOOST_TIME, Integer.valueOf(this.totalBoostTime));
+			return true;
+		}
 	}
 
 	@Override
@@ -112,16 +113,26 @@ public class EntityJens extends EntityPig
 	}
 
 	@Override
-	public void notifyDataManagerChange(DataParameter<?> key)
+	public EntityJens createChild(EntityAgeable ageable)
 	{
-		if (BOOST_TIME.equals(key) && this.world.isRemote)
-		{
-			this.boosting = true;
-			this.boostTime = 0;
-			this.totalBoostTime = this.dataManager.get(BOOST_TIME).intValue();
-		}
+		return new EntityJens(this.world);
+	}
 
-		super.notifyDataManagerChange(key);
+	public void digestFish()
+	{
+		this.playSound(ModSoundEvents.ENTITY_JENS_EAT, 1.0F, 1.0F);
+
+		this.digesting = true;
+		this.digest_time = (ModConfigs.Jens_digest_time * 20);
+
+		for (int i = 0; i < 7; ++i)
+		{
+			double d0 = this.rand.nextGaussian() * 0.02D;
+			double d1 = this.rand.nextGaussian() * 0.02D;
+			double d2 = this.rand.nextGaussian() * 0.02D;
+			MINECRAFT.world.spawnParticle(EnumParticleTypes.HEART, this.posX + this.rand.nextFloat() * this.width * 2.0F - this.width, this.posY + 0.5D + this.rand.nextFloat() * this.height,
+					this.posZ + this.rand.nextFloat() * this.width * 2.0F - this.width, d0, d1, d2);
+		}
 	}
 
 	@Override
@@ -132,23 +143,80 @@ public class EntityJens extends EntityPig
 		this.dataManager.register(BOOST_TIME, Integer.valueOf(0));
 	}
 
-	public static void registerFixesJens(DataFixer fixer)
+	@Override
+	protected SoundEvent getAmbientSound()
 	{
-		EntityLiving.registerFixesMob(fixer, EntityJens.class);
+		return ModSoundEvents.ENTITY_JENS_AMBIENT;
 	}
 
 	@Override
-	public void writeEntityToNBT(NBTTagCompound compound)
+	@Nullable
+	public Entity getControllingPassenger()
 	{
-		super.writeEntityToNBT(compound);
-		compound.setBoolean("Saddle", this.getSaddled());
+		return this.getPassengers().isEmpty() ? null : (Entity) this.getPassengers().get(0);
 	}
 
 	@Override
-	public void readEntityFromNBT(NBTTagCompound compound)
+	protected SoundEvent getDeathSound()
 	{
-		super.readEntityFromNBT(compound);
-		this.setSaddled(compound.getBoolean("Saddle"));
+		return ModSoundEvents.ENTITY_JENS_DEATH;
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(DamageSource damageSourceIn)
+	{
+		return ModSoundEvents.ENTITY_JENS_HURT;
+	}
+
+	@Override
+	protected ResourceLocation getLootTable()
+	{
+		return ModLootTableList.ENTITIES_JENS;
+	}
+
+	@Override
+	public boolean getSaddled()
+	{
+		return this.dataManager.get(SADDLED).booleanValue();
+	}
+
+	@Override
+	protected void initEntityAI()
+	{
+		this.tasks.addTask(0, new EntityAISwimming(this));
+		this.tasks.addTask(1, new EntityAIPanic(this, 1.25D));
+		this.tasks.addTask(2, new EntityAIEatDroppedFish(this));
+		this.tasks.addTask(3, new EntityAIMate(this, 1.0D));
+		this.tasks.addTask(4, new EntityAITempt(this, 1.2D, false, TEMPTATION_ITEMS));
+		this.tasks.addTask(4, new EntityAITempt(this, 1.2D, ModItems.RAM_ON_A_STICK, false));
+		this.tasks.addTask(5, new EntityAIFollowParent(this, 1.1D));
+		this.tasks.addTask(6, new EntityAIWanderAvoidWater(this, 1.0D));
+		this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
+		this.tasks.addTask(8, new EntityAILookIdle(this));
+	}
+
+	@Override
+	public boolean isBreedingItem(ItemStack stack)
+	{
+		return TEMPTATION_ITEMS.contains(stack.getItem());
+	}
+
+	public boolean isFishItem(ItemStack stack)
+	{
+		return FISH_ITEMS.contains(stack.getItem());
+	}
+
+	@Override
+	public void notifyDataManagerChange(DataParameter<?> key)
+	{
+		if (BOOST_TIME.equals(key) && this.world.isRemote)
+		{
+			this.boosting = true;
+			this.boostTime = 0;
+			this.totalBoostTime = this.dataManager.get(BOOST_TIME).intValue();
+		}
+
+		super.notifyDataManagerChange(key);
 	}
 
 	@Override
@@ -166,39 +234,30 @@ public class EntityJens extends EntityPig
 	}
 
 	@Override
-	public boolean getSaddled()
+	public void onLivingUpdate()
 	{
-		return this.dataManager.get(SADDLED).booleanValue();
-	}
+		super.onLivingUpdate();
 
-	@Override
-	public void setSaddled(boolean saddled)
-	{
-		if (saddled)
+		if (!this.world.isRemote && this.digesting == true && this.digest_time > 0)
 		{
-			this.dataManager.set(SADDLED, Boolean.valueOf(true));
+			this.digest_time--;
 		}
-		else
+
+		if (!this.world.isRemote && this.digesting == true && this.digest_time <= 0)
 		{
-			this.dataManager.set(SADDLED, Boolean.valueOf(false));
+			for (int i = 0; i < 7; ++i)
+			{
+				double d0 = this.rand.nextGaussian() * 0.02D;
+				double d1 = this.rand.nextGaussian() * 0.02D;
+				double d2 = this.rand.nextGaussian() * 0.02D;
+				MINECRAFT.world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX + this.rand.nextFloat() * this.width * 2.0F - this.width, this.posY + 0.5D + this.rand.nextFloat() * this.height,
+						this.posZ + this.rand.nextFloat() * this.width * 2.0F - this.width, d0, d1, d2);
+			}
+			this.playSound(ModSoundEvents.ENTITY_JENS_POOP, 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
+			this.dropItem(ModItems.SURSTROEMMING, 1);
+			this.digesting = false;
+			this.digest_time = 0;
 		}
-	}
-
-	@Override
-	public boolean isBreedingItem(ItemStack stack)
-	{
-		return TEMPTATION_ITEMS.contains(stack.getItem());
-	}
-
-	public boolean isFishItem(ItemStack stack)
-	{
-		return FISH_ITEMS.contains(stack.getItem());
-	}
-
-	@Override
-	public EntityJens createChild(EntityAgeable ageable)
-	{
-		return new EntityJens(this.world);
 	}
 
 	@Override
@@ -243,46 +302,22 @@ public class EntityJens extends EntityPig
 	}
 
 	@Override
-	public void onLivingUpdate()
+	public void readEntityFromNBT(NBTTagCompound compound)
 	{
-		super.onLivingUpdate();
-
-		if (!this.world.isRemote && this.digesting == true && this.digest_time > 0)
-		{
-			this.digest_time--;
-		}
-
-		if (!this.world.isRemote && this.digesting == true && this.digest_time <= 0)
-		{
-			for (int i = 0; i < 7; ++i)
-			{
-				double d0 = this.rand.nextGaussian() * 0.02D;
-				double d1 = this.rand.nextGaussian() * 0.02D;
-				double d2 = this.rand.nextGaussian() * 0.02D;
-				MINECRAFT.world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX + this.rand.nextFloat() * this.width * 2.0F - this.width, this.posY + 0.5D + this.rand.nextFloat() * this.height,
-						this.posZ + this.rand.nextFloat() * this.width * 2.0F - this.width, d0, d1, d2);
-			}
-			this.playSound(ModSoundEvents.ENTITY_JENS_POOP, 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-			this.dropItem(ModItems.SURSTROEMMING, 1);
-			this.digesting = false;
-			this.digest_time = 0;
-		}
+		super.readEntityFromNBT(compound);
+		this.setSaddled(compound.getBoolean("Saddle"));
 	}
 
-	public void digestFish()
+	@Override
+	public void setSaddled(boolean saddled)
 	{
-		this.playSound(ModSoundEvents.ENTITY_JENS_EAT, 1.0F, 1.0F);
-
-		this.digesting = true;
-		this.digest_time = (ModConfigs.Jens_digest_time * 20);
-
-		for (int i = 0; i < 7; ++i)
+		if (saddled)
 		{
-			double d0 = this.rand.nextGaussian() * 0.02D;
-			double d1 = this.rand.nextGaussian() * 0.02D;
-			double d2 = this.rand.nextGaussian() * 0.02D;
-			MINECRAFT.world.spawnParticle(EnumParticleTypes.HEART, this.posX + this.rand.nextFloat() * this.width * 2.0F - this.width, this.posY + 0.5D + this.rand.nextFloat() * this.height,
-					this.posZ + this.rand.nextFloat() * this.width * 2.0F - this.width, d0, d1, d2);
+			this.dataManager.set(SADDLED, Boolean.valueOf(true));
+		}
+		else
+		{
+			this.dataManager.set(SADDLED, Boolean.valueOf(false));
 		}
 	}
 
@@ -348,43 +383,9 @@ public class EntityJens extends EntityPig
 	}
 
 	@Override
-	public boolean boost()
+	public void writeEntityToNBT(NBTTagCompound compound)
 	{
-		if (this.boosting)
-		{
-			return false;
-		}
-		else
-		{
-			this.boosting = true;
-			this.boostTime = 0;
-			this.totalBoostTime = this.getRNG().nextInt(841) + 140;
-			this.getDataManager().set(BOOST_TIME, Integer.valueOf(this.totalBoostTime));
-			return true;
-		}
-	}
-
-	@Override
-	protected ResourceLocation getLootTable()
-	{
-		return ModLootTableList.ENTITIES_JENS;
-	}
-
-	@Override
-	protected SoundEvent getAmbientSound()
-	{
-		return ModSoundEvents.ENTITY_JENS_AMBIENT;
-	}
-
-	@Override
-	protected SoundEvent getHurtSound(DamageSource damageSourceIn)
-	{
-		return ModSoundEvents.ENTITY_JENS_HURT;
-	}
-
-	@Override
-	protected SoundEvent getDeathSound()
-	{
-		return ModSoundEvents.ENTITY_JENS_DEATH;
+		super.writeEntityToNBT(compound);
+		compound.setBoolean("Saddle", this.getSaddled());
 	}
 }

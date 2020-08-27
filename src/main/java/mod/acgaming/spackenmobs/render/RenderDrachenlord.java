@@ -15,7 +15,17 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderDrachenlord extends RenderZombie
 {
+	public static class Factory implements IRenderFactory<EntityDrachenlord>
+	{
+		@Override
+		public Render<? super EntityDrachenlord> createRenderFor(RenderManager manager)
+		{
+			return new RenderDrachenlord(manager);
+		}
+	}
+
 	private static final ResourceLocation DRACHENLORD_TEXTURE = new ResourceLocation("spackenmobs:textures/entities/drachenlord.png");
+
 	public static final Factory FACTORY = new Factory();
 
 	public RenderDrachenlord(RenderManager renderManagerIn)
@@ -36,14 +46,5 @@ public class RenderDrachenlord extends RenderZombie
 	protected ResourceLocation getEntityTexture(EntityZombie entity)
 	{
 		return DRACHENLORD_TEXTURE;
-	}
-
-	public static class Factory implements IRenderFactory<EntityDrachenlord>
-	{
-		@Override
-		public Render<? super EntityDrachenlord> createRenderFor(RenderManager manager)
-		{
-			return new RenderDrachenlord(manager);
-		}
 	}
 }

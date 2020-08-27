@@ -2,6 +2,7 @@ package mod.acgaming.spackenmobs.misc;
 
 import mod.acgaming.spackenmobs.Spackenmobs;
 import mod.acgaming.spackenmobs.entities.EntityApoRed;
+import mod.acgaming.spackenmobs.entities.EntityBakaMitaiCreeper;
 import mod.acgaming.spackenmobs.entities.EntityDrachenlord;
 import mod.acgaming.spackenmobs.entities.EntityHolzstammhuhn;
 import mod.acgaming.spackenmobs.entities.EntityIslamist;
@@ -32,18 +33,6 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 @EventBusSubscriber(modid = Spackenmobs.MODID)
 public class RegHandler
 {
-	@SubscribeEvent
-	public static void registerItems(Register<Item> event)
-	{
-		final Item[] items =
-		{
-				new Item().setRegistryName(Spackenmobs.MODID, "ram").setUnlocalizedName(Spackenmobs.MODID + "." + "ram").setCreativeTab(Spackenmobs.SPACKENMOBS_TAB),
-				new Item().setRegistryName(Spackenmobs.MODID, "ram_on_a_stick").setUnlocalizedName(Spackenmobs.MODID + "." + "ram_on_a_stick").setCreativeTab(Spackenmobs.SPACKENMOBS_TAB),
-				new Item().setRegistryName(Spackenmobs.MODID, "surstroemming").setUnlocalizedName(Spackenmobs.MODID + "." + "surstroemming").setCreativeTab(Spackenmobs.SPACKENMOBS_TAB)
-		};
-		event.getRegistry().registerAll(items);
-	}
-
 	@SubscribeEvent
 	public static void registerEntities(Register<EntityEntry> event)
 	{
@@ -127,6 +116,26 @@ public class RegHandler
 			EntityRegistry.addSpawn(EntityJens.class, ModConfigs.Holzstammhuhn_weight, ModConfigs.Holzstammhuhn_min, ModConfigs.Holzstammhuhn_max, EnumCreatureType.CREATURE,
 					BiomeHelper.getBiomesWithCreature(EntityChicken.class));
 		}
+
+		// Baka Mitai Creeper
+		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:bakamitai_creeper"), EntityBakaMitaiCreeper.class, "bakamitai_creeper", id++, Spackenmobs.instance, 64, 1, true, 826890, 0);
+		if (ModConfigs.BakaMitaiCreeper_spawn == true)
+		{
+			EntityRegistry.addSpawn(EntityBakaMitaiCreeper.class, ModConfigs.BakaMitaiCreeper_weight, ModConfigs.BakaMitaiCreeper_min, ModConfigs.BakaMitaiCreeper_max, EnumCreatureType.MONSTER,
+					BiomeHelper.getBiomesWithMonster(EntityCreeper.class));
+		}
+	}
+
+	@SubscribeEvent
+	public static void registerItems(Register<Item> event)
+	{
+		final Item[] items =
+		{
+				new Item().setRegistryName(Spackenmobs.MODID, "ram").setUnlocalizedName(Spackenmobs.MODID + "." + "ram").setCreativeTab(Spackenmobs.SPACKENMOBS_TAB),
+				new Item().setRegistryName(Spackenmobs.MODID, "ram_on_a_stick").setUnlocalizedName(Spackenmobs.MODID + "." + "ram_on_a_stick").setCreativeTab(Spackenmobs.SPACKENMOBS_TAB),
+				new Item().setRegistryName(Spackenmobs.MODID, "surstroemming").setUnlocalizedName(Spackenmobs.MODID + "." + "surstroemming").setCreativeTab(Spackenmobs.SPACKENMOBS_TAB)
+		};
+		event.getRegistry().registerAll(items);
 	}
 
 	@SubscribeEvent
@@ -145,8 +154,12 @@ public class RegHandler
 		// Islamist
 		ModSoundEvents.ENTITY_ISLAMIST_FUSE.setRegistryName(new ResourceLocation("spackenmobs:entities.islamist.fuse"));
 		event.getRegistry().register(ModSoundEvents.ENTITY_ISLAMIST_FUSE);
+		ModSoundEvents.ENTITY_ISLAMIST_BLOW.setRegistryName(new ResourceLocation("spackenmobs:entities.islamist.blow"));
+		event.getRegistry().register(ModSoundEvents.ENTITY_ISLAMIST_BLOW);
 		ModSoundEvents.ENTITY_ISLAMIST_HURT.setRegistryName(new ResourceLocation("spackenmobs:entities.islamist.hurt"));
 		event.getRegistry().register(ModSoundEvents.ENTITY_ISLAMIST_HURT);
+		ModSoundEvents.ENTITY_ISLAMIST_AMBIENT.setRegistryName(new ResourceLocation("spackenmobs:entities.islamist.ambient"));
+		event.getRegistry().register(ModSoundEvents.ENTITY_ISLAMIST_AMBIENT);
 
 		// Marcell D'Avis
 		ModSoundEvents.ENTITY_MARCELLDAVIS_AMBIENT.setRegistryName(new ResourceLocation("spackenmobs:entities.marcell_davis.ambient"));
@@ -185,8 +198,6 @@ public class RegHandler
 		// Schalker
 		ModSoundEvents.ENTITY_SCHALKER_AMBIENT.setRegistryName(new ResourceLocation("spackenmobs:entities.schalker.ambient"));
 		event.getRegistry().register(ModSoundEvents.ENTITY_SCHALKER_AMBIENT);
-		ModSoundEvents.ENTITY_SCHALKER_HURT.setRegistryName(new ResourceLocation("spackenmobs:entities.schalker.hurt"));
-		event.getRegistry().register(ModSoundEvents.ENTITY_SCHALKER_HURT);
 		ModSoundEvents.ENTITY_SCHALKER_DEATH.setRegistryName(new ResourceLocation("spackenmobs:entities.schalker.death"));
 		event.getRegistry().register(ModSoundEvents.ENTITY_SCHALKER_DEATH);
 		ModSoundEvents.ENTITY_SCHALKER_OPEN.setRegistryName(new ResourceLocation("spackenmobs:entities.schalker.open"));
@@ -205,5 +216,11 @@ public class RegHandler
 		event.getRegistry().register(ModSoundEvents.ENTITY_JENS_EAT);
 		ModSoundEvents.ENTITY_JENS_POOP.setRegistryName(new ResourceLocation("spackenmobs:entities.jens.poop"));
 		event.getRegistry().register(ModSoundEvents.ENTITY_JENS_POOP);
+
+		// Baka Mitai Creeper
+		ModSoundEvents.ENTITY_BAKAMITAICREEPER_FUSE.setRegistryName(new ResourceLocation("spackenmobs:entities.bakamitai_creeper.fuse"));
+		event.getRegistry().register(ModSoundEvents.ENTITY_BAKAMITAICREEPER_FUSE);
+		ModSoundEvents.ENTITY_BAKAMITAICREEPER_BLOW.setRegistryName(new ResourceLocation("spackenmobs:entities.bakamitai_creeper.blow"));
+		event.getRegistry().register(ModSoundEvents.ENTITY_BAKAMITAICREEPER_BLOW);
 	}
 }

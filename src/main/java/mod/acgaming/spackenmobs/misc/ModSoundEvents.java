@@ -36,7 +36,6 @@ public class ModSoundEvents
 	public static final SoundEvent ENTITY_DRACHENLORD_ANGRY = new SoundEvent(new ResourceLocation("spackenmobs:entities.drachenlord.angry"));
 
 	public static final SoundEvent ENTITY_SCHALKER_AMBIENT = new SoundEvent(new ResourceLocation("spackenmobs:entities.schalker.ambient"));
-	public static final SoundEvent ENTITY_SCHALKER_HURT = new SoundEvent(new ResourceLocation("spackenmobs:entities.schalker.hurt"));
 	public static final SoundEvent ENTITY_SCHALKER_DEATH = new SoundEvent(new ResourceLocation("spackenmobs:entities.schalker.death"));
 	public static final SoundEvent ENTITY_SCHALKER_OPEN = new SoundEvent(new ResourceLocation("spackenmobs:entities.schalker.open"));
 	public static final SoundEvent ENTITY_SCHALKER_SHOOT = new SoundEvent(new ResourceLocation("spackenmobs:entities.schalker.shoot"));
@@ -46,4 +45,7 @@ public class ModSoundEvents
 	public static final SoundEvent ENTITY_JENS_DEATH = new SoundEvent(new ResourceLocation("spackenmobs:entities.jens.death"));
 	public static final SoundEvent ENTITY_JENS_EAT = new SoundEvent(new ResourceLocation("spackenmobs:entities.jens.eat"));
 	public static final SoundEvent ENTITY_JENS_POOP = new SoundEvent(new ResourceLocation("spackenmobs:entities.jens.poop"));
+
+	public static final SoundEvent ENTITY_BAKAMITAICREEPER_FUSE = new SoundEvent(new ResourceLocation("spackenmobs:entities.bakamitai_creeper.fuse"));
+	public static final SoundEvent ENTITY_BAKAMITAICREEPER_BLOW = new SoundEvent(new ResourceLocation("spackenmobs:entities.bakamitai_creeper.blow"));
 }

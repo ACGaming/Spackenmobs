@@ -23,35 +23,14 @@ public class EntityAIEatDroppedFish extends EntityAIBase
 		this.world = jens.world;
 	}
 
-	public EntityItem getNearbyFood()
+	public void eatItem(EntityItem item)
 	{
-		List<EntityItem> items = getItems();
-		for (EntityItem item : items)
+		ItemStack stack = item.getItem();
+		stack.setCount(stack.getCount() - 1);
+		if (stack.getCount() == 0)
 		{
-			EntityItem stack = item;
-			if (items != null)
-			{
-				return stack;
-			}
+			item.setDead();
 		}
-		return null;
-	}
-
-	List<EntityItem> getItems()
-	{
-		return this.world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(this.jens.posX - this.searchDistance, this.jens.posY - this.searchDistance, this.jens.posZ - this.searchDistance,
-				this.jens.posX + this.searchDistance, this.jens.posY + this.searchDistance, this.jens.posZ + this.searchDistance));
-	}
-
-	@Override
-	public boolean shouldExecute()
-	{
-		EntityItem nearbyFood = getNearbyFood();
-		if (nearbyFood != null && !this.jens.isChild() && this.jens.digesting == false && this.jens.isFishItem(nearbyFood.getItem()))
-		{
-			execute(this.jens, nearbyFood);
-		}
-		return false;
 	}
 
 	public boolean execute(EntityJens jens, EntityItem item)
@@ -67,13 +46,34 @@ public class EntityAIEatDroppedFish extends EntityAIBase
 		return true;
 	}
 
-	public void eatItem(EntityItem item)
+	List<EntityItem> getItems()
 	{
-		ItemStack stack = item.getItem();
-		stack.setCount(stack.getCount() - 1);
-		if (stack.getCount() == 0)
+		return this.world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(this.jens.posX - this.searchDistance, this.jens.posY - this.searchDistance, this.jens.posZ - this.searchDistance,
+				this.jens.posX + this.searchDistance, this.jens.posY + this.searchDistance, this.jens.posZ + this.searchDistance));
+	}
+
+	public EntityItem getNearbyFood()
+	{
+		List<EntityItem> items = getItems();
+		for (EntityItem item : items)
 		{
-			item.setDead();
+			EntityItem stack = item;
+			if (items != null)
+			{
+				return stack;
+			}
 		}
+		return null;
+	}
+
+	@Override
+	public boolean shouldExecute()
+	{
+		EntityItem nearbyFood = getNearbyFood();
+		if (nearbyFood != null && !this.jens.isChild() && this.jens.digesting == false && this.jens.isFishItem(nearbyFood.getItem()))
+		{
+			execute(this.jens, nearbyFood);
+		}
+		return false;
 	}
 }

@@ -20,6 +20,49 @@ import net.minecraft.world.World;
 
 public class EntityWolfMZTE extends EntityWolf
 {
+	class AIAvoidEntity<T extends Entity> extends EntityAIAvoidEntity<T>
+	{
+		private final EntityWolfMZTE wolf;
+
+		public AIAvoidEntity(EntityWolfMZTE wolfIn, Class<T> p_i47251_3_, float p_i47251_4_, double p_i47251_5_, double p_i47251_7_)
+		{
+			super(wolfIn, p_i47251_3_, p_i47251_4_, p_i47251_5_, p_i47251_7_);
+			this.wolf = wolfIn;
+		}
+
+		private boolean avoidLlama(EntityLlama p_190854_1_)
+		{
+			return p_190854_1_.getStrength() >= EntityWolfMZTE.this.rand.nextInt(5);
+		}
+
+		@Override
+		public boolean shouldExecute()
+		{
+			if (super.shouldExecute() && this.closestLivingEntity instanceof EntityLlama)
+			{
+				return !this.wolf.isTamed() && this.avoidLlama((EntityLlama) this.closestLivingEntity);
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		@Override
+		public void startExecuting()
+		{
+			EntityWolfMZTE.this.setAttackTarget((EntityLivingBase) null);
+			super.startExecuting();
+		}
+
+		@Override
+		public void updateTask()
+		{
+			EntityWolfMZTE.this.setAttackTarget((EntityLivingBase) null);
+			super.updateTask();
+		}
+	}
+
 	private static final DataParameter<Float> DATA_HEALTH_ID = EntityDataManager.<Float>createKey(EntityWolf.class, DataSerializers.FLOAT);
 	private static final DataParameter<Boolean> BEGGING = EntityDataManager.<Boolean>createKey(EntityWolf.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<Integer> COLLAR_COLOR = EntityDataManager.<Integer>createKey(EntityWolf.class, DataSerializers.VARINT);
@@ -28,6 +71,7 @@ public class EntityWolfMZTE extends EntityWolf
 	private boolean isWet;
 	private boolean isShaking;
 	private float timeWolfIsShaking;
+
 	private float prevTimeWolfIsShaking;
 
 	public EntityWolfMZTE(World worldIn)
@@ -35,21 +79,6 @@ public class EntityWolfMZTE extends EntityWolf
 		super(worldIn);
 		this.setSize(0.6F, 0.85F);
 		this.setTamed(false);
-	}
-
-	@Override
-	public EntityWolfMZTE createChild(EntityAgeable ageable)
-	{
-		EntityWolfMZTE entitywolfmzte = new EntityWolfMZTE(this.world);
-		UUID uuid = this.getOwnerId();
-
-		if (uuid != null)
-		{
-			entitywolfmzte.setOwnerId(uuid);
-			entitywolfmzte.setTamed(true);
-		}
-
-		return entitywolfmzte;
 	}
 
 	@Override
@@ -87,6 +116,21 @@ public class EntityWolfMZTE extends EntityWolf
 	}
 
 	@Override
+	public EntityWolfMZTE createChild(EntityAgeable ageable)
+	{
+		EntityWolfMZTE entitywolfmzte = new EntityWolfMZTE(this.world);
+		UUID uuid = this.getOwnerId();
+
+		if (uuid != null)
+		{
+			entitywolfmzte.setOwnerId(uuid);
+			entitywolfmzte.setTamed(true);
+		}
+
+		return entitywolfmzte;
+	}
+
+	@Override
 	public boolean shouldAttackEntity(EntityLivingBase target, EntityLivingBase owner)
 	{
 		if (!(target instanceof EntityCreeper) && !(target instanceof EntityGhast))
@@ -113,49 +157,6 @@ public class EntityWolfMZTE extends EntityWolf
 		else
 		{
 			return false;
-		}
-	}
-
-	class AIAvoidEntity<T extends Entity> extends EntityAIAvoidEntity<T>
-	{
-		private final EntityWolfMZTE wolf;
-
-		public AIAvoidEntity(EntityWolfMZTE wolfIn, Class<T> p_i47251_3_, float p_i47251_4_, double p_i47251_5_, double p_i47251_7_)
-		{
-			super(wolfIn, p_i47251_3_, p_i47251_4_, p_i47251_5_, p_i47251_7_);
-			this.wolf = wolfIn;
-		}
-
-		@Override
-		public boolean shouldExecute()
-		{
-			if (super.shouldExecute() && this.closestLivingEntity instanceof EntityLlama)
-			{
-				return !this.wolf.isTamed() && this.avoidLlama((EntityLlama) this.closestLivingEntity);
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-		private boolean avoidLlama(EntityLlama p_190854_1_)
-		{
-			return p_190854_1_.getStrength() >= EntityWolfMZTE.this.rand.nextInt(5);
-		}
-
-		@Override
-		public void startExecuting()
-		{
-			EntityWolfMZTE.this.setAttackTarget((EntityLivingBase) null);
-			super.startExecuting();
-		}
-
-		@Override
-		public void updateTask()
-		{
-			EntityWolfMZTE.this.setAttackTarget((EntityLivingBase) null);
-			super.updateTask();
 		}
 	}
 }

@@ -17,9 +17,9 @@ public class ModLootTableList
 	public static final ResourceLocation EMPTY = register("empty");
 	public static final ResourceLocation ENTITIES_JENS = register("entities/jens");
 
-	private static ResourceLocation register(String id)
+	public static Set<ResourceLocation> getAll()
 	{
-		return register(new ResourceLocation("spackenmobs", id));
+		return READ_ONLY_LOOT_TABLES;
 	}
 
 	public static ResourceLocation register(ResourceLocation id)
@@ -34,9 +34,9 @@ public class ModLootTableList
 		}
 	}
 
-	public static Set<ResourceLocation> getAll()
+	private static ResourceLocation register(String id)
 	{
-		return READ_ONLY_LOOT_TABLES;
+		return register(new ResourceLocation("spackenmobs", id));
 	}
 
 	public static boolean test()

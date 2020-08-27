@@ -21,14 +21,14 @@ public class EntityMarcellDAvis extends EntityZombie
 	}
 
 	@Override
-	protected SoundEvent getHurtSound(DamageSource damageSourceIn)
-	{
-		return ModSoundEvents.ENTITY_MARCELLDAVIS_HURT;
-	}
-
-	@Override
 	protected SoundEvent getDeathSound()
 	{
 		return ModSoundEvents.ENTITY_MARCELLDAVIS_DEATH;
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(DamageSource damageSourceIn)
+	{
+		return ModSoundEvents.ENTITY_MARCELLDAVIS_HURT;
 	}
 }

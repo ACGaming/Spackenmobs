@@ -31,6 +31,13 @@ public class ModelSchalker extends ModelBase
 	}
 
 	@Override
+	public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale)
+	{
+		this.base.render(scale);
+		this.lid.render(scale);
+	}
+
+	@Override
 	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn)
 	{
 		EntitySchalker EntitySchalker = (EntitySchalker) entityIn;
@@ -57,12 +64,5 @@ public class ModelSchalker extends ModelBase
 
 		this.head.rotateAngleX = headPitch * 0.017453292F;
 		this.head.rotateAngleY = netHeadYaw * 0.017453292F;
-	}
-
-	@Override
-	public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale)
-	{
-		this.base.render(scale);
-		this.lid.render(scale);
 	}
 }
