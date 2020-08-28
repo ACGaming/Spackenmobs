@@ -29,6 +29,7 @@ import net.minecraft.entity.monster.EntityGolem;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.entity.projectile.EntityShulkerBullet;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumDyeColor;
@@ -106,9 +107,9 @@ public class EntitySchalker extends EntityGolem implements IMob
 					if (this.attackTime <= 0)
 					{
 						this.attackTime = 20 + EntitySchalker.this.rand.nextInt(10) * 20 / 2;
-						EntitySchalkerBullet entityschalkerbullet = new EntitySchalkerBullet(EntitySchalker.this.world, EntitySchalker.this, entitylivingbase,
+						EntityShulkerBullet entityshulkerbullet = new EntityShulkerBullet(EntitySchalker.this.world, EntitySchalker.this, entitylivingbase,
 								EntitySchalker.this.getAttachmentFacing().getAxis());
-						EntitySchalker.this.world.spawnEntity(entityschalkerbullet);
+						EntitySchalker.this.world.spawnEntity(entityshulkerbullet);
 						EntitySchalker.this.playSound(ModSoundEvents.ENTITY_SCHALKER_SHOOT, 2.0F, (EntitySchalker.this.rand.nextFloat() - EntitySchalker.this.rand.nextFloat()) * 0.2F + 1.0F);
 					}
 				}
