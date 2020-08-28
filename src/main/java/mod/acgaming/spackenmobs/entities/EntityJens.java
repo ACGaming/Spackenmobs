@@ -26,12 +26,14 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
@@ -46,7 +48,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class EntityJens extends EntityPig
 {
 	private static final DataParameter<Boolean> SADDLED = EntityDataManager.<Boolean>createKey(EntityJens.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> DIGESTING = EntityDataManager.<Boolean>createKey(EntityJens.class, DataSerializers.BOOLEAN);
+
 	private static final DataParameter<Integer> BOOST_TIME = EntityDataManager.<Integer>createKey(EntityJens.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> DIGEST_TIME = EntityDataManager.<Integer>createKey(EntityJens.class, DataSerializers.VARINT);
+
 	private static final Set<Item> TEMPTATION_ITEMS = Sets.newHashSet(ModItems.RAM);
 	private static final Set<Item> FISH_ITEMS = Sets.newHashSet(Items.FISH);
 
@@ -56,11 +62,11 @@ public class EntityJens extends EntityPig
 	}
 
 	private boolean boosting;
+	public boolean digesting;
+
 	private int boostTime;
 	private int totalBoostTime;
-	public boolean digesting = false;
-
-	public int digest_time = 0;
+	public int digestTime;
 
 	@SideOnly(Side.CLIENT)
 	Minecraft MINECRAFT = Minecraft.getMinecraft();
@@ -123,7 +129,10 @@ public class EntityJens extends EntityPig
 		this.playSound(ModSoundEvents.ENTITY_JENS_EAT, 1.0F, 1.0F);
 
 		this.digesting = true;
-		this.digest_time = (ModConfigs.Jens_digest_time * 20);
+		this.dataManager.set(DIGESTING, Boolean.valueOf(true));
+
+		this.digestTime = (ModConfigs.Jens_digest_time * 20);
+		this.dataManager.set(DIGEST_TIME, Integer.valueOf(this.digestTime));
 
 		for (int i = 0; i < 7; ++i)
 		{
@@ -133,6 +142,8 @@ public class EntityJens extends EntityPig
 			MINECRAFT.world.spawnParticle(EnumParticleTypes.HEART, this.posX + this.rand.nextFloat() * this.width * 2.0F - this.width, this.posY + 0.5D + this.rand.nextFloat() * this.height,
 					this.posZ + this.rand.nextFloat() * this.width * 2.0F - this.width, d0, d1, d2);
 		}
+
+		this.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, ModConfigs.Jens_digest_time * 20));
 	}
 
 	@Override
@@ -140,7 +151,9 @@ public class EntityJens extends EntityPig
 	{
 		super.entityInit();
 		this.dataManager.register(SADDLED, Boolean.valueOf(false));
+		this.dataManager.register(DIGESTING, Boolean.valueOf(false));
 		this.dataManager.register(BOOST_TIME, Integer.valueOf(0));
+		this.dataManager.register(DIGEST_TIME, Integer.valueOf(0));
 	}
 
 	@Override
@@ -238,12 +251,13 @@ public class EntityJens extends EntityPig
 	{
 		super.onLivingUpdate();
 
-		if (!this.world.isRemote && this.digesting == true && this.digest_time > 0)
+		if (!this.world.isRemote && this.digesting == true && this.digestTime > 0)
 		{
-			this.digest_time--;
+			this.digestTime--;
+			this.dataManager.set(DIGEST_TIME, Integer.valueOf(this.digestTime));
 		}
 
-		if (!this.world.isRemote && this.digesting == true && this.digest_time <= 0)
+		if (!this.world.isRemote && this.digesting == true && this.digestTime <= 0)
 		{
 			for (int i = 0; i < 7; ++i)
 			{
@@ -255,8 +269,13 @@ public class EntityJens extends EntityPig
 			}
 			this.playSound(ModSoundEvents.ENTITY_JENS_POOP, 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
 			this.dropItem(ModItems.SURSTROEMMING, 1);
+			this.clearActivePotions();
+
 			this.digesting = false;
-			this.digest_time = 0;
+			this.dataManager.set(DIGESTING, Boolean.valueOf(false));
+
+			this.digestTime = 0;
+			this.dataManager.set(DIGEST_TIME, Integer.valueOf(0));
 		}
 	}
 
@@ -288,6 +307,7 @@ public class EntityJens extends EntityPig
 			else if (itemstack.getItem() == Items.SADDLE)
 			{
 				itemstack.interactWithEntity(player, this, hand);
+				this.setCustomNameTag("Reitbarer Jens");
 				return true;
 			}
 			else
@@ -306,6 +326,8 @@ public class EntityJens extends EntityPig
 	{
 		super.readEntityFromNBT(compound);
 		this.setSaddled(compound.getBoolean("Saddle"));
+		this.digesting = compound.getBoolean("Digesting");
+		this.digestTime = compound.getInteger("DigestTime");
 	}
 
 	@Override
@@ -387,5 +409,7 @@ public class EntityJens extends EntityPig
 	{
 		super.writeEntityToNBT(compound);
 		compound.setBoolean("Saddle", this.getSaddled());
+		compound.setBoolean("Digesting", this.digesting);
+		compound.setInteger("DigestTime", this.digestTime);
 	}
 }

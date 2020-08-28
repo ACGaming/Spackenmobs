@@ -63,9 +63,9 @@ public class EntityWolfMZTE extends EntityWolf
 		}
 	}
 
-	private static final DataParameter<Float> DATA_HEALTH_ID = EntityDataManager.<Float>createKey(EntityWolf.class, DataSerializers.FLOAT);
-	private static final DataParameter<Boolean> BEGGING = EntityDataManager.<Boolean>createKey(EntityWolf.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Integer> COLLAR_COLOR = EntityDataManager.<Integer>createKey(EntityWolf.class, DataSerializers.VARINT);
+	private static final DataParameter<Float> DATA_HEALTH_ID = EntityDataManager.<Float>createKey(EntityWolfMZTE.class, DataSerializers.FLOAT);
+	private static final DataParameter<Boolean> BEGGING = EntityDataManager.<Boolean>createKey(EntityWolfMZTE.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Integer> COLLAR_COLOR = EntityDataManager.<Integer>createKey(EntityWolfMZTE.class, DataSerializers.VARINT);
 	private float headRotationCourse;
 	private float headRotationCourseOld;
 	private boolean isWet;

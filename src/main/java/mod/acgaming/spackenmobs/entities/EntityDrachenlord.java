@@ -68,7 +68,7 @@ public class EntityDrachenlord extends EntityZombie
 	private static final UUID ATTACK_SPEED_BOOST_MODIFIER_UUID = UUID.fromString("49455A49-7EC5-45BA-B886-3B90B23A1718");
 	private static final AttributeModifier ATTACK_SPEED_BOOST_MODIFIER = (new AttributeModifier(ATTACK_SPEED_BOOST_MODIFIER_UUID, "Attacking speed boost", 0.05D, 0)).setSaved(false);
 
-	public static void registerFixesPigZombie(DataFixer fixer)
+	public static void registerFixesDrachenlord(DataFixer fixer)
 	{
 		EntityLiving.registerFixesMob(fixer, EntityDrachenlord.class);
 	}
@@ -121,7 +121,7 @@ public class EntityDrachenlord extends EntityZombie
 		}
 	}
 
-	private void becomeAngryAt(Entity p_70835_1_)
+	public void becomeAngryAt(Entity p_70835_1_)
 	{
 		this.angerLevel = 400 + this.rand.nextInt(400);
 		this.randomSoundDelay = this.rand.nextInt(40);
