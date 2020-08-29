@@ -15,45 +15,37 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderApoRed extends RenderSkeleton
-{
-	public static class Factory implements IRenderFactory<EntityApoRed>
-	{
-		@Override
-		public Render<? super EntityApoRed> createRenderFor(RenderManager manager)
-		{
-			return new RenderApoRed(manager);
-		}
-	}
+public class RenderApoRed extends RenderSkeleton {
+    public static final Factory FACTORY = new Factory();
+    private static final ResourceLocation APORED_TEXTURE = new ResourceLocation(
+        "spackenmobs:textures/entities/apored.png");
 
-	private static final ResourceLocation APORED_TEXTURE = new ResourceLocation("spackenmobs:textures/entities/apored.png");
+    public RenderApoRed(RenderManager renderManagerIn) {
+        super(renderManagerIn);
+        this.addLayer(new LayerHeldItem(this));
+        this.addLayer(new LayerBipedArmor(this) {
+            @Override
+            protected void initArmor() {
+                this.modelLeggings = new ModelSkeleton(0.5F, true);
+                this.modelArmor = new ModelSkeleton(1.0F, true);
+            }
+        });
+    }
 
-	public static final Factory FACTORY = new Factory();
+    @Override
+    public void transformHeldFull3DItemLayer() {
+        GlStateManager.translate(0.09375F, 0.1875F, 0.0F);
+    }
 
-	public RenderApoRed(RenderManager renderManagerIn)
-	{
-		super(renderManagerIn);
-		this.addLayer(new LayerHeldItem(this));
-		this.addLayer(new LayerBipedArmor(this)
-		{
-			@Override
-			protected void initArmor()
-			{
-				this.modelLeggings = new ModelSkeleton(0.5F, true);
-				this.modelArmor = new ModelSkeleton(1.0F, true);
-			}
-		});
-	}
+    @Override
+    protected ResourceLocation getEntityTexture(AbstractSkeleton entity) {
+        return APORED_TEXTURE;
+    }
 
-	@Override
-	protected ResourceLocation getEntityTexture(AbstractSkeleton entity)
-	{
-		return APORED_TEXTURE;
-	}
-
-	@Override
-	public void transformHeldFull3DItemLayer()
-	{
-		GlStateManager.translate(0.09375F, 0.1875F, 0.0F);
-	}
+    public static class Factory implements IRenderFactory<EntityApoRed> {
+        @Override
+        public Render<? super EntityApoRed> createRenderFor(RenderManager manager) {
+            return new RenderApoRed(manager);
+        }
+    }
 }

@@ -1,7 +1,5 @@
 package mod.acgaming.spackenmobs.entities;
 
-import java.util.UUID;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
@@ -18,145 +16,68 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.world.World;
 
-public class EntityWolfMZTE extends EntityWolf
-{
-	class AIAvoidEntity<T extends Entity> extends EntityAIAvoidEntity<T>
-	{
-		private final EntityWolfMZTE wolf;
+import java.util.UUID;
 
-		public AIAvoidEntity(EntityWolfMZTE wolfIn, Class<T> p_i47251_3_, float p_i47251_4_, double p_i47251_5_, double p_i47251_7_)
-		{
-			super(wolfIn, p_i47251_3_, p_i47251_4_, p_i47251_5_, p_i47251_7_);
-			this.wolf = wolfIn;
-		}
+public class EntityWolfMZTE extends EntityWolf {
+    public EntityWolfMZTE(World worldIn) {
+        super(worldIn);
+        this.setSize(0.6F, 0.85F);
+        this.setTamed(false);
+    }
 
-		private boolean avoidLlama(EntityLlama p_190854_1_)
-		{
-			return p_190854_1_.getStrength() >= EntityWolfMZTE.this.rand.nextInt(5);
-		}
+    @Override
+    public EntityWolfMZTE createChild(EntityAgeable ageable) {
+        EntityWolfMZTE entitywolfmzte = new EntityWolfMZTE(this.world);
+        UUID uuid = this.getOwnerId();
 
-		@Override
-		public boolean shouldExecute()
-		{
-			if (super.shouldExecute() && this.closestLivingEntity instanceof EntityLlama)
-			{
-				return !this.wolf.isTamed() && this.avoidLlama((EntityLlama) this.closestLivingEntity);
-			}
-			else
-			{
-				return false;
-			}
-		}
+        if(uuid != null) {
+            entitywolfmzte.setOwnerId(uuid);
+            entitywolfmzte.setTamed(true);
+        }
 
-		@Override
-		public void startExecuting()
-		{
-			EntityWolfMZTE.this.setAttackTarget((EntityLivingBase) null);
-			super.startExecuting();
-		}
+        return entitywolfmzte;
+    }
 
-		@Override
-		public void updateTask()
-		{
-			EntityWolfMZTE.this.setAttackTarget((EntityLivingBase) null);
-			super.updateTask();
-		}
-	}
+    @Override
+    public boolean canMateWith(EntityAnimal otherAnimal) {
+        if(otherAnimal == this) {
+            return false;
+        }else if(!this.isTamed()) {
+            return false;
+        }else if(!(otherAnimal instanceof EntityWolfMZTE)) {
+            return false;
+        }else {
+            EntityWolfMZTE entitywolfmzte = (EntityWolfMZTE)otherAnimal;
 
-	private static final DataParameter<Float> DATA_HEALTH_ID = EntityDataManager.<Float>createKey(EntityWolfMZTE.class, DataSerializers.FLOAT);
-	private static final DataParameter<Boolean> BEGGING = EntityDataManager.<Boolean>createKey(EntityWolfMZTE.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Integer> COLLAR_COLOR = EntityDataManager.<Integer>createKey(EntityWolfMZTE.class, DataSerializers.VARINT);
-	private float headRotationCourse;
-	private float headRotationCourseOld;
-	private boolean isWet;
-	private boolean isShaking;
-	private float timeWolfIsShaking;
+            if(!entitywolfmzte.isTamed()) {
+                return false;
+            }else if(entitywolfmzte.isSitting()) {
+                return false;
+            }else {
+                return this.isInLove() && entitywolfmzte.isInLove();
+            }
+        }
+    }
 
-	private float prevTimeWolfIsShaking;
+    @Override
+    public boolean shouldAttackEntity(EntityLivingBase target, EntityLivingBase owner) {
+        if(!(target instanceof EntityCreeper) && !(target instanceof EntityGhast)) {
+            if(target instanceof EntityWolfMZTE) {
+                EntityWolfMZTE entitywolfmzte = (EntityWolfMZTE)target;
 
-	public EntityWolfMZTE(World worldIn)
-	{
-		super(worldIn);
-		this.setSize(0.6F, 0.85F);
-		this.setTamed(false);
-	}
+                if(entitywolfmzte.isTamed() && entitywolfmzte.getOwner() == owner) {
+                    return false;
+                }
+            }
 
-	@Override
-	public boolean canMateWith(EntityAnimal otherAnimal)
-	{
-		if (otherAnimal == this)
-		{
-			return false;
-		}
-		else if (!this.isTamed())
-		{
-			return false;
-		}
-		else if (!(otherAnimal instanceof EntityWolfMZTE))
-		{
-			return false;
-		}
-		else
-		{
-			EntityWolfMZTE entitywolfmzte = (EntityWolfMZTE) otherAnimal;
-
-			if (!entitywolfmzte.isTamed())
-			{
-				return false;
-			}
-			else if (entitywolfmzte.isSitting())
-			{
-				return false;
-			}
-			else
-			{
-				return this.isInLove() && entitywolfmzte.isInLove();
-			}
-		}
-	}
-
-	@Override
-	public EntityWolfMZTE createChild(EntityAgeable ageable)
-	{
-		EntityWolfMZTE entitywolfmzte = new EntityWolfMZTE(this.world);
-		UUID uuid = this.getOwnerId();
-
-		if (uuid != null)
-		{
-			entitywolfmzte.setOwnerId(uuid);
-			entitywolfmzte.setTamed(true);
-		}
-
-		return entitywolfmzte;
-	}
-
-	@Override
-	public boolean shouldAttackEntity(EntityLivingBase target, EntityLivingBase owner)
-	{
-		if (!(target instanceof EntityCreeper) && !(target instanceof EntityGhast))
-		{
-			if (target instanceof EntityWolfMZTE)
-			{
-				EntityWolfMZTE entitywolfmzte = (EntityWolfMZTE) target;
-
-				if (entitywolfmzte.isTamed() && entitywolfmzte.getOwner() == owner)
-				{
-					return false;
-				}
-			}
-
-			if (target instanceof EntityPlayer && owner instanceof EntityPlayer && !((EntityPlayer) owner).canAttackPlayer((EntityPlayer) target))
-			{
-				return false;
-			}
-			else
-			{
-				return !(target instanceof AbstractHorse) || !((AbstractHorse) target).isTame();
-			}
-		}
-		else
-		{
-			return false;
-		}
-	}
+            if(target instanceof EntityPlayer && owner instanceof EntityPlayer
+                && !((EntityPlayer)owner).canAttackPlayer((EntityPlayer)target)) {
+                return false;
+            }else {
+                return !(target instanceof AbstractHorse) || !((AbstractHorse)target).isTame();
+            }
+        }else {
+            return false;
+        }
+    }
 }
