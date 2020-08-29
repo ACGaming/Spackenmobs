@@ -1,6 +1,6 @@
 {
-	"parent": "item/handheld_rod",
-	"textures": {
-		"layer0": "spackenmobs:items/ram_on_a_stick"
-	}
+  "parent": "item/handheld_rod",
+  "textures": {
+    "layer0": "spackenmobs:items/ram_on_a_stick"
+  }
 }

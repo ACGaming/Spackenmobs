@@ -8,20 +8,25 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import org.lwjgl.input.Keyboard;
 
-public class TauntDrachenlordEvent {
-    public static AxisAlignedBB getBoundingBox(double x, double y, double z, int hRadius, int vRadius) {
-        return new AxisAlignedBB(x - hRadius, y - vRadius, z - hRadius, x + hRadius, y + vRadius, z + hRadius);
-    }
+public class TauntDrachenlordEvent
+{
+	public static AxisAlignedBB getBoundingBox(double x, double y, double z, int hRadius, int vRadius)
+	{
+		return new AxisAlignedBB(x - hRadius, y - vRadius, z - hRadius, x + hRadius, y + vRadius, z + hRadius);
+	}
 
-    public static void makeAngry(EntityPlayer player, EntityDrachenlord drache) {
-        drache.attackEntityFrom(DamageSource.causePlayerDamage(player), 0);
-    }
+	public static void makeAngry(EntityPlayer player, EntityDrachenlord drache)
+	{
+		drache.attackEntityFrom(DamageSource.causePlayerDamage(player), 0);
+	}
 
-    @SubscribeEvent
-    public void onKeyPress(KeyInputEvent event, EntityDrachenlord drache, EntityPlayer player) {
-        final int aggroRange = 64;
-        if(Keyboard.isKeyDown(Keyboard.KEY_J)) {
+	@SubscribeEvent
+	public void onKeyPress(KeyInputEvent event, EntityDrachenlord drache, EntityPlayer player)
+	{
+		final int aggroRange = 64;
+		if (Keyboard.isKeyDown(Keyboard.KEY_J))
+		{
 
-        }
-    }
+		}
+	}
 }
