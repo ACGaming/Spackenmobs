@@ -2,8 +2,6 @@ package mod.acgaming.spackenmobs.entities;
 
 import java.util.Set;
 
-import javax.annotation.Nullable;
-
 import com.google.common.collect.Sets;
 
 import mod.acgaming.spackenmobs.misc.ModConfigs;
@@ -40,7 +38,6 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.datafix.DataFixer;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -81,25 +78,8 @@ public class EntityJens extends EntityPig
 	protected void applyEntityAttributes()
 	{
 		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20.0D);
 		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-	}
-
-	@Override
-	public boolean boost()
-	{
-		if (this.boosting)
-		{
-			return false;
-		}
-		else
-		{
-			this.boosting = true;
-			this.boostTime = 0;
-			this.totalBoostTime = this.getRNG().nextInt(841) + 140;
-			this.getDataManager().set(BOOST_TIME, Integer.valueOf(this.totalBoostTime));
-			return true;
-		}
 	}
 
 	@Override
@@ -163,13 +143,6 @@ public class EntityJens extends EntityPig
 	}
 
 	@Override
-	@Nullable
-	public Entity getControllingPassenger()
-	{
-		return this.getPassengers().isEmpty() ? null : (Entity) this.getPassengers().get(0);
-	}
-
-	@Override
 	protected SoundEvent getDeathSound()
 	{
 		return ModSoundEvents.ENTITY_JENS_DEATH;
@@ -188,16 +161,11 @@ public class EntityJens extends EntityPig
 	}
 
 	@Override
-	public boolean getSaddled()
-	{
-		return this.dataManager.get(SADDLED).booleanValue();
-	}
-
-	@Override
 	protected void initEntityAI()
 	{
 		this.tasks.addTask(0, new EntityAISwimming(this));
 		this.tasks.addTask(1, new EntityAIPanic(this, 1.25D));
+		this.tasks.addTask(2, new EntityAIDance(this, ModConfigs.Jens_search_distance));
 		this.tasks.addTask(2, new EntityAIEatDroppedFish(this));
 		this.tasks.addTask(3, new EntityAIMate(this, 1.0D));
 		this.tasks.addTask(4, new EntityAITempt(this, 1.2D, false, TEMPTATION_ITEMS));
@@ -217,33 +185,6 @@ public class EntityJens extends EntityPig
 	public boolean isFishItem(ItemStack stack)
 	{
 		return FISH_ITEMS.contains(stack.getItem());
-	}
-
-	@Override
-	public void notifyDataManagerChange(DataParameter<?> key)
-	{
-		if (BOOST_TIME.equals(key) && this.world.isRemote)
-		{
-			this.boosting = true;
-			this.boostTime = 0;
-			this.totalBoostTime = this.dataManager.get(BOOST_TIME).intValue();
-		}
-
-		super.notifyDataManagerChange(key);
-	}
-
-	@Override
-	public void onDeath(DamageSource cause)
-	{
-		super.onDeath(cause);
-
-		if (!this.world.isRemote)
-		{
-			if (this.getSaddled())
-			{
-				this.dropItem(Items.SADDLE, 1);
-			}
-		}
 	}
 
 	@Override
@@ -308,6 +249,7 @@ public class EntityJens extends EntityPig
 			{
 				itemstack.interactWithEntity(player, this, hand);
 				this.setCustomNameTag("Reitbarer Jens");
+				this.setAlwaysRenderNameTag(true);
 				return true;
 			}
 			else
@@ -328,80 +270,6 @@ public class EntityJens extends EntityPig
 		this.setSaddled(compound.getBoolean("Saddle"));
 		this.digesting = compound.getBoolean("Digesting");
 		this.digestTime = compound.getInteger("DigestTime");
-	}
-
-	@Override
-	public void setSaddled(boolean saddled)
-	{
-		if (saddled)
-		{
-			this.dataManager.set(SADDLED, Boolean.valueOf(true));
-		}
-		else
-		{
-			this.dataManager.set(SADDLED, Boolean.valueOf(false));
-		}
-	}
-
-	@Override
-	public void travel(float strafe, float vertical, float forward)
-	{
-		Entity entity = this.getPassengers().isEmpty() ? null : (Entity) this.getPassengers().get(0);
-
-		if (this.isBeingRidden() && this.canBeSteered())
-		{
-			this.rotationYaw = entity.rotationYaw;
-			this.prevRotationYaw = this.rotationYaw;
-			this.rotationPitch = entity.rotationPitch * 0.5F;
-			this.setRotation(this.rotationYaw, this.rotationPitch);
-			this.renderYawOffset = this.rotationYaw;
-			this.rotationYawHead = this.rotationYaw;
-			this.stepHeight = 1.0F;
-			this.jumpMovementFactor = this.getAIMoveSpeed() * 0.1F;
-
-			if (this.boosting && this.boostTime++ > this.totalBoostTime)
-			{
-				this.boosting = false;
-			}
-
-			if (this.canPassengerSteer())
-			{
-				float f = (float) this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue() * 0.225F;
-
-				if (this.boosting)
-				{
-					f += f * 1.15F * MathHelper.sin((float) this.boostTime / (float) this.totalBoostTime * (float) Math.PI);
-				}
-
-				this.setAIMoveSpeed(f);
-				super.travel(0.0F, 0.0F, 1.0F);
-			}
-			else
-			{
-				this.motionX = 0.0D;
-				this.motionY = 0.0D;
-				this.motionZ = 0.0D;
-			}
-
-			this.prevLimbSwingAmount = this.limbSwingAmount;
-			double d1 = this.posX - this.prevPosX;
-			double d0 = this.posZ - this.prevPosZ;
-			float f1 = MathHelper.sqrt(d1 * d1 + d0 * d0) * 4.0F;
-
-			if (f1 > 1.0F)
-			{
-				f1 = 1.0F;
-			}
-
-			this.limbSwingAmount += (f1 - this.limbSwingAmount) * 0.4F;
-			this.limbSwing += this.limbSwingAmount;
-		}
-		else
-		{
-			this.stepHeight = 0.5F;
-			this.jumpMovementFactor = 0.02F;
-			super.travel(strafe, vertical, forward);
-		}
 	}
 
 	@Override

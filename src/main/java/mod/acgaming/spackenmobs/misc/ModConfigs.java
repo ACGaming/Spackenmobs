@@ -115,6 +115,6 @@ public class ModConfigs
 	public static int WolfMZTE_max = 4;
 	@Name("Time in seconds Jens needs to digest:")
 	public static int Jens_digest_time = 120;
-	@Name("Maximum distance in blocks Jens can search for fish:")
-	public static double Jens_search_distance = 10.0;
+	@Name("Maximum distance in blocks Jens can search:")
+	public static int Jens_search_distance = 10;
 }
