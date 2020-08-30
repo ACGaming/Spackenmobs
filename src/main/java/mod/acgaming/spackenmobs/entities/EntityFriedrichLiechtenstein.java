@@ -13,10 +13,7 @@ import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
@@ -29,6 +26,7 @@ public class EntityFriedrichLiechtenstein extends EntityCreature implements IMer
 		super(worldIn);
 		setSize(0.6F, 1.8F);
 		setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ModItems.AHOJ_BRAUSE));
+		setItemStackToSlot(EntityEquipmentSlot.OFFHAND, new ItemStack(ModItems.AHOJ_BRAUSE_DRINK));
 	}
 
 	@Override
@@ -60,6 +58,13 @@ public class EntityFriedrichLiechtenstein extends EntityCreature implements IMer
 		{
 			player.playSound(ModSoundEvents.ENTITY_FRIEDRICH_DEATH, 1.0F, 1.0F);
 			player.playSound(SoundEvents.ENTITY_COW_MILK, 1.0F, 1.0F);
+			for (int i = 0; i < 7; ++i)
+			{
+				double d0 = this.rand.nextGaussian() * 0.02D;
+				double d1 = this.rand.nextGaussian() * 0.02D;
+				double d2 = this.rand.nextGaussian() * 0.02D;
+				this.world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, this.posX + this.rand.nextFloat() * this.width * 2.0F - this.width, this.posY + 0.5D + this.rand.nextFloat() * this.height, this.posZ + this.rand.nextFloat() * this.width * 2.0F - this.width, d0, d1, d2);
+			}
 			itemstack.shrink(1);
 
 			if (itemstack.isEmpty())

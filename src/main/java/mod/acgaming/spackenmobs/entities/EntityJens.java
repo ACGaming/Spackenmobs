@@ -38,10 +38,9 @@ public class EntityJens extends EntityPig
 
 	private static final Set<Item> TEMPTATION_ITEMS = Sets.newHashSet(ModItems.RAM);
 	private static final Set<Item> FISH_ITEMS = Sets.newHashSet(Items.FISH);
+
 	public boolean digesting;
 	public int digestTime;
-	@SideOnly(Side.CLIENT)
-	Minecraft MINECRAFT = Minecraft.getMinecraft();
 
 	public EntityJens(World worldIn)
 	{
@@ -93,8 +92,7 @@ public class EntityJens extends EntityPig
 			double d0 = this.rand.nextGaussian() * 0.02D;
 			double d1 = this.rand.nextGaussian() * 0.02D;
 			double d2 = this.rand.nextGaussian() * 0.02D;
-			MINECRAFT.world.spawnParticle(EnumParticleTypes.HEART, this.posX + this.rand.nextFloat() * this.width * 2.0F - this.width, this.posY + 0.5D + this.rand.nextFloat() * this.height,
-					this.posZ + this.rand.nextFloat() * this.width * 2.0F - this.width, d0, d1, d2);
+			this.world.spawnParticle(EnumParticleTypes.HEART, this.posX + this.rand.nextFloat() * this.width * 2.0F - this.width, this.posY + 0.5D + this.rand.nextFloat() * this.height, this.posZ + this.rand.nextFloat() * this.width * 2.0F - this.width, d0, d1, d2);
 		}
 
 		this.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, ModConfigs.Jens_digest_time * 20));
@@ -179,8 +177,7 @@ public class EntityJens extends EntityPig
 				double d0 = this.rand.nextGaussian() * 0.02D;
 				double d1 = this.rand.nextGaussian() * 0.02D;
 				double d2 = this.rand.nextGaussian() * 0.02D;
-				MINECRAFT.world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX + this.rand.nextFloat() * this.width * 2.0F - this.width, this.posY + 0.5D + this.rand.nextFloat() * this.height,
-						this.posZ + this.rand.nextFloat() * this.width * 2.0F - this.width, d0, d1, d2);
+				this.world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX + this.rand.nextFloat() * this.width * 2.0F - this.width, this.posY + 0.5D + this.rand.nextFloat() * this.height, this.posZ + this.rand.nextFloat() * this.width * 2.0F - this.width, d0, d1, d2);
 			}
 			this.playSound(ModSoundEvents.ENTITY_JENS_POOP, 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
 			this.dropItem(ModItems.SURSTROEMMING, 1);

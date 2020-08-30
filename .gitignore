@@ -22,3 +22,4 @@ eclipse
 run
 build.bat
 runClient.bat
+runServer.bat
