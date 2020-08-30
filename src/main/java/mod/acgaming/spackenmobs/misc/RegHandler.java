@@ -1,24 +1,11 @@
 package mod.acgaming.spackenmobs.misc;
 
 import mod.acgaming.spackenmobs.Spackenmobs;
-import mod.acgaming.spackenmobs.entities.EntityApoRed;
-import mod.acgaming.spackenmobs.entities.EntityBakaMitaiCreeper;
-import mod.acgaming.spackenmobs.entities.EntityDrachenlord;
-import mod.acgaming.spackenmobs.entities.EntityHolzstammhuhn;
-import mod.acgaming.spackenmobs.entities.EntityIslamist;
-import mod.acgaming.spackenmobs.entities.EntityJens;
-import mod.acgaming.spackenmobs.entities.EntityMarcellDAvis;
-import mod.acgaming.spackenmobs.entities.EntityMrBean;
-import mod.acgaming.spackenmobs.entities.EntitySchalker;
-import mod.acgaming.spackenmobs.entities.EntitySmavaCreeper;
-import mod.acgaming.spackenmobs.entities.EntityWolfMZTE;
+import mod.acgaming.spackenmobs.entities.*;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraft.entity.monster.EntityPigZombie;
-import net.minecraft.entity.monster.EntityShulker;
-import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.monster.*;
 import net.minecraft.entity.passive.EntityChicken;
+import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.item.Item;
@@ -124,18 +111,19 @@ public class RegHandler
 			EntityRegistry.addSpawn(EntityBakaMitaiCreeper.class, ModConfigs.BakaMitaiCreeper_weight, ModConfigs.BakaMitaiCreeper_min, ModConfigs.BakaMitaiCreeper_max, EnumCreatureType.MONSTER,
 					BiomeHelper.getBiomesWithMonster(EntityCreeper.class));
 		}
+
+		// Friedrich Liechtenstein
+		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:friedrich"), EntityFriedrichLiechtenstein.class, "friedrich", id++, Spackenmobs.instance, 64, 1, true, 16447728, 15878595);
+		if (ModConfigs.Friedrich_spawn == true)
+		{
+			EntityRegistry.addSpawn(EntityFriedrichLiechtenstein.class, ModConfigs.Friedrich_weight, ModConfigs.Friedrich_min, ModConfigs.Friedrich_max, EnumCreatureType.CREATURE, BiomeHelper.getBiomesWithCreature(EntityCow.class));
+		}
 	}
 
 	@SubscribeEvent
 	public static void registerItems(Register<Item> event)
 	{
-		final Item[] items =
-				{
-						new Item().setRegistryName(Spackenmobs.MODID, "ram").setUnlocalizedName(Spackenmobs.MODID + "." + "ram").setCreativeTab(Spackenmobs.SPACKENMOBS_TAB),
-						new Item().setRegistryName(Spackenmobs.MODID, "ram_on_a_stick").setUnlocalizedName(Spackenmobs.MODID + "." + "ram_on_a_stick").setCreativeTab(Spackenmobs.SPACKENMOBS_TAB),
-						new Item().setRegistryName(Spackenmobs.MODID, "surstroemming").setUnlocalizedName(Spackenmobs.MODID + "." + "surstroemming").setCreativeTab(Spackenmobs.SPACKENMOBS_TAB)
-				};
-		event.getRegistry().registerAll(items);
+		event.getRegistry().registerAll(ModItems.ITEMS.toArray(new Item[0]));
 	}
 
 	@SubscribeEvent
@@ -222,5 +210,13 @@ public class RegHandler
 		event.getRegistry().register(ModSoundEvents.ENTITY_BAKAMITAICREEPER_FUSE);
 		ModSoundEvents.ENTITY_BAKAMITAICREEPER_BLOW.setRegistryName(new ResourceLocation("spackenmobs:entities.bakamitai_creeper.blow"));
 		event.getRegistry().register(ModSoundEvents.ENTITY_BAKAMITAICREEPER_BLOW);
+
+		// Friedrich Liechtenstein
+		ModSoundEvents.ENTITY_FRIEDRICH_AMBIENT.setRegistryName(new ResourceLocation("spackenmobs:entities.friedrich.ambient"));
+		event.getRegistry().register(ModSoundEvents.ENTITY_FRIEDRICH_AMBIENT);
+		ModSoundEvents.ENTITY_FRIEDRICH_HURT.setRegistryName(new ResourceLocation("spackenmobs:entities.friedrich.hurt"));
+		event.getRegistry().register(ModSoundEvents.ENTITY_FRIEDRICH_HURT);
+		ModSoundEvents.ENTITY_FRIEDRICH_DEATH.setRegistryName(new ResourceLocation("spackenmobs:entities.friedrich.death"));
+		event.getRegistry().register(ModSoundEvents.ENTITY_FRIEDRICH_DEATH);
 	}
 }

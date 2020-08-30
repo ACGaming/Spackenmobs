@@ -11,7 +11,7 @@ public class EntityMarcellDAvis extends EntityZombie
 	public EntityMarcellDAvis(World worldIn)
 	{
 		super(worldIn);
-		this.setSize(0.6F, 1.95F);
+		this.setSize(0.6F, 1.8F);
 	}
 
 	@Override

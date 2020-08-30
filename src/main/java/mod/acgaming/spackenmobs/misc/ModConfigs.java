@@ -18,6 +18,8 @@ public class ModConfigs
 	public static boolean BakaMitaiCreeper_spawn = true;
 	@Name("Allow Drachenlord to spawn?")
 	public static boolean Drachenlord_spawn = true;
+	@Name("Allow Friedrich Liechtenstein to spawn?")
+	public static boolean Friedrich_spawn = true;
 	@Name("Allow Holzstammhuhn to spawn?")
 	public static boolean Holzstammhuhn_spawn = true;
 	@Name("Allow Islamist to spawn?")
@@ -52,6 +54,12 @@ public class ModConfigs
 	public static int Drachenlord_min = 1;
 	@Name("Drachenlord max group size:")
 	public static int Drachenlord_max = 4;
+	@Name("Friedrich Liechtenstein spawn probability:")
+	public static int Friedrich_weight = 25;
+	@Name("Friedrich Liechtenstein min group size:")
+	public static int Friedrich_min = 1;
+	@Name("Friedrich Liechtenstein max group size:")
+	public static int Friedrich_max = 4;
 	@Name("Holzstammhuhn spawn probability:")
 	public static int Holzstammhuhn_weight = 50;
 	@Name("Holzstammhuhn min group size:")

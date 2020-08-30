@@ -8,10 +8,10 @@ import net.minecraft.world.World;
 
 public class EntityIslamist extends EntityCreeper
 {
-	private int lastActiveTime;
-	private int timeSinceIgnited;
 	private final int fuseTime = 30;
 	private final int explosionRadius = 6;
+	private int lastActiveTime;
+	private int timeSinceIgnited;
 
 	public EntityIslamist(World worldIn)
 	{

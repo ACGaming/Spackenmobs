@@ -9,10 +9,10 @@ import net.minecraft.world.World;
 
 public class EntitySmavaCreeper extends EntityCreeper
 {
-	private int lastActiveTime;
-	private int timeSinceIgnited;
 	private final int fuseTime = 20;
 	private final int explosionRadius = 6;
+	private int lastActiveTime;
+	private int timeSinceIgnited;
 
 	public EntitySmavaCreeper(World worldIn)
 	{

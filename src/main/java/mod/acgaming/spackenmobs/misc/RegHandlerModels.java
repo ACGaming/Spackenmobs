@@ -18,6 +18,8 @@ public class RegHandlerModels
 		registerModel(ModItems.RAM, 0);
 		registerModel(ModItems.RAM_ON_A_STICK, 0);
 		registerModel(ModItems.SURSTROEMMING, 0);
+		registerModel(ModItems.AHOJ_BRAUSE, 0);
+		registerModel(ModItems.AHOJ_BRAUSE_DRINK, 0);
 	}
 
 	private static void registerModel(Item item, int meta)

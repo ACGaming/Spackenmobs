@@ -18,5 +18,6 @@ public class ModEntities
 		RenderingRegistry.registerEntityRenderingHandler(EntitySmavaCreeper.class, RenderSmavaCreeper.FACTORY);
 		RenderingRegistry.registerEntityRenderingHandler(EntityWolfMZTE.class, RenderWolfMZTE.FACTORY);
 		RenderingRegistry.registerEntityRenderingHandler(EntityHolzstammhuhn.class, RenderHolzstammhuhn.FACTORY);
+		RenderingRegistry.registerEntityRenderingHandler(EntityFriedrichLiechtenstein.class, RenderFriedrichLiechtenstein.FACTORY);
 	}
 }

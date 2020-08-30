@@ -1,20 +1,22 @@
 package mod.acgaming.spackenmobs.items;
 
 import mod.acgaming.spackenmobs.Spackenmobs;
+import mod.acgaming.spackenmobs.misc.ModItems;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemBase extends Item
+public class ModItemBase extends Item
 {
-	public ItemBase(String name, CreativeTabs tab)
+	public ModItemBase(String name)
 	{
+		setUnlocalizedName(name);
 		setRegistryName(name);
-		setUnlocalizedName(Spackenmobs.MODID + "." + name);
-		setCreativeTab(tab);
+		setCreativeTab(Spackenmobs.SPACKENMOBS_TAB);
+
+		ModItems.ITEMS.add(this);
 	}
 
 	@SideOnly(Side.CLIENT)

@@ -5,7 +5,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.LootTableManager;
 
-import java.io.File;
 import java.util.Collections;
 import java.util.Set;
 
@@ -14,6 +13,7 @@ public class ModLootTableList
 	private static final Set<ResourceLocation> LOOT_TABLES = Sets.newHashSet();
 	public static final ResourceLocation EMPTY = register("empty");
 	public static final ResourceLocation ENTITIES_JENS = register("entities/jens");
+	public static final ResourceLocation ENTITIES_FRIEDRICH = register("entities/friedrich");
 	private static final Set<ResourceLocation> READ_ONLY_LOOT_TABLES = Collections.unmodifiableSet(LOOT_TABLES);
 
 	public static Set<ResourceLocation> getAll()

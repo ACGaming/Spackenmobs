@@ -48,4 +48,8 @@ public class ModSoundEvents
 
 	public static final SoundEvent ENTITY_BAKAMITAICREEPER_FUSE = new SoundEvent(new ResourceLocation("spackenmobs:entities.bakamitai_creeper.fuse"));
 	public static final SoundEvent ENTITY_BAKAMITAICREEPER_BLOW = new SoundEvent(new ResourceLocation("spackenmobs:entities.bakamitai_creeper.blow"));
+
+	public static final SoundEvent ENTITY_FRIEDRICH_AMBIENT = new SoundEvent(new ResourceLocation("spackenmobs:entities.friedrich.ambient"));
+	public static final SoundEvent ENTITY_FRIEDRICH_HURT = new SoundEvent(new ResourceLocation("spackenmobs:entities.friedrich.hurt"));
+	public static final SoundEvent ENTITY_FRIEDRICH_DEATH = new SoundEvent(new ResourceLocation("spackenmobs:entities.friedrich.death"));
 }

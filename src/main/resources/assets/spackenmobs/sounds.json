@@ -906,5 +906,44 @@
         "name": "spackenmobs:bakamitai_creeper/blow"
       }
     ]
+  },
+  "entities.friedrich.ambient": {
+    "sounds": [
+      {
+        "name": "spackenmobs:friedrich/say1"
+      },
+      {
+        "name": "spackenmobs:friedrich/say2"
+      },
+      {
+        "name": "spackenmobs:friedrich/say3"
+      },
+      {
+        "name": "spackenmobs:friedrich/say4"
+      },
+      {
+        "name": "spackenmobs:friedrich/say5"
+      },
+      {
+        "name": "spackenmobs:friedrich/say6"
+      },
+      {
+        "name": "spackenmobs:friedrich/say7"
+      }
+    ]
+  },
+  "entities.friedrich.death": {
+    "sounds": [
+      {
+        "name": "spackenmobs:friedrich/death"
+      }
+    ]
+  },
+  "entities.friedrich.hurt": {
+    "sounds": [
+      {
+        "name": "spackenmobs:friedrich/hurt"
+      }
+    ]
   }
 }
