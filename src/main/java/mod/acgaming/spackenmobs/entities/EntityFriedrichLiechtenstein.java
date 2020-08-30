@@ -70,10 +70,31 @@ public class EntityFriedrichLiechtenstein extends EntityCreature implements IMer
 			if (itemstack.isEmpty())
 			{
 				player.setHeldItem(hand, new ItemStack(ModItems.AHOJ_BRAUSE_DRINK));
-			}
-			else if (!player.inventory.addItemStackToInventory(new ItemStack(ModItems.AHOJ_BRAUSE_DRINK)))
+			} else if (!player.inventory.addItemStackToInventory(new ItemStack(ModItems.AHOJ_BRAUSE_DRINK)))
 			{
 				player.dropItem(new ItemStack(ModItems.AHOJ_BRAUSE_DRINK), false);
+			}
+
+			return true;
+		}
+		else if (itemstack.getItem() == Items.PAPER)
+		{
+			player.playSound(ModSoundEvents.ENTITY_FRIEDRICH_AMBIENT, 1.0F, 1.0F);
+			for (int i = 0; i < 7; ++i)
+			{
+				double d0 = this.rand.nextGaussian() * 0.02D;
+				double d1 = this.rand.nextGaussian() * 0.02D;
+				double d2 = this.rand.nextGaussian() * 0.02D;
+				this.world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, this.posX + this.rand.nextFloat() * this.width * 2.0F - this.width, this.posY + 0.5D + this.rand.nextFloat() * this.height, this.posZ + this.rand.nextFloat() * this.width * 2.0F - this.width, d0, d1, d2);
+			}
+			itemstack.shrink(1);
+
+			if (itemstack.isEmpty())
+			{
+				player.setHeldItem(hand, new ItemStack(ModItems.AHOJ_BRAUSE));
+			} else if (!player.inventory.addItemStackToInventory(new ItemStack(ModItems.AHOJ_BRAUSE)))
+			{
+				player.dropItem(new ItemStack(ModItems.AHOJ_BRAUSE), false);
 			}
 
 			return true;

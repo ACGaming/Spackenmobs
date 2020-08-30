@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "spackenmobs:ram"
+    },
+    "title": {
+      "translate": "advancements.general.ram.title"
+    },
+    "description": {
+      "translate": "advancements.general.ram.description"
+    }
+  },
+  "parent": "spackenmobs:general/root",
+  "criteria": {
+    "ram": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "spackenmobs:ram"
+          }
+        ]
+      }
+    }
+  }
+}

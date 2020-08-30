@@ -1,0 +1,24 @@
+{
+  "display": {
+    "icon": {
+      "item": "spackenmobs:surstroemming"
+    },
+    "title": {
+      "translate": "advancements.spackenmobs.root.title"
+    },
+    "description": {
+      "translate": "advancements.spackenmobs.root.description"
+    },
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
+    "show_toast": false,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "entered_overworld": {
+      "trigger": "minecraft:changed_dimension",
+      "conditions": {
+        "to": "overworld"
+      }
+    }
+  }
+}

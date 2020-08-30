@@ -5,7 +5,6 @@ import mod.acgaming.spackenmobs.misc.ModConfigs;
 import mod.acgaming.spackenmobs.misc.ModItems;
 import mod.acgaming.spackenmobs.misc.ModLootTableList;
 import mod.acgaming.spackenmobs.misc.ModSoundEvents;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -23,8 +22,6 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.*;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Set;
 

@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "spackenmobs:surstroemming"
+    },
+    "title": {
+      "translate": "advancements.general.surstroemming.title"
+    },
+    "description": {
+      "translate": "advancements.general.surstroemming.description"
+    }
+  },
+  "parent": "spackenmobs:general/root",
+  "criteria": {
+    "surstroemming": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "spackenmobs:surstroemming"
+          }
+        ]
+      }
+    }
+  }
+}

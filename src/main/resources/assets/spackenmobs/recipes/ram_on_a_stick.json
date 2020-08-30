@@ -1,0 +1,18 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"# ",
+		" X"
+	],
+	"key": {
+		"#": {
+			"item": "minecraft:fishing_rod"
+		},
+		"X": {
+			"item": "spackenmobs:ram"
+		}
+	},
+	"result": {
+		"item": "spackenmobs:ram_on_a_stick"
+	}
+}

@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "spackenmobs:ahoj_brause_drink"
+    },
+    "title": {
+      "translate": "advancements.general.ahoj_brause_drink.title"
+    },
+    "description": {
+      "translate": "advancements.general.ahoj_brause_drink.description"
+    }
+  },
+  "parent": "spackenmobs:general/root",
+  "criteria": {
+    "ahoj_brause_drink": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "spackenmobs:ahoj_brause_drink"
+          }
+        ]
+      }
+    }
+  }
+}

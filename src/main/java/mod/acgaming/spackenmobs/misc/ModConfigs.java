@@ -103,7 +103,7 @@ public class ModConfigs
 	@Name("Smava Creeper max group size:")
 	public static int SmavaCreeper_max = 4;
 	@Name("WolfMZTE spawn probability:")
-	public static int WolfMZTE_weight = 50;
+	public static int WolfMZTE_weight = 25;
 	@Name("WolfMZTE min group size:")
 	public static int WolfMZTE_min = 1;
 	@Name("WolfMZTE max group size:")
