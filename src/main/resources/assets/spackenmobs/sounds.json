@@ -929,6 +929,12 @@
       },
       {
         "name": "spackenmobs:friedrich/say7"
+      },
+	  {
+        "name": "spackenmobs:friedrich/say8"
+      },
+	  {
+        "name": "spackenmobs:friedrich/say9"
       }
     ]
   },
