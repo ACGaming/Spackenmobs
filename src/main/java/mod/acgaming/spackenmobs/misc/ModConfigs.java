@@ -34,8 +34,8 @@ public class ModConfigs
 	public static boolean Schalker_spawn = true;
 	@Name("Allow Smava Creeper to spawn?")
 	public static boolean SmavaCreeper_spawn = true;
-	@Name("Allow WolfMZTE to spawn?")
-	public static boolean WolfMZTE_spawn = true;
+	@Name("Allow MZTEWolf to spawn?")
+	public static boolean MZTEWolf_spawn = true;
 	@Name("ApoRed spawn probability:")
 	public static int ApoRed_weight = 50;
 	@Name("ApoRed min group size:")
@@ -102,12 +102,12 @@ public class ModConfigs
 	public static int SmavaCreeper_min = 1;
 	@Name("Smava Creeper max group size:")
 	public static int SmavaCreeper_max = 4;
-	@Name("WolfMZTE spawn probability:")
-	public static int WolfMZTE_weight = 25;
-	@Name("WolfMZTE min group size:")
-	public static int WolfMZTE_min = 1;
-	@Name("WolfMZTE max group size:")
-	public static int WolfMZTE_max = 4;
+	@Name("MZTEWolf spawn probability:")
+	public static int MZTEWolf_weight = 25;
+	@Name("MZTEWolf min group size:")
+	public static int MZTEWolf_min = 1;
+	@Name("MZTEWolf max group size:")
+	public static int MZTEWolf_max = 4;
 	@Name("Time in seconds Jens needs to digest:")
 	public static int Jens_digest_time = 120;
 	@Name("Maximum distance in blocks Jens can search:")

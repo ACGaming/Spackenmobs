@@ -67,6 +67,13 @@ Marcell D'Avis acts like a zombie and is the manager for customer satisfaction a
 
 Mr. Bean acts like a zombie and limits his statements to "Magic" and snorting noises.
 
+### MZTEWolf
+
+![MZTEWolf](https://i.imgur.com/0P6Gmmy.png)
+*Rust noises*
+
+MZTEWolf acts like a wolf and is based on a lousy coder from Thuringia. It has a passion for Kotlin and Rust.
+
 ### Schalker
 
 ![Schalker](https://i.imgur.com/eUrvPnm.png)
@@ -80,13 +87,6 @@ Schalker acts like a shulker and will spread its love for soccer and the Ruhr ar
 *"Wenn Kredit, dann..."*
 
 Smava Creeper acts like a creeper and is a pesky credit agent known from the infamous TV ads. Watch out, it is twice as fast and its explosions are twice as strong! It also explodes a little faster.
-
-### WolfMZTE
-
-![WolfMZTE](https://i.imgur.com/0P6Gmmy.png)
-*Rust noises*
-
-WolfMZTE acts like a wolf and is based on a lousy coder from Thuringia. It has a passion for Kotlin and Rust.
 
 ## Items
 

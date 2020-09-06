@@ -1,6 +1,6 @@
 package mod.acgaming.spackenmobs.render;
 
-import mod.acgaming.spackenmobs.entities.EntityWolfMZTE;
+import mod.acgaming.spackenmobs.entities.EntityMZTEWolf;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -13,17 +13,17 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderWolfMZTE extends RenderWolf
+public class RenderMZTEWolf extends RenderWolf
 {
 	public static final Factory FACTORY = new Factory();
-	private static final ResourceLocation WOLFMZTE_TEXTURE = new ResourceLocation(
-			"spackenmobs:textures/entities/wolfmzte.png");
-	private static final ResourceLocation TAMED_WOLFMZTE_TEXTURE = new ResourceLocation(
-			"spackenmobs:textures/entities/wolfmzte_tame.png");
-	private static final ResourceLocation ANRGY_WOLFMZTE_TEXTURE = new ResourceLocation(
-			"spackenmobs:textures/entities/wolfmzte_angry.png");
+	private static final ResourceLocation MZTEWOLF_TEXTURE = new ResourceLocation(
+			"spackenmobs:textures/entities/mztewolf.png");
+	private static final ResourceLocation TAMED_MZTEWOLF_TEXTURE = new ResourceLocation(
+			"spackenmobs:textures/entities/mztewolf_tame.png");
+	private static final ResourceLocation ANRGY_MZTEWOLF_TEXTURE = new ResourceLocation(
+			"spackenmobs:textures/entities/mztewolf_angry.png");
 
-	public RenderWolfMZTE(RenderManager renderManagerIn)
+	public RenderMZTEWolf(RenderManager renderManagerIn)
 	{
 		super(renderManagerIn);
 		this.addLayer(new LayerWolfCollar(this));
@@ -52,19 +52,19 @@ public class RenderWolfMZTE extends RenderWolf
 	{
 		if (entity.isTamed())
 		{
-			return TAMED_WOLFMZTE_TEXTURE;
+			return TAMED_MZTEWOLF_TEXTURE;
 		} else
 		{
-			return entity.isAngry() ? ANRGY_WOLFMZTE_TEXTURE : WOLFMZTE_TEXTURE;
+			return entity.isAngry() ? ANRGY_MZTEWOLF_TEXTURE : MZTEWOLF_TEXTURE;
 		}
 	}
 
-	public static class Factory implements IRenderFactory<EntityWolfMZTE>
+	public static class Factory implements IRenderFactory<EntityMZTEWolf>
 	{
 		@Override
-		public Render<? super EntityWolfMZTE> createRenderFor(RenderManager manager)
+		public Render<? super EntityMZTEWolf> createRenderFor(RenderManager manager)
 		{
-			return new RenderWolfMZTE(manager);
+			return new RenderMZTEWolf(manager);
 		}
 	}
 }

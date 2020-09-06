@@ -76,8 +76,7 @@ public class EntityFriedrichLiechtenstein extends EntityCreature implements IMer
 			}
 
 			return true;
-		}
-		else if (itemstack.getItem() == Items.PAPER)
+		} else if (itemstack.getItem() == Items.PAPER)
 		{
 			player.playSound(ModSoundEvents.ENTITY_FRIEDRICH_AMBIENT, 1.0F, 1.0F);
 			for (int i = 0; i < 7; ++i)
@@ -98,8 +97,7 @@ public class EntityFriedrichLiechtenstein extends EntityCreature implements IMer
 			}
 
 			return true;
-		}
-		else
+		} else
 		{
 			return super.processInteract(player, hand);
 		}

@@ -9,16 +9,16 @@ import net.minecraft.world.World;
 
 public class EntitySmavaCreeper extends EntityCreeper
 {
-	private final int fuseTime = 20;
-	private final int explosionRadius = 6;
 	private int lastActiveTime;
 	private int timeSinceIgnited;
 
 	public EntitySmavaCreeper(World worldIn)
 	{
 		super(worldIn);
-		setSize(0.6F, 1.7F);
-		getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.5D);
+		this.setSize(0.6F, 1.7F);
+		this.fuseTime = 20;
+		this.explosionRadius = 6;
+		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.5D);
 	}
 
 	@Override

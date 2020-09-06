@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ModItems
 {
-	public static final List<Item> ITEMS = new ArrayList<Item>();
+	public static final List<Item> ITEMS = new ArrayList<>();
 
 	public static final Item RAM = new ModItemBase("ram");
 	public static final Item RAM_ON_A_STICK = new ModItemBase("ram_on_a_stick");

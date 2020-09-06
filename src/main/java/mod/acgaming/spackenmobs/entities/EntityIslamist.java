@@ -8,8 +8,6 @@ import net.minecraft.world.World;
 
 public class EntityIslamist extends EntityCreeper
 {
-	private final int fuseTime = 30;
-	private final int explosionRadius = 6;
 	private int lastActiveTime;
 	private int timeSinceIgnited;
 
@@ -17,6 +15,8 @@ public class EntityIslamist extends EntityCreeper
 	{
 		super(worldIn);
 		this.setSize(0.6F, 1.7F);
+		this.fuseTime = 30;
+		this.explosionRadius = 6;
 	}
 
 	@Override

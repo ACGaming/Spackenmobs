@@ -12,9 +12,9 @@ import net.minecraft.world.World;
 
 import java.util.UUID;
 
-public class EntityWolfMZTE extends EntityWolf
+public class EntityMZTEWolf extends EntityWolf
 {
-	public EntityWolfMZTE(World worldIn)
+	public EntityMZTEWolf(World worldIn)
 	{
 		super(worldIn);
 		this.setSize(0.6F, 0.85F);
@@ -22,18 +22,18 @@ public class EntityWolfMZTE extends EntityWolf
 	}
 
 	@Override
-	public EntityWolfMZTE createChild(EntityAgeable ageable)
+	public EntityMZTEWolf createChild(EntityAgeable ageable)
 	{
-		EntityWolfMZTE entitywolfmzte = new EntityWolfMZTE(this.world);
+		EntityMZTEWolf entitymztewolf = new EntityMZTEWolf(this.world);
 		UUID uuid = this.getOwnerId();
 
 		if (uuid != null)
 		{
-			entitywolfmzte.setOwnerId(uuid);
-			entitywolfmzte.setTamed(true);
+			entitymztewolf.setOwnerId(uuid);
+			entitymztewolf.setTamed(true);
 		}
 
-		return entitywolfmzte;
+		return entitymztewolf;
 	}
 
 	@Override
@@ -45,22 +45,22 @@ public class EntityWolfMZTE extends EntityWolf
 		} else if (!this.isTamed())
 		{
 			return false;
-		} else if (!(otherAnimal instanceof EntityWolfMZTE))
+		} else if (!(otherAnimal instanceof EntityMZTEWolf))
 		{
 			return false;
 		} else
 		{
-			EntityWolfMZTE entitywolfmzte = (EntityWolfMZTE) otherAnimal;
+			EntityMZTEWolf entitymztewolf = (EntityMZTEWolf) otherAnimal;
 
-			if (!entitywolfmzte.isTamed())
+			if (!entitymztewolf.isTamed())
 			{
 				return false;
-			} else if (entitywolfmzte.isSitting())
+			} else if (entitymztewolf.isSitting())
 			{
 				return false;
 			} else
 			{
-				return this.isInLove() && entitywolfmzte.isInLove();
+				return this.isInLove() && entitymztewolf.isInLove();
 			}
 		}
 	}
@@ -70,11 +70,11 @@ public class EntityWolfMZTE extends EntityWolf
 	{
 		if (!(target instanceof EntityCreeper) && !(target instanceof EntityGhast))
 		{
-			if (target instanceof EntityWolfMZTE)
+			if (target instanceof EntityMZTEWolf)
 			{
-				EntityWolfMZTE entitywolfmzte = (EntityWolfMZTE) target;
+				EntityMZTEWolf entitymztewolf = (EntityMZTEWolf) target;
 
-				if (entitywolfmzte.isTamed() && entitywolfmzte.getOwner() == owner)
+				if (entitymztewolf.isTamed() && entitymztewolf.getOwner() == owner)
 				{
 					return false;
 				}

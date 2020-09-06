@@ -1,13 +1,14 @@
 {
-	"type": "minecraft:crafting_shapeless",
-	"ingredients": [{
-			"item": "minecraft:glass_bottle"
-		},
-		{
-			"item": "spackenmobs:ahoj_brause"
-		}
-	],
-	"result": {
-		"item": "spackenmobs:ahoj_brause_drink"
-	}
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "item": "spackenmobs:ahoj_brause"
+    }
+  ],
+  "result": {
+    "item": "spackenmobs:ahoj_brause_drink"
+  }
 }
