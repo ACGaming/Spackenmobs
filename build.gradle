@@ -12,7 +12,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 
 version = "RC4"
-group = "com.acgaming.spackenmobs" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = "mod.acgaming.spackenmobs" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Spackenmobs-1.12.2"
 
 sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.

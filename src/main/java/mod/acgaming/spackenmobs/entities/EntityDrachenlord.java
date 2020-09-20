@@ -173,7 +173,7 @@ public class EntityDrachenlord extends EntityZombie
 		}
 	}
 
-	private void becomeAngryAt(Entity p_70835_1_)
+	public void becomeAngryAt(Entity p_70835_1_)
 	{
 		this.angerLevel = 400 + this.rand.nextInt(400);
 		this.randomSoundDelay = this.rand.nextInt(40);
