@@ -12,7 +12,6 @@ public class ModItemBase extends Item
 {
 	public ModItemBase(String name)
 	{
-		setUnlocalizedName(name);
 		setRegistryName(name);
 		setCreativeTab(Spackenmobs.SPACKENMOBS_TAB);
 
