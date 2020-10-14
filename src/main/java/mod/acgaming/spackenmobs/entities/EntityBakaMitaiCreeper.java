@@ -11,6 +11,8 @@ public class EntityBakaMitaiCreeper extends EntityCreeper
 {
 	private int lastActiveTime;
 	private int timeSinceIgnited;
+	private int fuseTime;
+	private int explosionRadius;
 
 	public EntityBakaMitaiCreeper(World worldIn)
 	{

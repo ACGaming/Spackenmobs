@@ -11,6 +11,8 @@ public class EntitySmavaCreeper extends EntityCreeper
 {
 	private int lastActiveTime;
 	private int timeSinceIgnited;
+	private int fuseTime;
+	private int explosionRadius;
 
 	public EntitySmavaCreeper(World worldIn)
 	{

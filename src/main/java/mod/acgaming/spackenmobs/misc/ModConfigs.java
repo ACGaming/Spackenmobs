@@ -43,11 +43,11 @@ public class ModConfigs
 	@Name("ApoRed max group size:")
 	public static int ApoRed_max = 4;
 	@Name("Baka Mitai Creeper spawn probability:")
-	public static int BakaMitaiCreeper_weight = 10;
+	public static int BakaMitaiCreeper_weight = 0;
 	@Name("Baka Mitai Creeper min group size:")
-	public static int BakaMitaiCreeper_min = 1;
+	public static int BakaMitaiCreeper_min = 0;
 	@Name("Baka Mitai Creeper max group size:")
-	public static int BakaMitaiCreeper_max = 2;
+	public static int BakaMitaiCreeper_max = 0;
 	@Name("Drachenlord spawn probability:")
 	public static int Drachenlord_weight = 20;
 	@Name("Drachenlord min group size:")

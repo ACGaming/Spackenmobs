@@ -10,6 +10,8 @@ public class EntityIslamist extends EntityCreeper
 {
 	private int lastActiveTime;
 	private int timeSinceIgnited;
+	private int fuseTime;
+	private int explosionRadius;
 
 	public EntityIslamist(World worldIn)
 	{
