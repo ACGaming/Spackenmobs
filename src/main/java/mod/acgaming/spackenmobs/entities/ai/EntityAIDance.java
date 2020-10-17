@@ -1,5 +1,6 @@
-package mod.acgaming.spackenmobs.entities;
+package mod.acgaming.spackenmobs.entities.ai;
 
+import mod.acgaming.spackenmobs.entities.EntityJens;
 import net.minecraft.block.BlockJukebox;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.init.Blocks;
@@ -43,8 +44,7 @@ public class EntityAIDance extends EntityAIBase
 			{
 				for (int z = -this.searchRadius; z <= this.searchRadius; z++)
 				{
-					if (this.jens.world.getBlockState(this.jens.getPosition().add(x, y, z)).getBlock() == Blocks.JUKEBOX
-							&& this.jens.world.getBlockState(this.jens.getPosition().add(x, y, z)).getValue(BlockJukebox.HAS_RECORD))
+					if (this.jens.world.getBlockState(this.jens.getPosition().add(x, y, z)).getBlock() == Blocks.JUKEBOX && this.jens.world.getBlockState(this.jens.getPosition().add(x, y, z)).getValue(BlockJukebox.HAS_RECORD))
 						return true;
 				}
 			}
@@ -79,7 +79,7 @@ public class EntityAIDance extends EntityAIBase
 					this.jens.setSneaking(false);
 					break;
 			}
-			this.lastDanceMoveTime = this.jens.world.rand.nextInt(10) + 5;
+			this.lastDanceMoveTime = this.jens.world.rand.nextInt(20) + 10;
 		}
 		this.lastDanceMoveTime--;
 	}

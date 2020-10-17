@@ -1,6 +1,8 @@
 package mod.acgaming.spackenmobs.entities;
 
 import com.google.common.collect.Sets;
+import mod.acgaming.spackenmobs.entities.ai.EntityAIDance;
+import mod.acgaming.spackenmobs.entities.ai.EntityAIEatDroppedFish;
 import mod.acgaming.spackenmobs.misc.ModConfigs;
 import mod.acgaming.spackenmobs.misc.ModItems;
 import mod.acgaming.spackenmobs.misc.ModLootTableList;
@@ -37,11 +39,11 @@ public class EntityJens extends EntityAnimal
 	private static final DataParameter<Integer> DIGEST_TIME = EntityDataManager.createKey(EntityJens.class, DataSerializers.VARINT);
 	private static final Set<Item> TEMPTATION_ITEMS = Sets.newHashSet(ModItems.RAM, Items.FISH);
 	private static final Set<Item> FISH_ITEMS = Sets.newHashSet(Items.FISH);
+	public boolean digesting;
+	public int digestTime;
 	private boolean boosting;
 	private int boostTime;
 	private int totalBoostTime;
-	public boolean digesting;
-	public int digestTime;
 
 	public EntityJens(World worldIn)
 	{
@@ -87,10 +89,9 @@ public class EntityJens extends EntityAnimal
 		if (!(entity instanceof EntityPlayer))
 		{
 			return false;
-		}
-		else
+		} else
 		{
-			EntityPlayer entityplayer = (EntityPlayer)entity;
+			EntityPlayer entityplayer = (EntityPlayer) entity;
 			return entityplayer.getHeldItemMainhand().getItem() == ModItems.RAM_ON_A_STICK || entityplayer.getHeldItemOffhand().getItem() == ModItems.RAM_ON_A_STICK;
 		}
 	}
@@ -168,26 +169,22 @@ public class EntityJens extends EntityAnimal
 				itemstack.shrink(1);
 				digestFish();
 				return true;
-			}
-			else if (itemstack.getItem() == Items.NAME_TAG)
+			} else if (itemstack.getItem() == Items.NAME_TAG)
 			{
 				itemstack.interactWithEntity(player, this, hand);
 				return true;
-			}
-			else if (!this.isBeingRidden())
+			} else if (!this.isBeingRidden())
 			{
 				if (!this.world.isRemote)
 				{
 					player.startRiding(this);
 				}
 				return true;
-			}
-			else
+			} else
 			{
 				return false;
 			}
-		}
-		else
+		} else
 		{
 			return true;
 		}
@@ -234,17 +231,16 @@ public class EntityJens extends EntityAnimal
 
 			if (this.canPassengerSteer())
 			{
-				float f = (float)this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue() * 0.225F;
+				float f = (float) this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue() * 0.225F;
 
 				if (this.boosting)
 				{
-					f += f * 1.15F * MathHelper.sin((float)this.boostTime / (float)this.totalBoostTime * (float)Math.PI);
+					f += f * 1.15F * MathHelper.sin((float) this.boostTime / (float) this.totalBoostTime * (float) Math.PI);
 				}
 
 				this.setAIMoveSpeed(f);
 				super.travel(0.0F, 0.0F, 1.0F);
-			}
-			else
+			} else
 			{
 				this.motionX = 0.0D;
 				this.motionY = 0.0D;
@@ -263,8 +259,7 @@ public class EntityJens extends EntityAnimal
 
 			this.limbSwingAmount += (f1 - this.limbSwingAmount) * 0.4F;
 			this.limbSwing += this.limbSwingAmount;
-		}
-		else
+		} else
 		{
 			this.stepHeight = 0.5F;
 			this.jumpMovementFactor = 0.02F;
@@ -277,8 +272,7 @@ public class EntityJens extends EntityAnimal
 		if (this.boosting)
 		{
 			return false;
-		}
-		else
+		} else
 		{
 			this.boosting = true;
 			this.boostTime = 0;

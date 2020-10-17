@@ -1,12 +1,11 @@
 package mod.acgaming.spackenmobs.render;
 
 import mod.acgaming.spackenmobs.entities.EntityBakaMitaiCreeper;
+import net.minecraft.client.model.ModelCreeper;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderCreeper;
+import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.entity.layers.LayerCreeperCharge;
-import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
@@ -14,17 +13,17 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderBakaMitaiCreeper extends RenderCreeper
+public class RenderBakaMitaiCreeper extends RenderLiving<EntityBakaMitaiCreeper>
 {
 	public static final Factory FACTORY = new Factory();
 	private static final ResourceLocation CREEPER_TEXTURE = new ResourceLocation("textures/entity/creeper/creeper.png");
 
 	public RenderBakaMitaiCreeper(RenderManager renderManagerIn)
 	{
-		super(renderManagerIn);
-		this.addLayer(new LayerCreeperCharge(this));
+		super(renderManagerIn, new ModelCreeper(), 0.5F);
 	}
 
+	@Override
 	protected int getColorMultiplier(EntityBakaMitaiCreeper entitylivingbaseIn, float lightBrightness, float partialTickTime)
 	{
 		float f = entitylivingbaseIn.getCreeperFlashIntensity(partialTickTime);
@@ -41,11 +40,12 @@ public class RenderBakaMitaiCreeper extends RenderCreeper
 	}
 
 	@Override
-	protected ResourceLocation getEntityTexture(EntityCreeper entity)
+	protected ResourceLocation getEntityTexture(EntityBakaMitaiCreeper entity)
 	{
 		return CREEPER_TEXTURE;
 	}
 
+	@Override
 	protected void preRenderCallback(EntityBakaMitaiCreeper entitylivingbaseIn, float partialTickTime)
 	{
 		float f = entitylivingbaseIn.getCreeperFlashIntensity(partialTickTime);

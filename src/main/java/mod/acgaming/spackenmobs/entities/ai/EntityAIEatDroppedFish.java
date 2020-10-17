@@ -1,5 +1,6 @@
-package mod.acgaming.spackenmobs.entities;
+package mod.acgaming.spackenmobs.entities.ai;
 
+import mod.acgaming.spackenmobs.entities.EntityJens;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
