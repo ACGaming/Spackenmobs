@@ -34,9 +34,9 @@ import java.util.Collection;
 
 public class EntityIslamist extends EntityMob
 {
-	private static final DataParameter<Integer> STATE = EntityDataManager.createKey(mod.acgaming.spackenmobs.entities.EntityIslamist.class, DataSerializers.VARINT);
-	private static final DataParameter<Boolean> POWERED = EntityDataManager.createKey(mod.acgaming.spackenmobs.entities.EntityIslamist.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> IGNITED = EntityDataManager.createKey(mod.acgaming.spackenmobs.entities.EntityIslamist.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Integer> STATE = EntityDataManager.createKey(EntityIslamist.class, DataSerializers.VARINT);
+	private static final DataParameter<Boolean> POWERED = EntityDataManager.createKey(EntityIslamist.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> IGNITED = EntityDataManager.createKey(EntityIslamist.class, DataSerializers.BOOLEAN);
 	private int lastActiveTime;
 	private int timeSinceIgnited;
 	private int fuseTime = 30;
