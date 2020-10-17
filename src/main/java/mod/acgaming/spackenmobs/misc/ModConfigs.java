@@ -37,11 +37,11 @@ public class ModConfigs
 	@Name("Allow MZTEWolf to spawn?")
 	public static boolean MZTEWolf_spawn = true;
 	@Name("ApoRed spawn probability:")
-	public static int ApoRed_weight = 20;
+	public static int ApoRed_weight = 15;
 	@Name("ApoRed min group size:")
 	public static int ApoRed_min = 1;
 	@Name("ApoRed max group size:")
-	public static int ApoRed_max = 4;
+	public static int ApoRed_max = 2;
 	@Name("Baka Mitai Creeper spawn probability:")
 	public static int BakaMitaiCreeper_weight = 10;
 	@Name("Baka Mitai Creeper min group size:")
@@ -49,69 +49,69 @@ public class ModConfigs
 	@Name("Baka Mitai Creeper max group size:")
 	public static int BakaMitaiCreeper_max = 2;
 	@Name("Drachenlord spawn probability:")
-	public static int Drachenlord_weight = 20;
+	public static int Drachenlord_weight = 15;
 	@Name("Drachenlord min group size:")
 	public static int Drachenlord_min = 1;
 	@Name("Drachenlord max group size:")
-	public static int Drachenlord_max = 4;
+	public static int Drachenlord_max = 2;
 	@Name("Friedrich Liechtenstein spawn probability:")
 	public static int Friedrich_weight = 15;
 	@Name("Friedrich Liechtenstein min group size:")
 	public static int Friedrich_min = 1;
 	@Name("Friedrich Liechtenstein max group size:")
-	public static int Friedrich_max = 4;
+	public static int Friedrich_max = 2;
 	@Name("Holzstammhuhn spawn probability:")
-	public static int Holzstammhuhn_weight = 20;
+	public static int Holzstammhuhn_weight = 15;
 	@Name("Holzstammhuhn min group size:")
 	public static int Holzstammhuhn_min = 1;
 	@Name("Holzstammhuhn max group size:")
-	public static int Holzstammhuhn_max = 4;
+	public static int Holzstammhuhn_max = 2;
 	@Name("Islamist spawn probability:")
-	public static int Islamist_weight = 20;
+	public static int Islamist_weight = 15;
 	@Name("Islamist min group size:")
 	public static int Islamist_min = 1;
 	@Name("Islamist max group size:")
-	public static int Islamist_max = 4;
+	public static int Islamist_max = 2;
 	@Name("Jens spawn probability:")
 	public static int Jens_weight = 15;
 	@Name("Jens min group size:")
 	public static int Jens_min = 1;
 	@Name("Jens max group size:")
-	public static int Jens_max = 4;
+	public static int Jens_max = 2;
 	@Name("Marcell D'Avis spawn probability:")
-	public static int MarcellDAvis_weight = 20;
+	public static int MarcellDAvis_weight = 15;
 	@Name("Marcell D'Avis min group size:")
 	public static int MarcellDAvis_min = 1;
 	@Name("Marcell D'Avis max group size:")
-	public static int MarcellDAvis_max = 4;
+	public static int MarcellDAvis_max = 2;
 	@Name("Mr. Bean spawn probability:")
-	public static int MrBean_weight = 20;
+	public static int MrBean_weight = 15;
 	@Name("Mr. Bean min group size:")
 	public static int MrBean_min = 1;
 	@Name("Mr. Bean max group size:")
-	public static int MrBean_max = 4;
+	public static int MrBean_max = 2;
 	@Name("Schalker spawn probability:")
-	public static int Schalker_weight = 20;
+	public static int Schalker_weight = 10;
 	@Name("Schalker min group size:")
 	public static int Schalker_min = 1;
 	@Name("Schalker max group size:")
-	public static int Schalker_max = 4;
+	public static int Schalker_max = 2;
 	@Name("Smava Creeper spawn probability:")
 	public static int SmavaCreeper_weight = 15;
 	@Name("Smava Creeper min group size:")
 	public static int SmavaCreeper_min = 1;
 	@Name("Smava Creeper max group size:")
-	public static int SmavaCreeper_max = 4;
+	public static int SmavaCreeper_max = 2;
 	@Name("MZTEWolf spawn probability:")
-	public static int MZTEWolf_weight = 20;
+	public static int MZTEWolf_weight = 15;
 	@Name("MZTEWolf min group size:")
 	public static int MZTEWolf_min = 1;
 	@Name("MZTEWolf max group size:")
-	public static int MZTEWolf_max = 4;
+	public static int MZTEWolf_max = 2;
 	@Name("Time in seconds Jens needs to digest:")
 	public static int Jens_digest_time = 120;
 	@Name("Maximum distance in blocks Jens can search:")
-	public static int Jens_search_distance = 10;
+	public static int Jens_search_distance = 16;
 
 	@EventBusSubscriber(modid = "spackenmobs")
 	private static class EventHandler

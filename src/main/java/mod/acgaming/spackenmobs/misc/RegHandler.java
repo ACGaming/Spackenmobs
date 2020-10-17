@@ -11,6 +11,8 @@ import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -78,7 +80,7 @@ public class RegHandler
 		if (ModConfigs.Schalker_spawn)
 		{
 			EntityRegistry.addSpawn(EntitySchalker.class, ModConfigs.Schalker_weight, ModConfigs.Schalker_min, ModConfigs.Schalker_max, EnumCreatureType.MONSTER,
-					BiomeHelper.getBiomesWithMonster(EntityShulker.class));
+					BiomeDictionary.getBiomes(BiomeDictionary.Type.END).toArray(new Biome[0]));
 		}
 
 		// Jens
