@@ -4,10 +4,7 @@ import mod.acgaming.spackenmobs.Spackenmobs;
 import mod.acgaming.spackenmobs.entities.*;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.*;
-import net.minecraft.entity.passive.EntityChicken;
-import net.minecraft.entity.passive.EntityCow;
-import net.minecraft.entity.passive.EntityPig;
-import net.minecraft.entity.passive.EntityWolf;
+import net.minecraft.entity.passive.*;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -119,6 +116,27 @@ public class RegHandler
 		if (ModConfigs.Friedrich_spawn)
 		{
 			EntityRegistry.addSpawn(EntityFriedrichLiechtenstein.class, ModConfigs.Friedrich_weight, ModConfigs.Friedrich_min, ModConfigs.Friedrich_max, EnumCreatureType.CREATURE, BiomeHelper.getBiomesWithCreature(EntityCow.class));
+		}
+
+		// Latin Teacher
+		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:latin_teacher"), EntityLatinTeacher.class, "latin_teacher", id++, Spackenmobs.instance, 64, 1, true, 16447728, 15878595);
+		if (ModConfigs.LatinTeacher_spawn)
+		{
+			EntityRegistry.addSpawn(EntityLatinTeacher.class, ModConfigs.LatinTeacher_weight, ModConfigs.LatinTeacher_min, ModConfigs.LatinTeacher_max, EnumCreatureType.MONSTER, BiomeHelper.getBiomesWithMonster(EntityWitch.class));
+		}
+
+		// ITbyHF
+		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:itbyhf"), EntityITbyHF.class, "itbyhf", id++, Spackenmobs.instance, 64, 1, true, 16447728, 15878595);
+		if (ModConfigs.ITbyHF_spawn)
+		{
+			EntityRegistry.addSpawn(EntityITbyHF.class, ModConfigs.ITbyHF_weight, ModConfigs.ITbyHF_min, ModConfigs.ITbyHF_max, EnumCreatureType.CREATURE, BiomeHelper.getBiomesWithCreature(EntitySheep.class));
+		}
+
+		// tilera Ghast
+		EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:tilera_ghast"), EntityTileraGhast.class, "tilera_ghast", id++, Spackenmobs.instance, 64, 1, true, 16447728, 15878595);
+		if (ModConfigs.tileraGhast_spawn)
+		{
+			EntityRegistry.addSpawn(EntityTileraGhast.class, ModConfigs.tileraGhast_weight, ModConfigs.tileraGhast_min, ModConfigs.tileraGhast_max, EnumCreatureType.MONSTER, BiomeHelper.getBiomesWithMonster(EntityGhast.class));
 		}
 	}
 

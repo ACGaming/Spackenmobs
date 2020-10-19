@@ -96,7 +96,7 @@ public class EntityBakaMitaiCreeper extends EntityMob
 	{
 		super.writeEntityToNBT(compound);
 
-		if ((Boolean) this.dataManager.get(POWERED))
+		if (this.dataManager.get(POWERED))
 		{
 			compound.setBoolean("powered", true);
 		}

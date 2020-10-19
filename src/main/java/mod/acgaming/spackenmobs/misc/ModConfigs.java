@@ -36,6 +36,13 @@ public class ModConfigs
 	public static boolean SmavaCreeper_spawn = true;
 	@Name("Allow MZTEWolf to spawn?")
 	public static boolean MZTEWolf_spawn = true;
+	@Name("Allow Latin Teacher to spawn?")
+	public static boolean LatinTeacher_spawn = true;
+	@Name("Allow ITbyHF to spawn?")
+	public static boolean ITbyHF_spawn = true;
+	@Name("Allow tilera Ghast to spawn?")
+	public static boolean tileraGhast_spawn = true;
+
 	@Name("ApoRed spawn probability:")
 	public static int ApoRed_weight = 15;
 	@Name("ApoRed min group size:")
@@ -108,6 +115,25 @@ public class ModConfigs
 	public static int MZTEWolf_min = 1;
 	@Name("MZTEWolf max group size:")
 	public static int MZTEWolf_max = 2;
+	@Name("Latin Teacher spawn probability:")
+	public static int LatinTeacher_weight = 15;
+	@Name("Latin Teacher min group size:")
+	public static int LatinTeacher_min = 1;
+	@Name("Latin Teacher max group size:")
+	public static int LatinTeacher_max = 2;
+	@Name("ITbyHF spawn probability:")
+	public static int ITbyHF_weight = 15;
+	@Name("ITbyHF min group size:")
+	public static int ITbyHF_min = 1;
+	@Name("ITbyHF max group size:")
+	public static int ITbyHF_max = 2;
+	@Name("tilera Ghast spawn probability:")
+	public static int tileraGhast_weight = 15;
+	@Name("tilera Ghast min group size:")
+	public static int tileraGhast_min = 1;
+	@Name("tilera Ghast max group size:")
+	public static int tileraGhast_max = 2;
+
 	@Name("Time in seconds Jens needs to digest:")
 	public static int Jens_digest_time = 120;
 	@Name("Maximum distance in blocks Jens can search:")

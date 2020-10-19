@@ -52,4 +52,6 @@ public class ModSoundEvents
 	public static final SoundEvent ENTITY_FRIEDRICH_AMBIENT = new SoundEvent(new ResourceLocation("spackenmobs:entities.friedrich.ambient"));
 	public static final SoundEvent ENTITY_FRIEDRICH_HURT = new SoundEvent(new ResourceLocation("spackenmobs:entities.friedrich.hurt"));
 	public static final SoundEvent ENTITY_FRIEDRICH_DEATH = new SoundEvent(new ResourceLocation("spackenmobs:entities.friedrich.death"));
+
+	public static final SoundEvent ENTITY_LATINTEACHER_AMBIENT = new SoundEvent(new ResourceLocation("spackenmobs:entities.latin_teacher.ambient"));
 }
