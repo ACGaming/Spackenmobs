@@ -36,4 +36,9 @@ public class MrBeanEntity extends ZombieEntity
 	{
 		return SpackenmobsRegistry.ENTITY_MRBEAN_DEATH.get();
 	}
+
+	protected float getSoundVolume()
+	{
+		return 0.5F;
+	}
 }

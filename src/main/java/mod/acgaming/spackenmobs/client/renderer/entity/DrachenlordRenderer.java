@@ -2,24 +2,15 @@ package mod.acgaming.spackenmobs.client.renderer.entity;
 
 import mod.acgaming.spackenmobs.entity.DrachenlordEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.model.ZombieModel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class DrachenlordRenderer extends MobRenderer<DrachenlordEntity, BipedModel<DrachenlordEntity>>
+public class DrachenlordRenderer extends AbstractDrachenlordRenderer<DrachenlordEntity, ZombieModel<DrachenlordEntity>>
 {
-	private static final ResourceLocation DRACHENLORD_TEXTURES = new ResourceLocation("spackenmobs:textures/entities/drachenlord.png");
-
 	public DrachenlordRenderer(EntityRendererManager renderManagerIn)
 	{
-		super(renderManagerIn, new BipedModel<>(0.0F), 0.5F);
-	}
-
-	public ResourceLocation getEntityTexture(DrachenlordEntity entity)
-	{
-		return DRACHENLORD_TEXTURES;
+		super(renderManagerIn, new ZombieModel<>(0.0F, false), new ZombieModel<>(0.5F, true), new ZombieModel<>(1.0F, true));
 	}
 }

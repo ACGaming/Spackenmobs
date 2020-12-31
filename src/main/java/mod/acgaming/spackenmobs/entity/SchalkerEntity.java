@@ -90,7 +90,11 @@ public class SchalkerEntity extends GolemEntity implements IMob
 		{
 			super.playAmbientSound();
 		}
+	}
 
+	protected float getSoundVolume()
+	{
+		return 0.5F;
 	}
 
 	protected SoundEvent getDeathSound()

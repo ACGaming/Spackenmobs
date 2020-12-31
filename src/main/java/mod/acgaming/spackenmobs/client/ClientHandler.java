@@ -4,13 +4,10 @@ import mod.acgaming.spackenmobs.client.renderer.entity.*;
 import mod.acgaming.spackenmobs.init.SpackenmobsRegistry;
 import mod.acgaming.spackenmobs.item.CustomSpawnEggItem;
 import net.minecraft.client.renderer.color.ItemColors;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
-@OnlyIn(Dist.CLIENT)
 public class ClientHandler
 {
 	public static void doClientStuff(final FMLClientSetupEvent event)

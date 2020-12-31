@@ -4,7 +4,9 @@ import mod.acgaming.spackenmobs.client.ClientHandler;
 import mod.acgaming.spackenmobs.init.SpackenmobsEntities;
 import mod.acgaming.spackenmobs.init.SpackenmobsRegistry;
 import mod.acgaming.spackenmobs.util.ConfigurationHandler;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -22,15 +24,20 @@ public class Spackenmobs
 	{
 		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigurationHandler.spec);
+		eventBus.register(ConfigurationHandler.class);
+
 		eventBus.addListener(this::setup);
-		eventBus.addListener(ClientHandler::doClientStuff);
-		eventBus.addListener(ClientHandler::registerItemColors);
 
 		SpackenmobsRegistry.ITEMS.register(eventBus);
 		SpackenmobsRegistry.ENTITIES.register(eventBus);
 		SpackenmobsRegistry.SOUND_EVENTS.register(eventBus);
 
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigurationHandler.spec);
+		DistExecutor.runWhenOn(Dist.CLIENT, () -> () ->
+		{
+			eventBus.addListener(ClientHandler::doClientStuff);
+			eventBus.addListener(ClientHandler::registerItemColors);
+		});
 	}
 
 	private void setup(final FMLCommonSetupEvent event)

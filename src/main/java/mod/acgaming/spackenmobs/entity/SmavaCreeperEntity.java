@@ -176,6 +176,11 @@ public class SmavaCreeperEntity extends MonsterEntity implements IChargeableMob
 		return SpackenmobsRegistry.ENTITY_SMAVA_CREEPER_AMBIENT.get();
 	}
 
+	protected float getSoundVolume()
+	{
+		return 0.5F;
+	}
+
 	protected void dropSpecialItems(DamageSource source, int looting, boolean recentlyHitIn)
 	{
 		super.dropSpecialItems(source, looting, recentlyHitIn);

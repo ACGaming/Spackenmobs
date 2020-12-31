@@ -7,6 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Food;
+import net.minecraft.item.HoneyBottleItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.SoupItem;
 import net.minecraft.potion.EffectInstance;
@@ -27,15 +28,15 @@ public class SpackenmobsRegistry
 	// ApoRed
 	public static final RegistryObject<EntityType<ApoRedEntity>> APORED = ENTITIES.register("apored",
 			() -> register("apored", EntityType.Builder.create(ApoRedEntity::new, EntityClassification.MONSTER)
-					.size(0.6F, 1.99F).trackingRange(8)));
+					.size(0.6F, 1.99F).trackingRange(10)));
 	// Baka Mitai Creeper
 	public static final RegistryObject<EntityType<BakaMitaiCreeperEntity>> BAKAMITAI_CREEPER = ENTITIES.register("bakamitai_creeper",
 			() -> register("bakamitai_creeper", EntityType.Builder.create(BakaMitaiCreeperEntity::new, EntityClassification.MONSTER)
-					.size(0.6F, 1.7F).trackingRange(8)));
+					.size(0.6F, 1.7F).trackingRange(10)));
 	// Drachenlord
 	public static final RegistryObject<EntityType<DrachenlordEntity>> DRACHENLORD = ENTITIES.register("drachenlord",
 			() -> register("drachenlord", EntityType.Builder.create(DrachenlordEntity::new, EntityClassification.MONSTER)
-					.size(1.2F, 1.9F).trackingRange(8)));
+					.size(0.6F, 1.95F).trackingRange(10)));
 	// Friedrich Liechtenstein
 	public static final RegistryObject<EntityType<FriedrichLiechtensteinEntity>> FRIEDRICH_LIECHTENSTEIN = ENTITIES.register("friedrich",
 			() -> register("friedrich", EntityType.Builder.create(FriedrichLiechtensteinEntity::new, EntityClassification.CREATURE)
@@ -47,7 +48,7 @@ public class SpackenmobsRegistry
 	// Islamist
 	public static final RegistryObject<EntityType<IslamistEntity>> ISLAMIST = ENTITIES.register("islamist",
 			() -> register("islamist", EntityType.Builder.create(IslamistEntity::new, EntityClassification.MONSTER)
-					.size(0.6F, 1.7F).trackingRange(8)));
+					.size(0.6F, 1.7F).trackingRange(10)));
 	// Jens
 	public static final RegistryObject<EntityType<JensEntity>> JENS = ENTITIES.register("jens",
 			() -> register("jens", EntityType.Builder.create(JensEntity::new, EntityClassification.CREATURE)
@@ -55,11 +56,11 @@ public class SpackenmobsRegistry
 	// Marcell D'Avis
 	public static final RegistryObject<EntityType<MarcellDAvisEntity>> MARCELLDAVIS = ENTITIES.register("marcell_davis",
 			() -> register("marcell_davis", EntityType.Builder.create(MarcellDAvisEntity::new, EntityClassification.MONSTER)
-					.size(0.6F, 1.95F).trackingRange(8)));
+					.size(0.6F, 1.95F).trackingRange(10)));
 	// Mr. Bean
 	public static final RegistryObject<EntityType<MrBeanEntity>> MRBEAN = ENTITIES.register("mr_bean",
 			() -> register("mr_bean", EntityType.Builder.create(MrBeanEntity::new, EntityClassification.MONSTER)
-					.size(0.6F, 1.95F).trackingRange(8)));
+					.size(0.6F, 1.95F).trackingRange(10)));
 	// MZTEWolf
 	public static final RegistryObject<EntityType<MZTEWolfEntity>> MZTEWOLF = ENTITIES.register("mztewolf",
 			() -> register("mztewolf", EntityType.Builder.create(MZTEWolfEntity::new, EntityClassification.CREATURE)
@@ -67,14 +68,15 @@ public class SpackenmobsRegistry
 	// Schalker
 	public static final RegistryObject<EntityType<SchalkerEntity>> SCHALKER = ENTITIES.register("schalker",
 			() -> register("schalker", EntityType.Builder.create(SchalkerEntity::new, EntityClassification.MONSTER)
-					.size(1.0F, 1.0F).trackingRange(8)));
+					.size(1.0F, 1.0F).trackingRange(10)));
 	// Smava Creeper
 	public static final RegistryObject<EntityType<SmavaCreeperEntity>> SMAVA_CREEPER = ENTITIES.register("smava_creeper",
 			() -> register("smava_creeper", EntityType.Builder.create(SmavaCreeperEntity::new, EntityClassification.MONSTER)
-					.size(0.6F, 1.7F).trackingRange(8)));
+					.size(0.6F, 1.7F).trackingRange(10)));
+
 	// --- ITEMS ---
 	public static final RegistryObject<Item> AHOJ_BRAUSE = ITEMS.register("ahoj_brause", () -> new Item(new Item.Properties().group(SpackenmobsTab.SPACKENMOBS_TAB).food(new Food.Builder().effect(new EffectInstance(Effects.SPEED, 200, 4), 1.0F).setAlwaysEdible().build())));
-	public static final RegistryObject<Item> AHOJ_BRAUSE_DRINK = ITEMS.register("ahoj_brause_drink", () -> new SoupItem(new SoupItem.Properties().group(SpackenmobsTab.SPACKENMOBS_TAB).food(new Food.Builder().effect(new EffectInstance(Effects.SPEED, 400, 9), 1.0F).setAlwaysEdible().build())));
+	public static final RegistryObject<Item> AHOJ_BRAUSE_DRINK = ITEMS.register("ahoj_brause_drink", () -> new HoneyBottleItem(new HoneyBottleItem.Properties().group(SpackenmobsTab.SPACKENMOBS_TAB).food(new Food.Builder().effect(new EffectInstance(Effects.SPEED, 400, 9), 1.0F).setAlwaysEdible().build())));
 	public static final RegistryObject<Item> RAM = ITEMS.register("ram", () -> new Item(new Item.Properties().group(SpackenmobsTab.SPACKENMOBS_TAB)));
 	public static final RegistryObject<Item> RAM_ON_A_STICK = ITEMS.register("ram_on_a_stick", () -> new Item(new Item.Properties().maxStackSize(1).group(SpackenmobsTab.SPACKENMOBS_TAB)));
 	public static final RegistryObject<Item> SURSTROEMMING = ITEMS.register("surstroemming", () -> new Item(new Item.Properties().group(SpackenmobsTab.SPACKENMOBS_TAB).food(new Food.Builder().hunger(6).saturation(3).effect(new EffectInstance(Effects.NAUSEA, 200, 0), 1.0F).build())));

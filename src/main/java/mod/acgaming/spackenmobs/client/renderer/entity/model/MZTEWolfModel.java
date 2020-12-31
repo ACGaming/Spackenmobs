@@ -22,7 +22,8 @@ public class MZTEWolfModel<T extends MZTEWolfEntity> extends TintedAgeableModel<
 	private final ModelRenderer tailChild;
 	private final ModelRenderer mane;
 
-	public MZTEWolfModel() {
+	public MZTEWolfModel()
+	{
 		float f = 0.0F;
 		float f1 = 13.5F;
 		this.head = new ModelRenderer(this, 0, 0);
@@ -58,39 +59,46 @@ public class MZTEWolfModel<T extends MZTEWolfEntity> extends TintedAgeableModel<
 		this.headChild.setTextureOffset(0, 10).addBox(-0.5F, 0.0F, -5.0F, 3.0F, 3.0F, 4.0F, 0.0F);
 	}
 
-	protected Iterable<ModelRenderer> getHeadParts() {
+	protected Iterable<ModelRenderer> getHeadParts()
+	{
 		return ImmutableList.of(this.head);
 	}
 
-	protected Iterable<ModelRenderer> getBodyParts() {
+	protected Iterable<ModelRenderer> getBodyParts()
+	{
 		return ImmutableList.of(this.body, this.legBackRight, this.legBackLeft, this.legFrontRight, this.legFrontLeft, this.tail, this.mane);
 	}
 
-	public void setLivingAnimations(T entityIn, float limbSwing, float limbSwingAmount, float partialTick) {
-		if (entityIn.func_233678_J__()) {
+	public void setLivingAnimations(T entityIn, float limbSwing, float limbSwingAmount, float partialTick)
+	{
+		if (entityIn.func_233678_J__())
+		{
 			this.tail.rotateAngleY = 0.0F;
-		} else {
+		} else
+		{
 			this.tail.rotateAngleY = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
 		}
 
-		if (entityIn.isEntitySleeping()) {
+		if (entityIn.isEntitySleeping())
+		{
 			this.mane.setRotationPoint(-1.0F, 16.0F, -3.0F);
 			this.mane.rotateAngleX = 1.2566371F;
 			this.mane.rotateAngleY = 0.0F;
 			this.body.setRotationPoint(0.0F, 18.0F, 0.0F);
-			this.body.rotateAngleX = ((float)Math.PI / 4F);
+			this.body.rotateAngleX = ((float) Math.PI / 4F);
 			this.tail.setRotationPoint(-1.0F, 21.0F, 6.0F);
 			this.legBackRight.setRotationPoint(-2.5F, 22.7F, 2.0F);
-			this.legBackRight.rotateAngleX = ((float)Math.PI * 1.5F);
+			this.legBackRight.rotateAngleX = ((float) Math.PI * 1.5F);
 			this.legBackLeft.setRotationPoint(0.5F, 22.7F, 2.0F);
-			this.legBackLeft.rotateAngleX = ((float)Math.PI * 1.5F);
+			this.legBackLeft.rotateAngleX = ((float) Math.PI * 1.5F);
 			this.legFrontRight.rotateAngleX = 5.811947F;
 			this.legFrontRight.setRotationPoint(-2.49F, 17.0F, -4.0F);
 			this.legFrontLeft.rotateAngleX = 5.811947F;
 			this.legFrontLeft.setRotationPoint(0.51F, 17.0F, -4.0F);
-		} else {
+		} else
+		{
 			this.body.setRotationPoint(0.0F, 14.0F, 2.0F);
-			this.body.rotateAngleX = ((float)Math.PI / 2F);
+			this.body.rotateAngleX = ((float) Math.PI / 2F);
 			this.mane.setRotationPoint(-1.0F, 14.0F, -3.0F);
 			this.mane.rotateAngleX = this.body.rotateAngleX;
 			this.tail.setRotationPoint(-1.0F, 12.0F, 8.0F);
@@ -99,8 +107,8 @@ public class MZTEWolfModel<T extends MZTEWolfEntity> extends TintedAgeableModel<
 			this.legFrontRight.setRotationPoint(-2.5F, 16.0F, -4.0F);
 			this.legFrontLeft.setRotationPoint(0.5F, 16.0F, -4.0F);
 			this.legBackRight.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
-			this.legBackLeft.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
-			this.legFrontRight.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 1.4F * limbSwingAmount;
+			this.legBackLeft.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
+			this.legFrontRight.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
 			this.legFrontLeft.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
 		}
 
@@ -110,9 +118,10 @@ public class MZTEWolfModel<T extends MZTEWolfEntity> extends TintedAgeableModel<
 		this.tailChild.rotateAngleZ = entityIn.getShakeAngle(partialTick, -0.2F);
 	}
 
-	public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		this.head.rotateAngleX = headPitch * ((float)Math.PI / 180F);
-		this.head.rotateAngleY = netHeadYaw * ((float)Math.PI / 180F);
+	public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch)
+	{
+		this.head.rotateAngleX = headPitch * ((float) Math.PI / 180F);
+		this.head.rotateAngleY = netHeadYaw * ((float) Math.PI / 180F);
 		this.tail.rotateAngleX = ageInTicks;
 	}
 }

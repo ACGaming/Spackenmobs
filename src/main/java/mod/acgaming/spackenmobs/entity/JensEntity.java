@@ -133,6 +133,11 @@ public class JensEntity extends AnimalEntity implements IRideable, IEquipable
 		this.playSound(SoundEvents.ENTITY_PIG_STEP, 0.15F, 1.0F);
 	}
 
+	protected float getSoundVolume()
+	{
+		return 0.5F;
+	}
+
 	public ActionResultType func_230254_b_(PlayerEntity player, Hand hand)
 	{
 		boolean breeding_item = this.isBreedingItem(player.getHeldItem(hand));
@@ -271,7 +276,7 @@ public class JensEntity extends AnimalEntity implements IRideable, IEquipable
 			this.world.addParticle(ParticleTypes.HEART, this.getPosXRandom(1.0D), this.getPosYRandom() + 0.5D, this.getPosZRandom(1.0D), d0, d1, d2);
 		}
 
-		this.addPotionEffect(new EffectInstance(Effects.NAUSEA, 100, 1));
+		this.addPotionEffect(new EffectInstance(Effects.NAUSEA, ConfigurationHandler.GENERAL.jens_digest_time.get() * 20, 1));
 	}
 
 	public void travel(Vector3d travelVector)

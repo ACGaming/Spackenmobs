@@ -15,12 +15,15 @@ public class MZTEWolfCollarLayer extends LayerRenderer<MZTEWolfEntity, MZTEWolfM
 {
 	private static final ResourceLocation WOLF_COLLAR = new ResourceLocation("textures/entity/wolf/wolf_collar.png");
 
-	public MZTEWolfCollarLayer(IEntityRenderer<MZTEWolfEntity, MZTEWolfModel<MZTEWolfEntity>> rendererIn) {
+	public MZTEWolfCollarLayer(IEntityRenderer<MZTEWolfEntity, MZTEWolfModel<MZTEWolfEntity>> rendererIn)
+	{
 		super(rendererIn);
 	}
 
-	public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, MZTEWolfEntity entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-		if (entitylivingbaseIn.isTamed() && !entitylivingbaseIn.isInvisible()) {
+	public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, MZTEWolfEntity entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch)
+	{
+		if (entitylivingbaseIn.isTamed() && !entitylivingbaseIn.isInvisible())
+		{
 			float[] afloat = entitylivingbaseIn.getCollarColor().getColorComponentValues();
 			renderCutoutModel(this.getEntityModel(), WOLF_COLLAR, matrixStackIn, bufferIn, packedLightIn, entitylivingbaseIn, afloat[0], afloat[1], afloat[2]);
 		}

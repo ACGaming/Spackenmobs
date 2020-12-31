@@ -62,6 +62,7 @@ public class IslamistEntity extends MonsterEntity implements IChargeableMob
 		this.goalSelector.addGoal(2, new IslamistSwellGoal(this));
 		this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, OcelotEntity.class, 6.0F, 1.0D, 1.2D));
 		this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, CatEntity.class, 6.0F, 1.0D, 1.2D));
+		this.goalSelector.addGoal(3, new LeapAtTargetGoal(this, 0.8F));
 		this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.0D, false));
 		this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
 		this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 8.0F));
@@ -174,6 +175,11 @@ public class IslamistEntity extends MonsterEntity implements IChargeableMob
 	protected SoundEvent getAmbientSound()
 	{
 		return SpackenmobsRegistry.ENTITY_ISLAMIST_AMBIENT.get();
+	}
+
+	protected float getSoundVolume()
+	{
+		return 0.5F;
 	}
 
 	protected void dropSpecialItems(DamageSource source, int looting, boolean recentlyHitIn)

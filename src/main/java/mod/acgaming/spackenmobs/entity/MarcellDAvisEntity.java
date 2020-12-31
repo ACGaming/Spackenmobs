@@ -36,4 +36,9 @@ public class MarcellDAvisEntity extends ZombieEntity
 	{
 		return SpackenmobsRegistry.ENTITY_MARCELLDAVIS_DEATH.get();
 	}
+
+	protected float getSoundVolume()
+	{
+		return 0.5F;
+	}
 }

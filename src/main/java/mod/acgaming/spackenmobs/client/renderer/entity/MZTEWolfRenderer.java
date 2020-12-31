@@ -49,8 +49,7 @@ public class MZTEWolfRenderer extends MobRenderer<MZTEWolfEntity, MZTEWolfModel<
 		if (entity.isTamed())
 		{
 			return TAMED_MZTEWOLF_TEXTURES;
-		}
-		else
+		} else
 		{
 			return entity.func_233678_J__() ? ANGRY_MZTEWOLF_TEXTURES : MZTEWOLF_TEXTURES;
 		}

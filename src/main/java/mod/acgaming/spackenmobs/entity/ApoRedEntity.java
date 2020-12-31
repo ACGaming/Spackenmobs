@@ -36,6 +36,11 @@ public class ApoRedEntity extends AbstractApoRedEntity
 		return SoundEvents.ENTITY_ZOMBIE_STEP;
 	}
 
+	protected float getSoundVolume()
+	{
+		return 0.5F;
+	}
+
 	protected void dropSpecialItems(DamageSource source, int looting, boolean recentlyHitIn)
 	{
 		super.dropSpecialItems(source, looting, recentlyHitIn);
