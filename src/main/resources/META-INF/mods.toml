@@ -1,0 +1,15 @@
+modLoader = "javafml"
+loaderVersion = "[35,)"
+issueTrackerURL = "https://github.com/ACGaming/Spackenmobs/issues"
+license = "MIT"
+
+[[mods]]
+modId = "spackenmobs"
+version = "${file.jarVersion}"
+displayName = "Spackenmobs"
+displayURL = "https://www.curseforge.com/minecraft/mc-mods/spackenmobs"
+authors = "ACGaming"
+description = '''
+Wenn Kredit, dann...?
+'''
+credits = "Code inspired by Instrumental Mobs."

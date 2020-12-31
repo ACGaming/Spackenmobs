@@ -1,49 +1,40 @@
 package mod.acgaming.spackenmobs;
 
-import mod.acgaming.spackenmobs.misc.ModEntities;
-import net.minecraft.creativetab.CreativeTabs;
+import mod.acgaming.spackenmobs.client.ClientHandler;
+import mod.acgaming.spackenmobs.init.SpackenmobsEntities;
+import mod.acgaming.spackenmobs.init.SpackenmobsRegistry;
+import mod.acgaming.spackenmobs.util.ConfigurationHandler;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-@Mod(modid = "spackenmobs", version = "RC7", acceptedMinecraftVersions = "[1.12.2]")
+@Mod(Reference.MOD_ID)
 public class Spackenmobs
 {
-	public static final String MODID = "spackenmobs";
-	public static final String VERSION = "RC7";
+	public static final Logger LOGGER = LogManager.getLogger(Reference.MOD_ID);
 
-	public static final CreativeTabs SPACKENMOBS_TAB = new SpackenmobsTab();
-
-	@Instance
-	public static Spackenmobs instance;
-
-	@SideOnly(Side.CLIENT)
-	@EventHandler
-	public void preInitClient(FMLPreInitializationEvent event)
+	public Spackenmobs()
 	{
-		ModEntities.initModels();
+		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+		eventBus.addListener(this::setup);
+		eventBus.addListener(ClientHandler::doClientStuff);
+		eventBus.addListener(ClientHandler::registerItemColors);
+
+		SpackenmobsRegistry.ITEMS.register(eventBus);
+		SpackenmobsRegistry.ENTITIES.register(eventBus);
+		SpackenmobsRegistry.SOUND_EVENTS.register(eventBus);
+
+		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigurationHandler.spec);
 	}
 
-	@EventHandler
-	public void preInit(FMLPreInitializationEvent event)
+	private void setup(final FMLCommonSetupEvent event)
 	{
-
-	}
-
-	@EventHandler
-	public void init(FMLInitializationEvent event)
-	{
-
-	}
-
-	@EventHandler
-	public void postInit(FMLPostInitializationEvent event)
-	{
-
+		SpackenmobsEntities.initializeEntities();
 	}
 }

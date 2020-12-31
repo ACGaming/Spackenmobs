@@ -19,7 +19,9 @@ build
 
 # other
 eclipse
+logs
 run
 build.bat
-runClient.bat
-runServer.bat
+
+# Files from Forge MDK
+forge*changelog.txt
