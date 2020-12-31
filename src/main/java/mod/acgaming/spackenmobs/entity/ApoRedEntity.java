@@ -38,7 +38,7 @@ public class ApoRedEntity extends AbstractApoRedEntity
 
 	protected float getSoundVolume()
 	{
-		return 0.5F;
+		return 0.6F;
 	}
 
 	protected void dropSpecialItems(DamageSource source, int looting, boolean recentlyHitIn)

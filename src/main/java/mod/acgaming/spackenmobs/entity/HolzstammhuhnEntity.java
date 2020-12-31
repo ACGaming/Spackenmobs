@@ -1,5 +1,6 @@
 package mod.acgaming.spackenmobs.entity;
 
+import mod.acgaming.spackenmobs.init.SpackenmobsRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -115,7 +116,7 @@ public class HolzstammhuhnEntity extends AnimalEntity
 
 	public HolzstammhuhnEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_)
 	{
-		return null;
+		return SpackenmobsRegistry.HOLZSTAMMHUHN.get().create(p_241840_1_);
 	}
 
 	public boolean isBreedingItem(ItemStack stack)

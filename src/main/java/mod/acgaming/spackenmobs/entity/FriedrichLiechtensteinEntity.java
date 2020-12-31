@@ -15,7 +15,6 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
@@ -24,18 +23,13 @@ public class FriedrichLiechtensteinEntity extends AnimalEntity
 	public FriedrichLiechtensteinEntity(EntityType<? extends FriedrichLiechtensteinEntity> type, World worldIn)
 	{
 		super(type, worldIn);
+		this.setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(SpackenmobsRegistry.AHOJ_BRAUSE.get()));
+		this.setItemStackToSlot(EquipmentSlotType.OFFHAND, new ItemStack(SpackenmobsRegistry.AHOJ_BRAUSE_DRINK.get()));
 	}
 
 	public static AttributeModifierMap.MutableAttribute registerAttributes()
 	{
 		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 20.0D).createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.2F);
-	}
-
-	protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty)
-	{
-		super.setEquipmentBasedOnDifficulty(difficulty);
-		this.setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(SpackenmobsRegistry.AHOJ_BRAUSE.get()));
-		this.setItemStackToSlot(EquipmentSlotType.OFFHAND, new ItemStack(SpackenmobsRegistry.AHOJ_BRAUSE_DRINK.get()));
 	}
 
 	protected void registerGoals()
@@ -72,7 +66,7 @@ public class FriedrichLiechtensteinEntity extends AnimalEntity
 
 	protected float getSoundVolume()
 	{
-		return 0.5F;
+		return 0.6F;
 	}
 
 	public ActionResultType func_230254_b_(PlayerEntity player, Hand hand)
@@ -125,7 +119,7 @@ public class FriedrichLiechtensteinEntity extends AnimalEntity
 
 	public FriedrichLiechtensteinEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_)
 	{
-		return null;
+		return SpackenmobsRegistry.FRIEDRICH_LIECHTENSTEIN.get().create(p_241840_1_);
 	}
 
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn)

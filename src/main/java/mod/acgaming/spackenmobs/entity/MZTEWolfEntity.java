@@ -1,6 +1,7 @@
 package mod.acgaming.spackenmobs.entity;
 
 import mod.acgaming.spackenmobs.entity.ai.goal.MZTEWolfBegGoal;
+import mod.acgaming.spackenmobs.init.SpackenmobsRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -480,7 +481,7 @@ public class MZTEWolfEntity extends TameableEntity implements IAngerable
 
 	public MZTEWolfEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_)
 	{
-		return null;
+		return SpackenmobsRegistry.MZTEWOLF.get().create(p_241840_1_);
 	}
 
 	public boolean canMateWith(AnimalEntity otherAnimal)

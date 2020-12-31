@@ -94,7 +94,7 @@ public class SchalkerEntity extends GolemEntity implements IMob
 
 	protected float getSoundVolume()
 	{
-		return 0.5F;
+		return 0.6F;
 	}
 
 	protected SoundEvent getDeathSound()

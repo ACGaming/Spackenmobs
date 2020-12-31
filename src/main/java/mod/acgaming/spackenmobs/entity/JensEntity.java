@@ -135,7 +135,7 @@ public class JensEntity extends AnimalEntity implements IRideable, IEquipable
 
 	protected float getSoundVolume()
 	{
-		return 0.5F;
+		return 0.6F;
 	}
 
 	public ActionResultType func_230254_b_(PlayerEntity player, Hand hand)
@@ -286,7 +286,7 @@ public class JensEntity extends AnimalEntity implements IRideable, IEquipable
 
 	public float getMountedSpeed()
 	{
-		return (float) this.getAttributeValue(Attributes.MOVEMENT_SPEED) * 0.225F;
+		return (float) this.getAttributeValue(Attributes.MOVEMENT_SPEED) * 0.5F;
 	}
 
 	public void travelTowards(Vector3d travelVec)
@@ -301,7 +301,7 @@ public class JensEntity extends AnimalEntity implements IRideable, IEquipable
 
 	public JensEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_)
 	{
-		return null;
+		return SpackenmobsRegistry.JENS.get().create(p_241840_1_);
 	}
 
 	public boolean isBreedingItem(ItemStack stack)

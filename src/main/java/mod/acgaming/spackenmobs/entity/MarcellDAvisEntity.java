@@ -39,6 +39,6 @@ public class MarcellDAvisEntity extends ZombieEntity
 
 	protected float getSoundVolume()
 	{
-		return 0.5F;
+		return 0.6F;
 	}
 }
