@@ -12,8 +12,8 @@ apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 version = "${version}"
-group = "com.acgaming.spackenmobs"
-archivesBaseName = "spackenmobs-Creepers-${mc_version}"
+group = "mod.acgaming.spackenmobs"
+archivesBaseName = "${jar_name}-${mc_version}"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
