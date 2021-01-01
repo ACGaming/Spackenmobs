@@ -47,6 +47,10 @@ public class ConfigurationHandler
 		public final ForgeConfigSpec.IntValue friedrich_max;
 		public final ForgeConfigSpec.IntValue friedrich_weight;
 
+		public final ForgeConfigSpec.IntValue gisela_min;
+		public final ForgeConfigSpec.IntValue gisela_max;
+		public final ForgeConfigSpec.IntValue gisela_weight;
+
 		public final ForgeConfigSpec.IntValue holzstammhuhn_min;
 		public final ForgeConfigSpec.IntValue holzstammhuhn_max;
 		public final ForgeConfigSpec.IntValue holzstammhuhn_weight;
@@ -99,6 +103,10 @@ public class ConfigurationHandler
 			friedrich_min = builder.defineInRange("friedrich_min", 1, 1, 64);
 			friedrich_max = builder.defineInRange("friedrich_max", 1, 1, 64);
 			friedrich_weight = builder.defineInRange("friedrich_weight", 10, 0, 200);
+
+			gisela_min = builder.defineInRange("gisela_min", 1, 1, 64);
+			gisela_max = builder.defineInRange("gisela_max", 1, 1, 64);
+			gisela_weight = builder.defineInRange("gisela_weight", 10, 0, 200);
 
 			holzstammhuhn_min = builder.defineInRange("holzstammhuhn_min", 1, 1, 64);
 			holzstammhuhn_max = builder.defineInRange("holzstammhuhn_max", 1, 1, 64);

@@ -40,6 +40,10 @@ public class SpackenmobsRegistry
 	public static final RegistryObject<EntityType<FriedrichLiechtensteinEntity>> FRIEDRICH_LIECHTENSTEIN = ENTITIES.register("friedrich",
 			() -> register("friedrich", EntityType.Builder.create(FriedrichLiechtensteinEntity::new, EntityClassification.CREATURE)
 					.size(0.6F, 1.8F).trackingRange(10)));
+	// Gisela
+	public static final RegistryObject<EntityType<GiselaEntity>> GISELA = ENTITIES.register("gisela",
+			() -> register("gisela", EntityType.Builder.create(GiselaEntity::new, EntityClassification.CREATURE)
+					.size(0.6F, 1.8F).trackingRange(10)));
 	// Holzstammhuhn
 	public static final RegistryObject<EntityType<HolzstammhuhnEntity>> HOLZSTAMMHUHN = ENTITIES.register("holzstammhuhn",
 			() -> register("holzstammhuhn", EntityType.Builder.create(HolzstammhuhnEntity::new, EntityClassification.CREATURE)
@@ -83,6 +87,7 @@ public class SpackenmobsRegistry
 	public static final RegistryObject<Item> BAKAMITAI_CREEPER_SPAWN_EGG = ITEMS.register("bakamitai_creeper_spawn_egg", () -> new CustomSpawnEggItem(SpackenmobsRegistry.BAKAMITAI_CREEPER::get, 826890, 0, itemBuilder()));
 	public static final RegistryObject<Item> DRACHENLORD_SPAWN_EGG = ITEMS.register("drachenlord_spawn_egg", () -> new CustomSpawnEggItem(SpackenmobsRegistry.DRACHENLORD::get, 15256745, 8738878, itemBuilder()));
 	public static final RegistryObject<Item> FRIEDRICH_LIECHTENSTEIN_SPAWN_EGG = ITEMS.register("friedrich_spawn_egg", () -> new CustomSpawnEggItem(SpackenmobsRegistry.FRIEDRICH_LIECHTENSTEIN::get, 16447728, 15878595, itemBuilder()));
+	public static final RegistryObject<Item> GISELA_SPAWN_EGG = ITEMS.register("gisela_spawn_egg", () -> new CustomSpawnEggItem(SpackenmobsRegistry.GISELA::get, 39835, 16448250, itemBuilder()));
 	public static final RegistryObject<Item> HOLZSTAMMHUHN_SPAWN_EGG = ITEMS.register("holzstammhuhn_spawn_egg", () -> new CustomSpawnEggItem(SpackenmobsRegistry.HOLZSTAMMHUHN::get, 12096347, 5295899, itemBuilder()));
 	public static final RegistryObject<Item> ISLAMIST_SPAWN_EGG = ITEMS.register("islamist_spawn_egg", () -> new CustomSpawnEggItem(SpackenmobsRegistry.ISLAMIST::get, 15263976, 15211548, itemBuilder()));
 	public static final RegistryObject<Item> JENS_SPAWN_EGG = ITEMS.register("jens_spawn_egg", () -> new CustomSpawnEggItem(SpackenmobsRegistry.JENS::get, 6704526, 6767911, itemBuilder()));
@@ -109,6 +114,10 @@ public class SpackenmobsRegistry
 	public static final RegistryObject<SoundEvent> ENTITY_FRIEDRICH_AMBIENT = SOUND_EVENTS.register("entities.friedrich.ambient", () -> createSound("entities.friedrich.ambient"));
 	public static final RegistryObject<SoundEvent> ENTITY_FRIEDRICH_HURT = SOUND_EVENTS.register("entities.friedrich.hurt", () -> createSound("entities.friedrich.hurt"));
 	public static final RegistryObject<SoundEvent> ENTITY_FRIEDRICH_DEATH = SOUND_EVENTS.register("entities.friedrich.death", () -> createSound("entities.friedrich.death"));
+	// Gisela
+	public static final RegistryObject<SoundEvent> ENTITY_GISELA_AMBIENT = SOUND_EVENTS.register("entities.gisela.ambient", () -> createSound("entities.gisela.ambient"));
+	public static final RegistryObject<SoundEvent> ENTITY_GISELA_HURT = SOUND_EVENTS.register("entities.gisela.hurt", () -> createSound("entities.gisela.hurt"));
+	//public static final RegistryObject<SoundEvent> ENTITY_GISELA_DEATH = SOUND_EVENTS.register("entities.gisela.death", () -> createSound("entities.gisela.death"));
 	// Islamist
 	public static final RegistryObject<SoundEvent> ENTITY_ISLAMIST_FUSE = SOUND_EVENTS.register("entities.islamist.fuse", () -> createSound("entities.islamist.fuse"));
 	public static final RegistryObject<SoundEvent> ENTITY_ISLAMIST_BLOW = SOUND_EVENTS.register("entities.islamist.blow", () -> createSound("entities.islamist.blow"));

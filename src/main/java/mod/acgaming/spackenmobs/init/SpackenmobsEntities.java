@@ -48,6 +48,7 @@ public class SpackenmobsEntities
 			for (Spawners entry : info.getSpawners(EntityClassification.CREATURE))
 			{
 				registerSpawn(creature_spawns, entry, ConfigurationHandler.SPAWN.holzstammhuhn_weight.get(), ConfigurationHandler.SPAWN.holzstammhuhn_min.get(), ConfigurationHandler.SPAWN.holzstammhuhn_max.get(), EntityType.CHICKEN, SpackenmobsRegistry.HOLZSTAMMHUHN.get());
+				registerSpawn(creature_spawns, entry, ConfigurationHandler.SPAWN.gisela_weight.get(), ConfigurationHandler.SPAWN.gisela_min.get(), ConfigurationHandler.SPAWN.gisela_max.get(), EntityType.SHEEP, SpackenmobsRegistry.GISELA.get());
 				registerSpawn(creature_spawns, entry, ConfigurationHandler.SPAWN.jens_weight.get(), ConfigurationHandler.SPAWN.jens_min.get(), ConfigurationHandler.SPAWN.jens_max.get(), EntityType.PIG, SpackenmobsRegistry.JENS.get());
 				registerSpawn(creature_spawns, entry, ConfigurationHandler.SPAWN.friedrich_weight.get(), ConfigurationHandler.SPAWN.friedrich_min.get(), ConfigurationHandler.SPAWN.friedrich_max.get(), EntityType.COW, SpackenmobsRegistry.FRIEDRICH_LIECHTENSTEIN.get());
 				registerSpawn(creature_spawns, entry, ConfigurationHandler.SPAWN.mztewolf_weight.get(), ConfigurationHandler.SPAWN.mztewolf_min.get(), ConfigurationHandler.SPAWN.mztewolf_max.get(), EntityType.WOLF, SpackenmobsRegistry.MZTEWOLF.get());
@@ -61,8 +62,9 @@ public class SpackenmobsEntities
 		EntitySpawnPlacementRegistry.register(SpackenmobsRegistry.BAKAMITAI_CREEPER.get(), PlacementType.ON_GROUND, Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawnInLight);
 		EntitySpawnPlacementRegistry.register(SpackenmobsRegistry.DRACHENLORD.get(), PlacementType.ON_GROUND, Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawnInLight);
 		EntitySpawnPlacementRegistry.register(SpackenmobsRegistry.FRIEDRICH_LIECHTENSTEIN.get(), PlacementType.ON_GROUND, Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
-		EntitySpawnPlacementRegistry.register(SpackenmobsRegistry.ISLAMIST.get(), PlacementType.ON_GROUND, Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawnInLight);
+		EntitySpawnPlacementRegistry.register(SpackenmobsRegistry.GISELA.get(), PlacementType.ON_GROUND, Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(SpackenmobsRegistry.HOLZSTAMMHUHN.get(), PlacementType.ON_GROUND, Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
+		EntitySpawnPlacementRegistry.register(SpackenmobsRegistry.ISLAMIST.get(), PlacementType.ON_GROUND, Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawnInLight);
 		EntitySpawnPlacementRegistry.register(SpackenmobsRegistry.JENS.get(), PlacementType.ON_GROUND, Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::canAnimalSpawn);
 		EntitySpawnPlacementRegistry.register(SpackenmobsRegistry.MARCELLDAVIS.get(), PlacementType.ON_GROUND, Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawnInLight);
 		EntitySpawnPlacementRegistry.register(SpackenmobsRegistry.MRBEAN.get(), PlacementType.ON_GROUND, Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawnInLight);
@@ -74,8 +76,9 @@ public class SpackenmobsEntities
 		GlobalEntityTypeAttributes.put(SpackenmobsRegistry.BAKAMITAI_CREEPER.get(), BakaMitaiCreeperEntity.registerAttributes().create());
 		GlobalEntityTypeAttributes.put(SpackenmobsRegistry.DRACHENLORD.get(), DrachenlordEntity.registerAttributes().create());
 		GlobalEntityTypeAttributes.put(SpackenmobsRegistry.FRIEDRICH_LIECHTENSTEIN.get(), FriedrichLiechtensteinEntity.registerAttributes().create());
-		GlobalEntityTypeAttributes.put(SpackenmobsRegistry.ISLAMIST.get(), IslamistEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(SpackenmobsRegistry.GISELA.get(), GiselaEntity.registerAttributes().create());
 		GlobalEntityTypeAttributes.put(SpackenmobsRegistry.HOLZSTAMMHUHN.get(), HolzstammhuhnEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(SpackenmobsRegistry.ISLAMIST.get(), IslamistEntity.registerAttributes().create());
 		GlobalEntityTypeAttributes.put(SpackenmobsRegistry.JENS.get(), JensEntity.registerAttributes().create());
 		GlobalEntityTypeAttributes.put(SpackenmobsRegistry.MARCELLDAVIS.get(), MarcellDAvisEntity.registerAttributes().create());
 		GlobalEntityTypeAttributes.put(SpackenmobsRegistry.MRBEAN.get(), MrBeanEntity.registerAttributes().create());
