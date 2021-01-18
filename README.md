@@ -1,5 +1,7 @@
 # Spackenmobs
 
+**DISCLAIMER** - This mod was created just for fun and is obviously not intended to offend or hurt anyone. It's a block game after all.
+
 ## Advanced Mobs
 
 ### Friedrich Liechtenstein
