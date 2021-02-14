@@ -22,7 +22,7 @@ public class Spackenmobs
 
 	public Spackenmobs()
 	{
-		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+		final IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigurationHandler.spec);
 		eventBus.register(ConfigurationHandler.class);
@@ -33,7 +33,7 @@ public class Spackenmobs
 		SpackenmobsRegistry.ENTITIES.register(eventBus);
 		SpackenmobsRegistry.SOUND_EVENTS.register(eventBus);
 
-		DistExecutor.runWhenOn(Dist.CLIENT, () -> () ->
+		DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> () ->
 		{
 			eventBus.addListener(ClientHandler::doClientStuff);
 			eventBus.addListener(ClientHandler::registerItemColors);
