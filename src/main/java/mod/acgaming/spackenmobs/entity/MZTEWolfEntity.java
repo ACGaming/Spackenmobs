@@ -130,7 +130,7 @@ public class MZTEWolfEntity extends TameableEntity implements IAngerable
 			return this.isTamed() && this.getHealth() < 10.0F ? SoundEvents.ENTITY_WOLF_WHINE : SoundEvents.ENTITY_WOLF_PANT;
 		} else
 		{
-			return SoundEvents.ENTITY_WOLF_AMBIENT;
+			return SpackenmobsRegistry.ENTITY_MZTEWOLF_AMBIENT.get();
 		}
 	}
 

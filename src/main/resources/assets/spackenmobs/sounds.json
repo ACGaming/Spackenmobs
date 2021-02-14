@@ -996,5 +996,17 @@
 				"name": "spackenmobs:gisela/hurt5"
 			}
 		]
+	},
+	"entities.mztewolf.ambient": {
+		"sounds": [{
+				"name": "spackenmobs:mztewolf/say1"
+			},
+			{
+				"name": "spackenmobs:mztewolf/say2"
+			},
+			{
+				"name": "spackenmobs:mztewolf/say3"
+			}
+		]
 	}
 }

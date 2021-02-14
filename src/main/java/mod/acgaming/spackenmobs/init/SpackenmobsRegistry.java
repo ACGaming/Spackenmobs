@@ -137,6 +137,8 @@ public class SpackenmobsRegistry
 	public static final RegistryObject<SoundEvent> ENTITY_MRBEAN_AMBIENT = SOUND_EVENTS.register("entities.mr_bean.ambient", () -> createSound("entities.mr_bean.ambient"));
 	public static final RegistryObject<SoundEvent> ENTITY_MRBEAN_HURT = SOUND_EVENTS.register("entities.mr_bean.hurt", () -> createSound("entities.mr_bean.hurt"));
 	public static final RegistryObject<SoundEvent> ENTITY_MRBEAN_DEATH = SOUND_EVENTS.register("entities.mr_bean.death", () -> createSound("entities.mr_bean.death"));
+	// MZTEWolf
+	public static final RegistryObject<SoundEvent> ENTITY_MZTEWOLF_AMBIENT = SOUND_EVENTS.register("entities.mztewolf.ambient", () -> createSound("entities.mztewolf.ambient"));
 	// Schalker
 	public static final RegistryObject<SoundEvent> ENTITY_SCHALKER_SHOOT = SOUND_EVENTS.register("entities.schalker.shoot", () -> createSound("entities.schalker.shoot"));
 	public static final RegistryObject<SoundEvent> ENTITY_SCHALKER_OPEN = SOUND_EVENTS.register("entities.schalker.open", () -> createSound("entities.schalker.open"));
