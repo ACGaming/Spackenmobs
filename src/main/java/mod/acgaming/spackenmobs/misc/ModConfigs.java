@@ -41,90 +41,90 @@ public class ModConfigs
     @Name("Allow tilera Ghast to spawn?")
     public static boolean tileraGhast_spawn = true;
 
-    @Name("ApoRed spawn probability:")
-    public static int ApoRed_weight = 15;
+    @Name("ApoRed spawn weight:")
+    public static int ApoRed_weight = 10;
     @Name("ApoRed min group size:")
     public static int ApoRed_min = 1;
     @Name("ApoRed max group size:")
-    public static int ApoRed_max = 2;
-    @Name("Baka Mitai Creeper spawn probability:")
+    public static int ApoRed_max = 1;
+    @Name("Baka Mitai Creeper spawn weight:")
     public static int BakaMitaiCreeper_weight = 10;
     @Name("Baka Mitai Creeper min group size:")
     public static int BakaMitaiCreeper_min = 1;
     @Name("Baka Mitai Creeper max group size:")
-    public static int BakaMitaiCreeper_max = 2;
-    @Name("Drachenlord spawn probability:")
-    public static int Drachenlord_weight = 15;
+    public static int BakaMitaiCreeper_max = 1;
+    @Name("Drachenlord spawn weight:")
+    public static int Drachenlord_weight = 10;
     @Name("Drachenlord min group size:")
     public static int Drachenlord_min = 1;
     @Name("Drachenlord max group size:")
-    public static int Drachenlord_max = 2;
-    @Name("Friedrich Liechtenstein spawn probability:")
-    public static int Friedrich_weight = 15;
+    public static int Drachenlord_max = 1;
+    @Name("Friedrich Liechtenstein spawn weight:")
+    public static int Friedrich_weight = 10;
     @Name("Friedrich Liechtenstein min group size:")
     public static int Friedrich_min = 1;
     @Name("Friedrich Liechtenstein max group size:")
-    public static int Friedrich_max = 2;
-    @Name("Holzstammhuhn spawn probability:")
-    public static int Holzstammhuhn_weight = 15;
+    public static int Friedrich_max = 1;
+    @Name("Holzstammhuhn spawn weight:")
+    public static int Holzstammhuhn_weight = 10;
     @Name("Holzstammhuhn min group size:")
     public static int Holzstammhuhn_min = 1;
     @Name("Holzstammhuhn max group size:")
-    public static int Holzstammhuhn_max = 2;
-    @Name("Islamist spawn probability:")
-    public static int Islamist_weight = 15;
+    public static int Holzstammhuhn_max = 1;
+    @Name("Islamist spawn weight:")
+    public static int Islamist_weight = 10;
     @Name("Islamist min group size:")
     public static int Islamist_min = 1;
     @Name("Islamist max group size:")
-    public static int Islamist_max = 2;
-    @Name("Jens spawn probability:")
-    public static int Jens_weight = 15;
+    public static int Islamist_max = 1;
+    @Name("Jens spawn weight:")
+    public static int Jens_weight = 10;
     @Name("Jens min group size:")
     public static int Jens_min = 1;
     @Name("Jens max group size:")
-    public static int Jens_max = 2;
-    @Name("Marcell D'Avis spawn probability:")
-    public static int MarcellDAvis_weight = 15;
+    public static int Jens_max = 1;
+    @Name("Marcell D'Avis spawn weight:")
+    public static int MarcellDAvis_weight = 10;
     @Name("Marcell D'Avis min group size:")
     public static int MarcellDAvis_min = 1;
     @Name("Marcell D'Avis max group size:")
-    public static int MarcellDAvis_max = 2;
-    @Name("Mr. Bean spawn probability:")
-    public static int MrBean_weight = 15;
+    public static int MarcellDAvis_max = 1;
+    @Name("Mr. Bean spawn weight:")
+    public static int MrBean_weight = 10;
     @Name("Mr. Bean min group size:")
     public static int MrBean_min = 1;
     @Name("Mr. Bean max group size:")
-    public static int MrBean_max = 2;
-    @Name("Schalker spawn probability:")
+    public static int MrBean_max = 1;
+    @Name("Schalker spawn weight:")
     public static int Schalker_weight = 10;
     @Name("Schalker min group size:")
     public static int Schalker_min = 1;
     @Name("Schalker max group size:")
-    public static int Schalker_max = 2;
-    @Name("Smava Creeper spawn probability:")
-    public static int SmavaCreeper_weight = 15;
+    public static int Schalker_max = 1;
+    @Name("Smava Creeper spawn weight:")
+    public static int SmavaCreeper_weight = 10;
     @Name("Smava Creeper min group size:")
     public static int SmavaCreeper_min = 1;
     @Name("Smava Creeper max group size:")
-    public static int SmavaCreeper_max = 2;
-    @Name("MZTEWolf spawn probability:")
-    public static int MZTEWolf_weight = 15;
+    public static int SmavaCreeper_max = 1;
+    @Name("MZTEWolf spawn weight:")
+    public static int MZTEWolf_weight = 10;
     @Name("MZTEWolf min group size:")
     public static int MZTEWolf_min = 1;
     @Name("MZTEWolf max group size:")
-    public static int MZTEWolf_max = 2;
-    @Name("Gisela spawn probability:")
-    public static int Gisela_weight = 15;
+    public static int MZTEWolf_max = 1;
+    @Name("Gisela spawn weight:")
+    public static int Gisela_weight = 10;
     @Name("Gisela min group size:")
     public static int Gisela_min = 1;
     @Name("Gisela max group size:")
-    public static int Gisela_max = 2;
-    @Name("tilera Ghast spawn probability:")
-    public static int tileraGhast_weight = 15;
+    public static int Gisela_max = 1;
+    @Name("tilera Ghast spawn weight:")
+    public static int tileraGhast_weight = 10;
     @Name("tilera Ghast min group size:")
     public static int tileraGhast_min = 1;
     @Name("tilera Ghast max group size:")
-    public static int tileraGhast_max = 2;
+    public static int tileraGhast_max = 1;
 
     @Name("Time in seconds Jens needs to digest:")
     public static int Jens_digest_time = 120;

@@ -238,7 +238,5 @@ public class RegistryHandler
         event.getRegistry().register(ModSoundEvents.ENTITY_GISELA_AMBIENT);
         ModSoundEvents.ENTITY_GISELA_HURT.setRegistryName(new ResourceLocation("spackenmobs:entities.gisela.hurt"));
         event.getRegistry().register(ModSoundEvents.ENTITY_GISELA_HURT);
-        ModSoundEvents.ENTITY_GISELA_DEATH.setRegistryName(new ResourceLocation("spackenmobs:entities.gisela.death"));
-        event.getRegistry().register(ModSoundEvents.ENTITY_GISELA_DEATH);
     }
 }

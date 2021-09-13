@@ -56,5 +56,4 @@ public class ModSoundEvents
 
     public static final SoundEvent ENTITY_GISELA_AMBIENT = new SoundEvent(new ResourceLocation("spackenmobs:entities.gisela.ambient"));
     public static final SoundEvent ENTITY_GISELA_HURT = new SoundEvent(new ResourceLocation("spackenmobs:entities.gisela.hurt"));
-    public static final SoundEvent ENTITY_GISELA_DEATH = new SoundEvent(new ResourceLocation("spackenmobs:entities.gisela.death"));
 }
