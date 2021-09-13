@@ -889,7 +889,10 @@
   "entities.jens.poop": {
     "sounds": [
       {
-        "name": "spackenmobs:jens/poop"
+        "name": "spackenmobs:jens/poop1"
+      },
+      {
+        "name": "spackenmobs:jens/poop2"
       }
     ]
   },
@@ -949,6 +952,111 @@
     "sounds": [
       {
         "name": "spackenmobs:friedrich/hurt"
+      }
+    ]
+  },
+  "entities.gisela.ambient": {
+    "sounds": [
+      {
+        "name": "spackenmobs:gisela/say1"
+      },
+      {
+        "name": "spackenmobs:gisela/say2"
+      },
+      {
+        "name": "spackenmobs:gisela/say3"
+      },
+      {
+        "name": "spackenmobs:gisela/say4"
+      },
+      {
+        "name": "spackenmobs:gisela/say5"
+      },
+      {
+        "name": "spackenmobs:gisela/say6"
+      },
+      {
+        "name": "spackenmobs:gisela/say7"
+      },
+      {
+        "name": "spackenmobs:gisela/say8"
+      },
+      {
+        "name": "spackenmobs:gisela/say9"
+      },
+      {
+        "name": "spackenmobs:gisela/say10"
+      },
+      {
+        "name": "spackenmobs:gisela/say11"
+      },
+      {
+        "name": "spackenmobs:gisela/say12"
+      },
+      {
+        "name": "spackenmobs:gisela/say13"
+      },
+      {
+        "name": "spackenmobs:gisela/say14"
+      },
+      {
+        "name": "spackenmobs:gisela/say15"
+      },
+      {
+        "name": "spackenmobs:gisela/say16"
+      },
+      {
+        "name": "spackenmobs:gisela/say17"
+      },
+      {
+        "name": "spackenmobs:gisela/say18"
+      },
+      {
+        "name": "spackenmobs:gisela/say19"
+      },
+      {
+        "name": "spackenmobs:gisela/say20"
+      },
+      {
+        "name": "spackenmobs:gisela/say21"
+      },
+      {
+        "name": "spackenmobs:gisela/say22"
+      },
+      {
+        "name": "spackenmobs:gisela/say23"
+      }
+    ]
+  },
+  "entities.gisela.hurt": {
+    "sounds": [
+      {
+        "name": "spackenmobs:gisela/hurt1"
+      },
+      {
+        "name": "spackenmobs:gisela/hurt2"
+      },
+      {
+        "name": "spackenmobs:gisela/hurt3"
+      },
+      {
+        "name": "spackenmobs:gisela/hurt4"
+      },
+      {
+        "name": "spackenmobs:gisela/hurt5"
+      }
+    ]
+  },
+  "entities.mztewolf.ambient": {
+    "sounds": [
+      {
+        "name": "spackenmobs:mztewolf/say1"
+      },
+      {
+        "name": "spackenmobs:mztewolf/say2"
+      },
+      {
+        "name": "spackenmobs:mztewolf/say3"
       }
     ]
   }
