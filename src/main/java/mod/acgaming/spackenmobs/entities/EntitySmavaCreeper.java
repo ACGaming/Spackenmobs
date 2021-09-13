@@ -1,7 +1,8 @@
 package mod.acgaming.spackenmobs.entities;
 
-import mod.acgaming.spackenmobs.entities.ai.EntityAISmavaCreeperSwell;
-import mod.acgaming.spackenmobs.misc.ModSoundEvents;
+import java.util.Collection;
+import javax.annotation.Nullable;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAreaEffectCloud;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -29,285 +30,286 @@ import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
-import java.util.Collection;
+import mod.acgaming.spackenmobs.entities.ai.EntityAISmavaCreeperSwell;
+import mod.acgaming.spackenmobs.misc.ModSoundEvents;
 
 public class EntitySmavaCreeper extends EntityMob
 {
-	private static final DataParameter<Integer> STATE = EntityDataManager.createKey(EntitySmavaCreeper.class, DataSerializers.VARINT);
-	private static final DataParameter<Boolean> POWERED = EntityDataManager.createKey(EntitySmavaCreeper.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> IGNITED = EntityDataManager.createKey(EntitySmavaCreeper.class, DataSerializers.BOOLEAN);
-	private int lastActiveTime;
-	private int timeSinceIgnited;
-	private int fuseTime = 20;
-	private int explosionRadius = 6;
-	private int droppedSkulls;
+    private static final DataParameter<Integer> STATE = EntityDataManager.createKey(EntitySmavaCreeper.class, DataSerializers.VARINT);
+    private static final DataParameter<Boolean> POWERED = EntityDataManager.createKey(EntitySmavaCreeper.class, DataSerializers.BOOLEAN);
+    private static final DataParameter<Boolean> IGNITED = EntityDataManager.createKey(EntitySmavaCreeper.class, DataSerializers.BOOLEAN);
+    private int lastActiveTime;
+    private int timeSinceIgnited;
+    private int fuseTime = 20;
+    private int explosionRadius = 6;
+    private int droppedSkulls;
 
-	public EntitySmavaCreeper(World worldIn)
-	{
-		super(worldIn);
-		this.setSize(0.6F, 1.7F);
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.5D);
-	}
+    public EntitySmavaCreeper(World worldIn)
+    {
+        super(worldIn);
+        this.setSize(0.6F, 1.7F);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.5D);
+    }
 
-	protected void initEntityAI()
-	{
-		this.tasks.addTask(1, new EntityAISwimming(this));
-		this.tasks.addTask(2, new EntityAISmavaCreeperSwell(this));
-		this.tasks.addTask(3, new EntityAIAvoidEntity(this, EntityOcelot.class, 6.0F, 1.0D, 1.2D));
-		this.tasks.addTask(4, new EntityAIAttackMelee(this, 1.0D, false));
-		this.tasks.addTask(5, new EntityAIWanderAvoidWater(this, 0.8D));
-		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-		this.tasks.addTask(6, new EntityAILookIdle(this));
-		this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
-		this.targetTasks.addTask(2, new EntityAIHurtByTarget(this, false));
-	}
+    public void onUpdate()
+    {
+        if (this.isEntityAlive())
+        {
+            this.lastActiveTime = this.timeSinceIgnited;
 
-	protected void applyEntityAttributes()
-	{
-		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-	}
+            if (this.hasIgnited())
+            {
+                this.setCreeperState(1);
+            }
 
-	public int getMaxFallHeight()
-	{
-		return this.getAttackTarget() == null ? 3 : 3 + (int) (this.getHealth() - 1.0F);
-	}
+            int i = this.getCreeperState();
 
-	public void fall(float distance, float damageMultiplier)
-	{
-		super.fall(distance, damageMultiplier);
-		this.timeSinceIgnited = (int) ((float) this.timeSinceIgnited + distance * 1.5F);
+            if (i > 0 && this.timeSinceIgnited == 0)
+            {
+                this.playSound(ModSoundEvents.ENTITY_SMAVACREEPER_FUSE, 1.0F, 1.0F);
+            }
 
-		if (this.timeSinceIgnited > this.fuseTime - 5)
-		{
-			this.timeSinceIgnited = this.fuseTime - 5;
-		}
-	}
+            this.timeSinceIgnited += i;
 
-	protected void entityInit()
-	{
-		super.entityInit();
-		this.dataManager.register(STATE, -1);
-		this.dataManager.register(POWERED, Boolean.FALSE);
-		this.dataManager.register(IGNITED, Boolean.FALSE);
-	}
+            if (this.timeSinceIgnited < 0)
+            {
+                this.timeSinceIgnited = 0;
+            }
 
-	public void writeEntityToNBT(NBTTagCompound compound)
-	{
-		super.writeEntityToNBT(compound);
+            if (this.timeSinceIgnited >= this.fuseTime)
+            {
+                this.timeSinceIgnited = this.fuseTime;
+                this.explode();
+            }
+        }
+        super.onUpdate();
+    }
 
-		if (this.dataManager.get(POWERED))
-		{
-			compound.setBoolean("powered", true);
-		}
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn)
+    {
+        return ModSoundEvents.ENTITY_SMAVACREEPER_HURT;
+    }
 
-		compound.setShort("Fuse", (short) this.fuseTime);
-		compound.setByte("ExplosionRadius", (byte) this.explosionRadius);
-		compound.setBoolean("ignited", this.hasIgnited());
-	}
+    protected SoundEvent getDeathSound()
+    {
+        return SoundEvents.ENTITY_CREEPER_DEATH;
+    }
 
-	public void readEntityFromNBT(NBTTagCompound compound)
-	{
-		super.readEntityFromNBT(compound);
-		this.dataManager.set(POWERED, compound.getBoolean("powered"));
+    public boolean attackEntityAsMob(Entity entityIn)
+    {
+        return true;
+    }
 
-		if (compound.hasKey("Fuse", 99))
-		{
-			this.fuseTime = compound.getShort("Fuse");
-		}
+    protected void applyEntityAttributes()
+    {
+        super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
+    }
 
-		if (compound.hasKey("ExplosionRadius", 99))
-		{
-			this.explosionRadius = compound.getByte("ExplosionRadius");
-		}
+    public void onDeath(DamageSource cause)
+    {
+        super.onDeath(cause);
 
-		if (compound.getBoolean("ignited"))
-		{
-			this.ignite();
-		}
-	}
+        if (this.world.getGameRules().getBoolean("doMobLoot"))
+        {
+            if (cause.getTrueSource() instanceof EntitySkeleton)
+            {
+                int i = Item.getIdFromItem(Items.RECORD_13);
+                int j = Item.getIdFromItem(Items.RECORD_WAIT);
+                int k = i + this.rand.nextInt(j - i + 1);
+                this.dropItem(Item.getItemById(k), 1);
+            }
+            else if (cause.getTrueSource() instanceof mod.acgaming.spackenmobs.entities.EntitySmavaCreeper && cause.getTrueSource() != this && ((mod.acgaming.spackenmobs.entities.EntitySmavaCreeper) cause.getTrueSource()).getPowered() && ((mod.acgaming.spackenmobs.entities.EntitySmavaCreeper) cause.getTrueSource()).ableToCauseSkullDrop())
+            {
+                ((mod.acgaming.spackenmobs.entities.EntitySmavaCreeper) cause.getTrueSource()).incrementDroppedSkulls();
+                this.entityDropItem(new ItemStack(Items.SKULL, 1, 4), 0.0F);
+            }
+        }
+    }
 
-	public void onUpdate()
-	{
-		if (this.isEntityAlive())
-		{
-			this.lastActiveTime = this.timeSinceIgnited;
+    public void fall(float distance, float damageMultiplier)
+    {
+        super.fall(distance, damageMultiplier);
+        this.timeSinceIgnited = (int) ((float) this.timeSinceIgnited + distance * 1.5F);
 
-			if (this.hasIgnited())
-			{
-				this.setCreeperState(1);
-			}
+        if (this.timeSinceIgnited > this.fuseTime - 5)
+        {
+            this.timeSinceIgnited = this.fuseTime - 5;
+        }
+    }
 
-			int i = this.getCreeperState();
+    public boolean getPowered()
+    {
+        return this.dataManager.get(POWERED);
+    }
 
-			if (i > 0 && this.timeSinceIgnited == 0)
-			{
-				this.playSound(ModSoundEvents.ENTITY_SMAVACREEPER_FUSE, 1.0F, 1.0F);
-			}
+    @SideOnly(Side.CLIENT)
+    public float getCreeperFlashIntensity(float p_70831_1_)
+    {
+        return ((float) this.lastActiveTime + (float) (this.timeSinceIgnited - this.lastActiveTime) * p_70831_1_) / (float) (this.fuseTime - 2);
+    }
 
-			this.timeSinceIgnited += i;
+    public int getCreeperState()
+    {
+        return this.dataManager.get(STATE);
+    }
 
-			if (this.timeSinceIgnited < 0)
-			{
-				this.timeSinceIgnited = 0;
-			}
+    public void setCreeperState(int state)
+    {
+        this.dataManager.set(STATE, state);
+    }
 
-			if (this.timeSinceIgnited >= this.fuseTime)
-			{
-				this.timeSinceIgnited = this.fuseTime;
-				this.explode();
-			}
-		}
-		super.onUpdate();
-	}
+    public void onStruckByLightning(EntityLightningBolt lightningBolt)
+    {
+        super.onStruckByLightning(lightningBolt);
+        this.dataManager.set(POWERED, Boolean.TRUE);
+    }
 
-	protected SoundEvent getAmbientSound()
-	{
-		return ModSoundEvents.ENTITY_SMAVACREEPER_AMBIENT;
-	}
+    public boolean hasIgnited()
+    {
+        return this.dataManager.get(IGNITED);
+    }
 
-	protected SoundEvent getHurtSound(DamageSource damageSourceIn)
-	{
-		return ModSoundEvents.ENTITY_SMAVACREEPER_HURT;
-	}
+    public void ignite()
+    {
+        this.dataManager.set(IGNITED, Boolean.TRUE);
+    }
 
-	protected SoundEvent getDeathSound()
-	{
-		return SoundEvents.ENTITY_CREEPER_DEATH;
-	}
+    public boolean ableToCauseSkullDrop()
+    {
+        return this.droppedSkulls < 1 && this.world.getGameRules().getBoolean("doMobLoot");
+    }
 
-	public void onDeath(DamageSource cause)
-	{
-		super.onDeath(cause);
+    public void incrementDroppedSkulls()
+    {
+        ++this.droppedSkulls;
+    }
 
-		if (this.world.getGameRules().getBoolean("doMobLoot"))
-		{
-			if (cause.getTrueSource() instanceof EntitySkeleton)
-			{
-				int i = Item.getIdFromItem(Items.RECORD_13);
-				int j = Item.getIdFromItem(Items.RECORD_WAIT);
-				int k = i + this.rand.nextInt(j - i + 1);
-				this.dropItem(Item.getItemById(k), 1);
-			} else if (cause.getTrueSource() instanceof mod.acgaming.spackenmobs.entities.EntitySmavaCreeper && cause.getTrueSource() != this && ((mod.acgaming.spackenmobs.entities.EntitySmavaCreeper) cause.getTrueSource()).getPowered() && ((mod.acgaming.spackenmobs.entities.EntitySmavaCreeper) cause.getTrueSource()).ableToCauseSkullDrop())
-			{
-				((mod.acgaming.spackenmobs.entities.EntitySmavaCreeper) cause.getTrueSource()).incrementDroppedSkulls();
-				this.entityDropItem(new ItemStack(Items.SKULL, 1, 4), 0.0F);
-			}
-		}
-	}
+    protected void initEntityAI()
+    {
+        this.tasks.addTask(1, new EntityAISwimming(this));
+        this.tasks.addTask(2, new EntityAISmavaCreeperSwell(this));
+        this.tasks.addTask(3, new EntityAIAvoidEntity(this, EntityOcelot.class, 6.0F, 1.0D, 1.2D));
+        this.tasks.addTask(4, new EntityAIAttackMelee(this, 1.0D, false));
+        this.tasks.addTask(5, new EntityAIWanderAvoidWater(this, 0.8D));
+        this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+        this.tasks.addTask(6, new EntityAILookIdle(this));
+        this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
+        this.targetTasks.addTask(2, new EntityAIHurtByTarget(this, false));
+    }
 
-	public boolean attackEntityAsMob(Entity entityIn)
-	{
-		return true;
-	}
+    protected void entityInit()
+    {
+        super.entityInit();
+        this.dataManager.register(STATE, -1);
+        this.dataManager.register(POWERED, Boolean.FALSE);
+        this.dataManager.register(IGNITED, Boolean.FALSE);
+    }
 
-	public boolean getPowered()
-	{
-		return this.dataManager.get(POWERED);
-	}
+    protected SoundEvent getAmbientSound()
+    {
+        return ModSoundEvents.ENTITY_SMAVACREEPER_AMBIENT;
+    }
 
-	@SideOnly(Side.CLIENT)
-	public float getCreeperFlashIntensity(float p_70831_1_)
-	{
-		return ((float) this.lastActiveTime + (float) (this.timeSinceIgnited - this.lastActiveTime) * p_70831_1_) / (float) (this.fuseTime - 2);
-	}
+    public void writeEntityToNBT(NBTTagCompound compound)
+    {
+        super.writeEntityToNBT(compound);
 
-	@Nullable
-	protected ResourceLocation getLootTable()
-	{
-		return LootTableList.ENTITIES_CREEPER;
-	}
+        if (this.dataManager.get(POWERED))
+        {
+            compound.setBoolean("powered", true);
+        }
 
-	public int getCreeperState()
-	{
-		return this.dataManager.get(STATE);
-	}
+        compound.setShort("Fuse", (short) this.fuseTime);
+        compound.setByte("ExplosionRadius", (byte) this.explosionRadius);
+        compound.setBoolean("ignited", this.hasIgnited());
+    }
 
-	public void setCreeperState(int state)
-	{
-		this.dataManager.set(STATE, state);
-	}
+    public void readEntityFromNBT(NBTTagCompound compound)
+    {
+        super.readEntityFromNBT(compound);
+        this.dataManager.set(POWERED, compound.getBoolean("powered"));
 
-	public void onStruckByLightning(EntityLightningBolt lightningBolt)
-	{
-		super.onStruckByLightning(lightningBolt);
-		this.dataManager.set(POWERED, Boolean.TRUE);
-	}
+        if (compound.hasKey("Fuse", 99))
+        {
+            this.fuseTime = compound.getShort("Fuse");
+        }
 
-	protected boolean processInteract(EntityPlayer player, EnumHand hand)
-	{
-		ItemStack itemstack = player.getHeldItem(hand);
+        if (compound.hasKey("ExplosionRadius", 99))
+        {
+            this.explosionRadius = compound.getByte("ExplosionRadius");
+        }
 
-		if (itemstack.getItem() == Items.FLINT_AND_STEEL)
-		{
-			this.world.playSound(player, this.posX, this.posY, this.posZ, SoundEvents.ITEM_FLINTANDSTEEL_USE, this.getSoundCategory(), 1.0F, this.rand.nextFloat() * 0.4F + 0.8F);
-			player.swingArm(hand);
+        if (compound.getBoolean("ignited"))
+        {
+            this.ignite();
+        }
+    }
 
-			if (!this.world.isRemote)
-			{
-				this.ignite();
-				itemstack.damageItem(1, player);
-				return true;
-			}
-		}
+    @Nullable
+    protected ResourceLocation getLootTable()
+    {
+        return LootTableList.ENTITIES_CREEPER;
+    }
 
-		return super.processInteract(player, hand);
-	}
+    public int getMaxFallHeight()
+    {
+        return this.getAttackTarget() == null ? 3 : 3 + (int) (this.getHealth() - 1.0F);
+    }
 
-	private void explode()
-	{
-		if (!this.world.isRemote)
-		{
-			boolean flag = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.world, this);
-			float f = this.getPowered() ? 2.0F : 1.0F;
-			this.dead = true;
-			this.world.playSound(null, getPosition(), ModSoundEvents.ENTITY_SMAVACREEPER_BLOW, getSoundCategory(), 5.0F, 1.0F);
-			this.world.createExplosion(this, this.posX, this.posY, this.posZ, (float) this.explosionRadius * f, flag);
-			this.setDead();
-			this.spawnLingeringCloud();
-		}
-	}
+    protected boolean processInteract(EntityPlayer player, EnumHand hand)
+    {
+        ItemStack itemstack = player.getHeldItem(hand);
 
-	private void spawnLingeringCloud()
-	{
-		Collection<PotionEffect> collection = this.getActivePotionEffects();
+        if (itemstack.getItem() == Items.FLINT_AND_STEEL)
+        {
+            this.world.playSound(player, this.posX, this.posY, this.posZ, SoundEvents.ITEM_FLINTANDSTEEL_USE, this.getSoundCategory(), 1.0F, this.rand.nextFloat() * 0.4F + 0.8F);
+            player.swingArm(hand);
 
-		if (!collection.isEmpty())
-		{
-			EntityAreaEffectCloud entityareaeffectcloud = new EntityAreaEffectCloud(this.world, this.posX, this.posY, this.posZ);
-			entityareaeffectcloud.setRadius(2.5F);
-			entityareaeffectcloud.setRadiusOnUse(-0.5F);
-			entityareaeffectcloud.setWaitTime(10);
-			entityareaeffectcloud.setDuration(entityareaeffectcloud.getDuration() / 2);
-			entityareaeffectcloud.setRadiusPerTick(-entityareaeffectcloud.getRadius() / (float) entityareaeffectcloud.getDuration());
+            if (!this.world.isRemote)
+            {
+                this.ignite();
+                itemstack.damageItem(1, player);
+                return true;
+            }
+        }
 
-			for (PotionEffect potioneffect : collection)
-			{
-				entityareaeffectcloud.addEffect(new PotionEffect(potioneffect));
-			}
+        return super.processInteract(player, hand);
+    }
 
-			this.world.spawnEntity(entityareaeffectcloud);
-		}
-	}
+    private void explode()
+    {
+        if (!this.world.isRemote)
+        {
+            boolean flag = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.world, this);
+            float f = this.getPowered() ? 2.0F : 1.0F;
+            this.dead = true;
+            this.world.playSound(null, getPosition(), ModSoundEvents.ENTITY_SMAVACREEPER_BLOW, getSoundCategory(), 5.0F, 1.0F);
+            this.world.createExplosion(this, this.posX, this.posY, this.posZ, (float) this.explosionRadius * f, flag);
+            this.setDead();
+            this.spawnLingeringCloud();
+        }
+    }
 
-	public boolean hasIgnited()
-	{
-		return this.dataManager.get(IGNITED);
-	}
+    private void spawnLingeringCloud()
+    {
+        Collection<PotionEffect> collection = this.getActivePotionEffects();
 
-	public void ignite()
-	{
-		this.dataManager.set(IGNITED, Boolean.TRUE);
-	}
+        if (!collection.isEmpty())
+        {
+            EntityAreaEffectCloud entityareaeffectcloud = new EntityAreaEffectCloud(this.world, this.posX, this.posY, this.posZ);
+            entityareaeffectcloud.setRadius(2.5F);
+            entityareaeffectcloud.setRadiusOnUse(-0.5F);
+            entityareaeffectcloud.setWaitTime(10);
+            entityareaeffectcloud.setDuration(entityareaeffectcloud.getDuration() / 2);
+            entityareaeffectcloud.setRadiusPerTick(-entityareaeffectcloud.getRadius() / (float) entityareaeffectcloud.getDuration());
 
-	public boolean ableToCauseSkullDrop()
-	{
-		return this.droppedSkulls < 1 && this.world.getGameRules().getBoolean("doMobLoot");
-	}
+            for (PotionEffect potioneffect : collection)
+            {
+                entityareaeffectcloud.addEffect(new PotionEffect(potioneffect));
+            }
 
-	public void incrementDroppedSkulls()
-	{
-		++this.droppedSkulls;
-	}
+            this.world.spawnEntity(entityareaeffectcloud);
+        }
+    }
 }

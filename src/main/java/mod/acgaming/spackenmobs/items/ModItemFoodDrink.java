@@ -9,29 +9,29 @@ import net.minecraft.world.World;
 
 public class ModItemFoodDrink extends ModItemFoodBase
 {
-	PotionEffect effect;
+    PotionEffect effect;
 
-	public ModItemFoodDrink(String name, int amount, float saturation, boolean isAnimalFood, PotionEffect effect)
-	{
-		super(name, amount, saturation, isAnimalFood);
-		setAlwaysEdible();
+    public ModItemFoodDrink(String name, int amount, float saturation, boolean isAnimalFood, PotionEffect effect)
+    {
+        super(name, amount, saturation, isAnimalFood);
+        setAlwaysEdible();
 
-		this.effect = effect;
-	}
+        this.effect = effect;
+    }
 
-	@Override
-	protected void onFoodEaten(ItemStack stack, World worldIn, EntityPlayer player)
-	{
-		if (!worldIn.isRemote)
-		{
-			player.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration(), effect.getAmplifier(), effect.getIsAmbient(), effect.doesShowParticles()));
-			player.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
-		}
-	}
+    @Override
+    protected void onFoodEaten(ItemStack stack, World worldIn, EntityPlayer player)
+    {
+        if (!worldIn.isRemote)
+        {
+            player.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration(), effect.getAmplifier(), effect.getIsAmbient(), effect.doesShowParticles()));
+            player.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
+        }
+    }
 
-	@Override
-	public EnumAction getItemUseAction(ItemStack stack)
-	{
-		return EnumAction.DRINK;
-	}
+    @Override
+    public EnumAction getItemUseAction(ItemStack stack)
+    {
+        return EnumAction.DRINK;
+    }
 }

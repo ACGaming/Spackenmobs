@@ -9,31 +9,31 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import mod.acgaming.spackenmobs.entities.EntityJens;
+import mod.acgaming.spackenmobs.entities.EntityGisela;
 
 @SideOnly(Side.CLIENT)
-public class RenderJens extends RenderBiped<EntityJens>
+public class RenderGisela extends RenderBiped<EntityGisela>
 {
     public static final Factory FACTORY = new Factory();
-    private static final ResourceLocation JENS_TEXTURE = new ResourceLocation("spackenmobs:textures/entities/jens.png");
+    private static final ResourceLocation GISELA_TEXTURE = new ResourceLocation("spackenmobs:textures/entities/gisela.png");
 
-    public RenderJens(RenderManager renderManagerIn)
+    public RenderGisela(RenderManager renderManagerIn)
     {
         super(renderManagerIn, new ModelBiped(), 0.25F);
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(EntityJens entity)
+    protected ResourceLocation getEntityTexture(EntityGisela entity)
     {
-        return JENS_TEXTURE;
+        return GISELA_TEXTURE;
     }
 
-    private static class Factory implements IRenderFactory<EntityJens>
+    private static class Factory implements IRenderFactory<EntityGisela>
     {
         @Override
-        public Render<? super EntityJens> createRenderFor(RenderManager manager)
+        public Render<? super EntityGisela> createRenderFor(RenderManager manager)
         {
-            return new RenderJens(manager);
+            return new RenderGisela(manager);
         }
     }
 }
