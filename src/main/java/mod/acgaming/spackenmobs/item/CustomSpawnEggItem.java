@@ -1,5 +1,10 @@
 package mod.acgaming.spackenmobs.item;
 
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.Supplier;
+import javax.annotation.Nullable;
+
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
@@ -30,132 +35,134 @@ import net.minecraft.world.spawner.AbstractSpawner;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nullable;
-import java.util.Map;
-import java.util.Objects;
-import java.util.function.Supplier;
-
 public class CustomSpawnEggItem extends Item
 {
-	private static final Map<Supplier<EntityType<?>>, CustomSpawnEggItem> EGGS = Maps.newIdentityHashMap();
-	private final Supplier<EntityType<?>> typeIn;
-	private final int primaryColor;
-	private final int secondaryColor;
+    private static final Map<Supplier<EntityType<?>>, CustomSpawnEggItem> EGGS = Maps.newIdentityHashMap();
 
-	public CustomSpawnEggItem(Supplier<EntityType<?>> type, int primary, int secondary, Properties properties)
-	{
-		super(properties);
-		this.typeIn = type;
-		this.primaryColor = primary;
-		this.secondaryColor = secondary;
-		EGGS.put(type, this);
-	}
+    public static Iterable<CustomSpawnEggItem> getEggs()
+    {
+        return Iterables.unmodifiableIterable(EGGS.values());
+    }
 
-	public static Iterable<CustomSpawnEggItem> getEggs()
-	{
-		return Iterables.unmodifiableIterable(EGGS.values());
-	}
+    private final Supplier<EntityType<?>> typeIn;
+    private final int primaryColor;
+    private final int secondaryColor;
 
-	public ActionResultType onItemUse(ItemUseContext context)
-	{
-		World worldIn = context.getWorld();
-		if (!worldIn.isRemote)
-		{
-			ItemStack stack = context.getItem();
-			BlockPos pos = context.getPos();
-			Direction dir = context.getFace();
-			BlockState state = worldIn.getBlockState(pos);
-			Block block = state.getBlock();
-			if (block == Blocks.SPAWNER)
-			{
-				TileEntity tile = worldIn.getTileEntity(pos);
-				if (tile instanceof MobSpawnerTileEntity)
-				{
-					AbstractSpawner spawner = ((MobSpawnerTileEntity) tile).getSpawnerBaseLogic();
-					EntityType<?> type = this.getType(stack.getTag());
-					spawner.setEntityType(type);
-					tile.markDirty();
-					worldIn.notifyBlockUpdate(pos, state, state, 3);
-					stack.shrink(1);
-					return ActionResultType.SUCCESS;
-				}
-			}
+    public CustomSpawnEggItem(Supplier<EntityType<?>> type, int primary, int secondary, Properties properties)
+    {
+        super(properties);
+        this.typeIn = type;
+        this.primaryColor = primary;
+        this.secondaryColor = secondary;
+        EGGS.put(type, this);
+    }
 
-			BlockPos pos2;
-			if (state.getCollisionShape(worldIn, pos).isEmpty())
-			{
-				pos2 = pos;
-			} else
-			{
-				pos2 = pos.offset(dir);
-			}
+    public ActionResultType onItemUse(ItemUseContext context)
+    {
+        World worldIn = context.getWorld();
+        if (!worldIn.isRemote)
+        {
+            ItemStack stack = context.getItem();
+            BlockPos pos = context.getPos();
+            Direction dir = context.getFace();
+            BlockState state = worldIn.getBlockState(pos);
+            Block block = state.getBlock();
+            if (block == Blocks.SPAWNER)
+            {
+                TileEntity tile = worldIn.getTileEntity(pos);
+                if (tile instanceof MobSpawnerTileEntity)
+                {
+                    AbstractSpawner spawner = ((MobSpawnerTileEntity) tile).getSpawnerBaseLogic();
+                    EntityType<?> type = this.getType(stack.getTag());
+                    spawner.setEntityType(type);
+                    tile.markDirty();
+                    worldIn.notifyBlockUpdate(pos, state, state, 3);
+                    stack.shrink(1);
+                    return ActionResultType.SUCCESS;
+                }
+            }
 
-			EntityType<?> type = this.getType(stack.getTag());
-			if (type.spawn((ServerWorld) worldIn, stack, context.getPlayer(), pos2, SpawnReason.SPAWN_EGG, true, !Objects.equals(pos, pos2) && dir == Direction.UP) != null)
-			{
-				stack.shrink(1);
-			}
+            BlockPos pos2;
+            if (state.getCollisionShape(worldIn, pos).isEmpty())
+            {
+                pos2 = pos;
+            }
+            else
+            {
+                pos2 = pos.offset(dir);
+            }
 
-		}
-		return ActionResultType.SUCCESS;
-	}
+            EntityType<?> type = this.getType(stack.getTag());
+            if (type.spawn((ServerWorld) worldIn, stack, context.getPlayer(), pos2, SpawnReason.SPAWN_EGG, true, !Objects.equals(pos, pos2) && dir == Direction.UP) != null)
+            {
+                stack.shrink(1);
+            }
 
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn)
-	{
-		ItemStack itemstack = playerIn.getHeldItem(handIn);
-		BlockRayTraceResult raytraceresult = rayTrace(worldIn, playerIn, RayTraceContext.FluidMode.SOURCE_ONLY);
-		if (raytraceresult.getType() != RayTraceResult.Type.BLOCK)
-		{
-			return ActionResult.resultPass(itemstack);
-		} else if (worldIn.isRemote)
-		{
-			return ActionResult.resultSuccess(itemstack);
-		} else
-		{
-			BlockPos blockpos = raytraceresult.getPos();
-			if (!(worldIn.getBlockState(blockpos).getBlock() instanceof FlowingFluidBlock))
-			{
-				return ActionResult.resultPass(itemstack);
-			} else if (worldIn.isBlockModifiable(playerIn, blockpos) && playerIn.canPlayerEdit(blockpos, raytraceresult.getFace(), itemstack))
-			{
-				EntityType<?> entitytype = this.getType(itemstack.getTag());
-				if (entitytype.spawn((ServerWorld) worldIn, itemstack, playerIn, blockpos, SpawnReason.SPAWN_EGG, false, false) == null)
-				{
-					return ActionResult.resultPass(itemstack);
-				} else
-				{
-					if (!playerIn.abilities.isCreativeMode)
-					{
-						itemstack.shrink(1);
-					}
+        }
+        return ActionResultType.SUCCESS;
+    }
 
-					playerIn.addStat(Stats.ITEM_USED.get(this));
-					return ActionResult.resultSuccess(itemstack);
-				}
-			} else
-			{
-				return ActionResult.resultFail(itemstack);
-			}
-		}
-	}
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn)
+    {
+        ItemStack itemstack = playerIn.getHeldItem(handIn);
+        BlockRayTraceResult raytraceresult = rayTrace(worldIn, playerIn, RayTraceContext.FluidMode.SOURCE_ONLY);
+        if (raytraceresult.getType() != RayTraceResult.Type.BLOCK)
+        {
+            return ActionResult.resultPass(itemstack);
+        }
+        else if (worldIn.isRemote)
+        {
+            return ActionResult.resultSuccess(itemstack);
+        }
+        else
+        {
+            BlockPos blockpos = raytraceresult.getPos();
+            if (!(worldIn.getBlockState(blockpos).getBlock() instanceof FlowingFluidBlock))
+            {
+                return ActionResult.resultPass(itemstack);
+            }
+            else if (worldIn.isBlockModifiable(playerIn, blockpos) && playerIn.canPlayerEdit(blockpos, raytraceresult.getFace(), itemstack))
+            {
+                EntityType<?> entitytype = this.getType(itemstack.getTag());
+                if (entitytype.spawn((ServerWorld) worldIn, itemstack, playerIn, blockpos, SpawnReason.SPAWN_EGG, false, false) == null)
+                {
+                    return ActionResult.resultPass(itemstack);
+                }
+                else
+                {
+                    if (!playerIn.abilities.isCreativeMode)
+                    {
+                        itemstack.shrink(1);
+                    }
 
-	@OnlyIn(Dist.CLIENT)
-	public int getColor(int p_195983_1_)
-	{
-		return p_195983_1_ == 0 ? this.primaryColor : this.secondaryColor;
-	}
+                    playerIn.addStat(Stats.ITEM_USED.get(this));
+                    return ActionResult.resultSuccess(itemstack);
+                }
+            }
+            else
+            {
+                return ActionResult.resultFail(itemstack);
+            }
+        }
+    }
 
-	public EntityType<?> getType(@Nullable CompoundNBT compound)
-	{
-		if (compound != null && compound.contains("EntityTag", 10))
-		{
-			CompoundNBT lvt_2_1_ = compound.getCompound("EntityTag");
-			if (lvt_2_1_.contains("id", 8))
-			{
-				return EntityType.byKey(lvt_2_1_.getString("id")).orElse(this.typeIn.get());
-			}
-		}
+    @OnlyIn(Dist.CLIENT)
+    public int getColor(int p_195983_1_)
+    {
+        return p_195983_1_ == 0 ? this.primaryColor : this.secondaryColor;
+    }
 
-		return this.typeIn.get();
-	}
+    public EntityType<?> getType(@Nullable CompoundNBT compound)
+    {
+        if (compound != null && compound.contains("EntityTag", 10))
+        {
+            CompoundNBT lvt_2_1_ = compound.getCompound("EntityTag");
+            if (lvt_2_1_.contains("id", 8))
+            {
+                return EntityType.byKey(lvt_2_1_.getString("id")).orElse(this.typeIn.get());
+            }
+        }
+
+        return this.typeIn.get();
+    }
 }

@@ -1,1012 +1,1063 @@
 {
-	"entities.smava_creeper.fuse": {
-		"sounds": [{
-			"name": "spackenmobs:smava_creeper/fuse"
-		}]
-	},
-	"entities.smava_creeper.blow": {
-		"sounds": [{
-			"name": "spackenmobs:smava_creeper/blow"
-		}]
-	},
-	"entities.smava_creeper.hurt": {
-		"sounds": [{
-			"name": "spackenmobs:smava_creeper/hurt"
-		}]
-	},
-	"entities.smava_creeper.ambient": {
-		"sounds": [{
-				"name": "spackenmobs:smava_creeper/say1"
-			},
-			{
-				"name": "spackenmobs:smava_creeper/say2"
-			},
-			{
-				"name": "spackenmobs:smava_creeper/say3"
-			},
-			{
-				"name": "spackenmobs:smava_creeper/say4"
-			},
-			{
-				"name": "spackenmobs:smava_creeper/say5"
-			},
-			{
-				"name": "spackenmobs:smava_creeper/say6"
-			}
-		]
-	},
-	"entities.marcell_davis.ambient": {
-		"sounds": [{
-				"name": "spackenmobs:marcell_davis/say1"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say2"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say3"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say4"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say5"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say6"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say7"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say8"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say9"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say10"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say11"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say12"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say13"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say14"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say15"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say16"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say17"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say18"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say19"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say20"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say21"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say22"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say23"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say24"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say25"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say26"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say27"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say28"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say29"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say30"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say31"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say32"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say33"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say34"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say35"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say36"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say37"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say38"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say39"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say40"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say41"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say42"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say43"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say44"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say45"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say46"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say47"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say48"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say49"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say50"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say51"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say52"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say53"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say54"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say55"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say56"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say57"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say58"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say59"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say60"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/say61"
-			}
-		]
-	},
-	"entities.marcell_davis.death": {
-		"sounds": [{
-				"name": "spackenmobs:marcell_davis/death1"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/death2"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/death3"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/death4"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/death5"
-			}
-		]
-	},
-	"entities.marcell_davis.hurt": {
-		"sounds": [{
-				"name": "spackenmobs:marcell_davis/hurt1"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/hurt2"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/hurt3"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/hurt4"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/hurt5"
-			},
-			{
-				"name": "spackenmobs:marcell_davis/hurt6"
-			}
-		]
-	},
-	"entities.islamist.fuse": {
-		"sounds": [{
-				"name": "spackenmobs:islamist/fuse1"
-			},
-			{
-				"name": "spackenmobs:islamist/fuse2"
-			},
-			{
-				"name": "spackenmobs:islamist/fuse3"
-			},
-			{
-				"name": "spackenmobs:islamist/fuse4"
-			}
-		]
-	},
-	"entities.islamist.blow": {
-		"sounds": [{
-			"name": "spackenmobs:islamist/blow"
-		}]
-	},
-	"entities.islamist.hurt": {
-		"sounds": [{
-				"name": "spackenmobs:islamist/say1"
-			},
-			{
-				"name": "spackenmobs:islamist/say2"
-			},
-			{
-				"name": "spackenmobs:islamist/say3"
-			},
-			{
-				"name": "spackenmobs:islamist/say4"
-			}
-		]
-	},
-	"entities.islamist.ambient": {
-		"sounds": [{
-				"name": "spackenmobs:islamist/say1"
-			},
-			{
-				"name": "spackenmobs:islamist/say2"
-			},
-			{
-				"name": "spackenmobs:islamist/say3"
-			},
-			{
-				"name": "spackenmobs:islamist/say4"
-			}
-		]
-	},
-	"entities.apored.ambient": {
-		"sounds": [{
-				"name": "spackenmobs:apored/say1"
-			},
-			{
-				"name": "spackenmobs:apored/say2"
-			},
-			{
-				"name": "spackenmobs:apored/say3"
-			},
-			{
-				"name": "spackenmobs:apored/say4"
-			},
-			{
-				"name": "spackenmobs:apored/say5"
-			},
-			{
-				"name": "spackenmobs:apored/say6"
-			},
-			{
-				"name": "spackenmobs:apored/say7"
-			},
-			{
-				"name": "spackenmobs:apored/say8"
-			},
-			{
-				"name": "spackenmobs:apored/say9"
-			},
-			{
-				"name": "spackenmobs:apored/say10"
-			},
-			{
-				"name": "spackenmobs:apored/say11"
-			},
-			{
-				"name": "spackenmobs:apored/say12"
-			},
-			{
-				"name": "spackenmobs:apored/say13"
-			},
-			{
-				"name": "spackenmobs:apored/say14"
-			},
-			{
-				"name": "spackenmobs:apored/say15"
-			},
-			{
-				"name": "spackenmobs:apored/say16"
-			},
-			{
-				"name": "spackenmobs:apored/say17"
-			},
-			{
-				"name": "spackenmobs:apored/say18"
-			},
-			{
-				"name": "spackenmobs:apored/say19"
-			},
-			{
-				"name": "spackenmobs:apored/say20"
-			},
-			{
-				"name": "spackenmobs:apored/say21"
-			},
-			{
-				"name": "spackenmobs:apored/say22"
-			},
-			{
-				"name": "spackenmobs:apored/say23"
-			},
-			{
-				"name": "spackenmobs:apored/say24"
-			},
-			{
-				"name": "spackenmobs:apored/say25"
-			},
-			{
-				"name": "spackenmobs:apored/say26"
-			}
-		]
-	},
-	"entities.apored.death": {
-		"sounds": [{
-				"name": "spackenmobs:apored/death1"
-			},
-			{
-				"name": "spackenmobs:apored/death2"
-			},
-			{
-				"name": "spackenmobs:apored/death3"
-			},
-			{
-				"name": "spackenmobs:apored/death4"
-			},
-			{
-				"name": "spackenmobs:apored/death5"
-			},
-			{
-				"name": "spackenmobs:apored/death6"
-			}
-		]
-	},
-	"entities.apored.hurt": {
-		"sounds": [{
-				"name": "spackenmobs:apored/hurt1"
-			},
-			{
-				"name": "spackenmobs:apored/hurt2"
-			},
-			{
-				"name": "spackenmobs:apored/hurt3"
-			},
-			{
-				"name": "spackenmobs:apored/hurt4"
-			},
-			{
-				"name": "spackenmobs:apored/hurt5"
-			},
-			{
-				"name": "spackenmobs:apored/hurt6"
-			},
-			{
-				"name": "spackenmobs:apored/hurt7"
-			},
-			{
-				"name": "spackenmobs:apored/hurt8"
-			},
-			{
-				"name": "spackenmobs:apored/hurt9"
-			},
-			{
-				"name": "spackenmobs:apored/hurt10"
-			},
-			{
-				"name": "spackenmobs:apored/hurt11"
-			},
-			{
-				"name": "spackenmobs:apored/hurt12"
-			},
-			{
-				"name": "spackenmobs:apored/hurt13"
-			},
-			{
-				"name": "spackenmobs:apored/hurt14"
-			},
-			{
-				"name": "spackenmobs:apored/hurt15"
-			},
-			{
-				"name": "spackenmobs:apored/hurt16"
-			},
-			{
-				"name": "spackenmobs:apored/hurt17"
-			},
-			{
-				"name": "spackenmobs:apored/hurt18"
-			},
-			{
-				"name": "spackenmobs:apored/hurt19"
-			}
-		]
-	},
-	"entities.mr_bean.ambient": {
-		"sounds": [{
-				"name": "spackenmobs:mr_bean/say1"
-			},
-			{
-				"name": "spackenmobs:mr_bean/say2"
-			}
-		]
-	},
-	"entities.mr_bean.death": {
-		"sounds": [{
-			"name": "spackenmobs:mr_bean/death"
-		}]
-	},
-	"entities.mr_bean.hurt": {
-		"sounds": [{
-			"name": "spackenmobs:mr_bean/hurt"
-		}]
-	},
-	"entities.drachenlord.ambient": {
-		"sounds": [{
-				"name": "spackenmobs:drachenlord/say1"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say2"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say3"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say4"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say5"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say6"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say7"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say8"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say9"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say10"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say11"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say12"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say13"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say14"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say15"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say16"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say17"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say18"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say19"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say20"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say21"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say22"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say23"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say24"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say25"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say26"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say27"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say28"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say29"
-			},
-			{
-				"name": "spackenmobs:drachenlord/say30"
-			}
-		]
-	},
-	"entities.drachenlord.angry": {
-		"sounds": [{
-				"name": "spackenmobs:drachenlord/angry1"
-			},
-			{
-				"name": "spackenmobs:drachenlord/angry2"
-			},
-			{
-				"name": "spackenmobs:drachenlord/angry3"
-			},
-			{
-				"name": "spackenmobs:drachenlord/angry4"
-			},
-			{
-				"name": "spackenmobs:drachenlord/angry5"
-			},
-			{
-				"name": "spackenmobs:drachenlord/angry6"
-			},
-			{
-				"name": "spackenmobs:drachenlord/angry7"
-			},
-			{
-				"name": "spackenmobs:drachenlord/angry8"
-			},
-			{
-				"name": "spackenmobs:drachenlord/angry9"
-			},
-			{
-				"name": "spackenmobs:drachenlord/angry10"
-			},
-			{
-				"name": "spackenmobs:drachenlord/angry11"
-			},
-			{
-				"name": "spackenmobs:drachenlord/angry12"
-			},
-			{
-				"name": "spackenmobs:drachenlord/angry13"
-			},
-			{
-				"name": "spackenmobs:drachenlord/angry14"
-			},
-			{
-				"name": "spackenmobs:drachenlord/angry15"
-			},
-			{
-				"name": "spackenmobs:drachenlord/angry16"
-			},
-			{
-				"name": "spackenmobs:drachenlord/angry17"
-			},
-			{
-				"name": "spackenmobs:drachenlord/angry18"
-			},
-			{
-				"name": "spackenmobs:drachenlord/angry19"
-			},
-			{
-				"name": "spackenmobs:drachenlord/angry20"
-			}
-		]
-	},
-	"entities.drachenlord.death": {
-		"sounds": [{
-			"name": "spackenmobs:drachenlord/death"
-		}]
-	},
-	"entities.drachenlord.hurt": {
-		"sounds": [{
-				"name": "spackenmobs:drachenlord/hurt1"
-			},
-			{
-				"name": "spackenmobs:drachenlord/hurt2"
-			},
-			{
-				"name": "spackenmobs:drachenlord/hurt3"
-			},
-			{
-				"name": "spackenmobs:drachenlord/hurt4"
-			},
-			{
-				"name": "spackenmobs:drachenlord/hurt5"
-			}
-		]
-	},
-	"entities.schalker.ambient": {
-		"sounds": [{
-				"name": "spackenmobs:schalker/ambient1"
-			},
-			{
-				"name": "spackenmobs:schalker/ambient2"
-			},
-			{
-				"name": "spackenmobs:schalker/ambient3"
-			},
-			{
-				"name": "spackenmobs:schalker/ambient4"
-			},
-			{
-				"name": "spackenmobs:schalker/ambient5"
-			},
-			{
-				"name": "spackenmobs:schalker/ambient6"
-			},
-			{
-				"name": "spackenmobs:schalker/ambient7"
-			},
-			{
-				"name": "spackenmobs:schalker/ambient8"
-			},
-			{
-				"name": "spackenmobs:schalker/ambient9"
-			},
-			{
-				"name": "spackenmobs:schalker/ambient10"
-			}
-		]
-	},
-	"entities.schalker.death": {
-		"sounds": [{
-			"name": "spackenmobs:schalker/death"
-		}]
-	},
-	"entities.schalker.open": {
-		"sounds": [{
-				"name": "spackenmobs:schalker/open1"
-			},
-			{
-				"name": "spackenmobs:schalker/open2"
-			},
-			{
-				"name": "spackenmobs:schalker/open3"
-			},
-			{
-				"name": "spackenmobs:schalker/open4"
-			},
-			{
-				"name": "spackenmobs:schalker/open5"
-			}
-		]
-	},
-	"entities.schalker.shoot": {
-		"sounds": [{
-				"name": "spackenmobs:schalker/shoot1"
-			},
-			{
-				"name": "spackenmobs:schalker/shoot2"
-			}
-		]
-	},
-	"entities.jens.ambient": {
-		"sounds": [{
-				"name": "spackenmobs:jens/say1"
-			},
-			{
-				"name": "spackenmobs:jens/say2"
-			},
-			{
-				"name": "spackenmobs:jens/say3"
-			},
-			{
-				"name": "spackenmobs:jens/say4"
-			},
-			{
-				"name": "spackenmobs:jens/say5"
-			},
-			{
-				"name": "spackenmobs:jens/say6"
-			},
-			{
-				"name": "spackenmobs:jens/say7"
-			},
-			{
-				"name": "spackenmobs:jens/say8"
-			},
-			{
-				"name": "spackenmobs:jens/say9"
-			},
-			{
-				"name": "spackenmobs:jens/say10"
-			},
-			{
-				"name": "spackenmobs:jens/say11"
-			},
-			{
-				"name": "spackenmobs:jens/say12"
-			},
-			{
-				"name": "spackenmobs:jens/say13"
-			},
-			{
-				"name": "spackenmobs:jens/say14"
-			},
-			{
-				"name": "spackenmobs:jens/say15"
-			},
-			{
-				"name": "spackenmobs:jens/say16"
-			},
-			{
-				"name": "spackenmobs:jens/say17"
-			}
-		]
-	},
-	"entities.jens.death": {
-		"sounds": [{
-				"name": "spackenmobs:jens/death1"
-			},
-			{
-				"name": "spackenmobs:jens/death2"
-			},
-			{
-				"name": "spackenmobs:jens/death3"
-			},
-			{
-				"name": "spackenmobs:jens/death4"
-			},
-			{
-				"name": "spackenmobs:jens/death5"
-			},
-			{
-				"name": "spackenmobs:jens/death6"
-			}
-		]
-	},
-	"entities.jens.hurt": {
-		"sounds": [{
-				"name": "spackenmobs:jens/hurt1"
-			},
-			{
-				"name": "spackenmobs:jens/hurt2"
-			},
-			{
-				"name": "spackenmobs:jens/hurt3"
-			},
-			{
-				"name": "spackenmobs:jens/hurt4"
-			},
-			{
-				"name": "spackenmobs:jens/hurt5"
-			},
-			{
-				"name": "spackenmobs:jens/hurt6"
-			},
-			{
-				"name": "spackenmobs:jens/hurt7"
-			},
-			{
-				"name": "spackenmobs:jens/hurt8"
-			},
-			{
-				"name": "spackenmobs:jens/hurt9"
-			},
-			{
-				"name": "spackenmobs:jens/hurt10"
-			}
-		]
-	},
-	"entities.jens.eat": {
-		"sounds": [{
-			"name": "spackenmobs:jens/eat"
-		}]
-	},
-	"entities.jens.poop": {
-		"sounds": [{
-				"name": "spackenmobs:jens/poop1"
-			},
-			{
-				"name": "spackenmobs:jens/poop2"
-			}
-		]
-	},
-	"entities.bakamitai_creeper.fuse": {
-		"sounds": [{
-			"name": "spackenmobs:bakamitai_creeper/fuse"
-		}]
-	},
-	"entities.bakamitai_creeper.blow": {
-		"sounds": [{
-			"name": "spackenmobs:bakamitai_creeper/blow"
-		}]
-	},
-	"entities.friedrich.ambient": {
-		"sounds": [{
-				"name": "spackenmobs:friedrich/say1"
-			},
-			{
-				"name": "spackenmobs:friedrich/say2"
-			},
-			{
-				"name": "spackenmobs:friedrich/say3"
-			},
-			{
-				"name": "spackenmobs:friedrich/say4"
-			},
-			{
-				"name": "spackenmobs:friedrich/say5"
-			},
-			{
-				"name": "spackenmobs:friedrich/say6"
-			},
-			{
-				"name": "spackenmobs:friedrich/say7"
-			},
-			{
-				"name": "spackenmobs:friedrich/say8"
-			},
-			{
-				"name": "spackenmobs:friedrich/say9"
-			}
-		]
-	},
-	"entities.friedrich.death": {
-		"sounds": [{
-			"name": "spackenmobs:friedrich/death"
-		}]
-	},
-	"entities.friedrich.hurt": {
-		"sounds": [{
-			"name": "spackenmobs:friedrich/hurt"
-		}]
-	},
-	"entities.gisela.ambient": {
-		"sounds": [{
-				"name": "spackenmobs:gisela/say1"
-			},
-			{
-				"name": "spackenmobs:gisela/say2"
-			},
-			{
-				"name": "spackenmobs:gisela/say3"
-			},
-			{
-				"name": "spackenmobs:gisela/say4"
-			},
-			{
-				"name": "spackenmobs:gisela/say5"
-			},
-			{
-				"name": "spackenmobs:gisela/say6"
-			},
-			{
-				"name": "spackenmobs:gisela/say7"
-			},
-			{
-				"name": "spackenmobs:gisela/say8"
-			},
-			{
-				"name": "spackenmobs:gisela/say9"
-			},
-			{
-				"name": "spackenmobs:gisela/say10"
-			},
-			{
-				"name": "spackenmobs:gisela/say11"
-			},
-			{
-				"name": "spackenmobs:gisela/say12"
-			},
-			{
-				"name": "spackenmobs:gisela/say13"
-			},
-			{
-				"name": "spackenmobs:gisela/say14"
-			},
-			{
-				"name": "spackenmobs:gisela/say15"
-			},
-			{
-				"name": "spackenmobs:gisela/say16"
-			},
-			{
-				"name": "spackenmobs:gisela/say17"
-			},
-			{
-				"name": "spackenmobs:gisela/say18"
-			},
-			{
-				"name": "spackenmobs:gisela/say19"
-			},
-			{
-				"name": "spackenmobs:gisela/say20"
-			},
-			{
-				"name": "spackenmobs:gisela/say21"
-			},
-			{
-				"name": "spackenmobs:gisela/say22"
-			},
-			{
-				"name": "spackenmobs:gisela/say23"
-			}
-		]
-	},
-	"entities.gisela.hurt": {
-		"sounds": [{
-				"name": "spackenmobs:gisela/hurt1"
-			},
-			{
-				"name": "spackenmobs:gisela/hurt2"
-			},
-			{
-				"name": "spackenmobs:gisela/hurt3"
-			},
-			{
-				"name": "spackenmobs:gisela/hurt4"
-			},
-			{
-				"name": "spackenmobs:gisela/hurt5"
-			}
-		]
-	},
-	"entities.mztewolf.ambient": {
-		"sounds": [{
-				"name": "spackenmobs:mztewolf/say1"
-			},
-			{
-				"name": "spackenmobs:mztewolf/say2"
-			},
-			{
-				"name": "spackenmobs:mztewolf/say3"
-			}
-		]
-	}
+  "entities.smava_creeper.fuse": {
+    "sounds": [
+      {
+        "name": "spackenmobs:smava_creeper/fuse"
+      }
+    ]
+  },
+  "entities.smava_creeper.blow": {
+    "sounds": [
+      {
+        "name": "spackenmobs:smava_creeper/blow"
+      }
+    ]
+  },
+  "entities.smava_creeper.hurt": {
+    "sounds": [
+      {
+        "name": "spackenmobs:smava_creeper/hurt"
+      }
+    ]
+  },
+  "entities.smava_creeper.ambient": {
+    "sounds": [
+      {
+        "name": "spackenmobs:smava_creeper/say1"
+      },
+      {
+        "name": "spackenmobs:smava_creeper/say2"
+      },
+      {
+        "name": "spackenmobs:smava_creeper/say3"
+      },
+      {
+        "name": "spackenmobs:smava_creeper/say4"
+      },
+      {
+        "name": "spackenmobs:smava_creeper/say5"
+      },
+      {
+        "name": "spackenmobs:smava_creeper/say6"
+      }
+    ]
+  },
+  "entities.marcell_davis.ambient": {
+    "sounds": [
+      {
+        "name": "spackenmobs:marcell_davis/say1"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say2"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say3"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say4"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say5"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say6"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say7"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say8"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say9"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say10"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say11"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say12"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say13"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say14"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say15"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say16"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say17"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say18"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say19"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say20"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say21"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say22"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say23"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say24"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say25"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say26"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say27"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say28"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say29"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say30"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say31"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say32"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say33"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say34"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say35"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say36"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say37"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say38"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say39"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say40"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say41"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say42"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say43"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say44"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say45"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say46"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say47"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say48"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say49"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say50"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say51"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say52"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say53"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say54"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say55"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say56"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say57"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say58"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say59"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say60"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/say61"
+      }
+    ]
+  },
+  "entities.marcell_davis.death": {
+    "sounds": [
+      {
+        "name": "spackenmobs:marcell_davis/death1"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/death2"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/death3"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/death4"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/death5"
+      }
+    ]
+  },
+  "entities.marcell_davis.hurt": {
+    "sounds": [
+      {
+        "name": "spackenmobs:marcell_davis/hurt1"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/hurt2"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/hurt3"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/hurt4"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/hurt5"
+      },
+      {
+        "name": "spackenmobs:marcell_davis/hurt6"
+      }
+    ]
+  },
+  "entities.islamist.fuse": {
+    "sounds": [
+      {
+        "name": "spackenmobs:islamist/fuse1"
+      },
+      {
+        "name": "spackenmobs:islamist/fuse2"
+      },
+      {
+        "name": "spackenmobs:islamist/fuse3"
+      },
+      {
+        "name": "spackenmobs:islamist/fuse4"
+      }
+    ]
+  },
+  "entities.islamist.blow": {
+    "sounds": [
+      {
+        "name": "spackenmobs:islamist/blow"
+      }
+    ]
+  },
+  "entities.islamist.hurt": {
+    "sounds": [
+      {
+        "name": "spackenmobs:islamist/say1"
+      },
+      {
+        "name": "spackenmobs:islamist/say2"
+      },
+      {
+        "name": "spackenmobs:islamist/say3"
+      },
+      {
+        "name": "spackenmobs:islamist/say4"
+      }
+    ]
+  },
+  "entities.islamist.ambient": {
+    "sounds": [
+      {
+        "name": "spackenmobs:islamist/say1"
+      },
+      {
+        "name": "spackenmobs:islamist/say2"
+      },
+      {
+        "name": "spackenmobs:islamist/say3"
+      },
+      {
+        "name": "spackenmobs:islamist/say4"
+      }
+    ]
+  },
+  "entities.apored.ambient": {
+    "sounds": [
+      {
+        "name": "spackenmobs:apored/say1"
+      },
+      {
+        "name": "spackenmobs:apored/say2"
+      },
+      {
+        "name": "spackenmobs:apored/say3"
+      },
+      {
+        "name": "spackenmobs:apored/say4"
+      },
+      {
+        "name": "spackenmobs:apored/say5"
+      },
+      {
+        "name": "spackenmobs:apored/say6"
+      },
+      {
+        "name": "spackenmobs:apored/say7"
+      },
+      {
+        "name": "spackenmobs:apored/say8"
+      },
+      {
+        "name": "spackenmobs:apored/say9"
+      },
+      {
+        "name": "spackenmobs:apored/say10"
+      },
+      {
+        "name": "spackenmobs:apored/say11"
+      },
+      {
+        "name": "spackenmobs:apored/say12"
+      },
+      {
+        "name": "spackenmobs:apored/say13"
+      },
+      {
+        "name": "spackenmobs:apored/say14"
+      },
+      {
+        "name": "spackenmobs:apored/say15"
+      },
+      {
+        "name": "spackenmobs:apored/say16"
+      },
+      {
+        "name": "spackenmobs:apored/say17"
+      },
+      {
+        "name": "spackenmobs:apored/say18"
+      },
+      {
+        "name": "spackenmobs:apored/say19"
+      },
+      {
+        "name": "spackenmobs:apored/say20"
+      },
+      {
+        "name": "spackenmobs:apored/say21"
+      },
+      {
+        "name": "spackenmobs:apored/say22"
+      },
+      {
+        "name": "spackenmobs:apored/say23"
+      },
+      {
+        "name": "spackenmobs:apored/say24"
+      },
+      {
+        "name": "spackenmobs:apored/say25"
+      },
+      {
+        "name": "spackenmobs:apored/say26"
+      }
+    ]
+  },
+  "entities.apored.death": {
+    "sounds": [
+      {
+        "name": "spackenmobs:apored/death1"
+      },
+      {
+        "name": "spackenmobs:apored/death2"
+      },
+      {
+        "name": "spackenmobs:apored/death3"
+      },
+      {
+        "name": "spackenmobs:apored/death4"
+      },
+      {
+        "name": "spackenmobs:apored/death5"
+      },
+      {
+        "name": "spackenmobs:apored/death6"
+      }
+    ]
+  },
+  "entities.apored.hurt": {
+    "sounds": [
+      {
+        "name": "spackenmobs:apored/hurt1"
+      },
+      {
+        "name": "spackenmobs:apored/hurt2"
+      },
+      {
+        "name": "spackenmobs:apored/hurt3"
+      },
+      {
+        "name": "spackenmobs:apored/hurt4"
+      },
+      {
+        "name": "spackenmobs:apored/hurt5"
+      },
+      {
+        "name": "spackenmobs:apored/hurt6"
+      },
+      {
+        "name": "spackenmobs:apored/hurt7"
+      },
+      {
+        "name": "spackenmobs:apored/hurt8"
+      },
+      {
+        "name": "spackenmobs:apored/hurt9"
+      },
+      {
+        "name": "spackenmobs:apored/hurt10"
+      },
+      {
+        "name": "spackenmobs:apored/hurt11"
+      },
+      {
+        "name": "spackenmobs:apored/hurt12"
+      },
+      {
+        "name": "spackenmobs:apored/hurt13"
+      },
+      {
+        "name": "spackenmobs:apored/hurt14"
+      },
+      {
+        "name": "spackenmobs:apored/hurt15"
+      },
+      {
+        "name": "spackenmobs:apored/hurt16"
+      },
+      {
+        "name": "spackenmobs:apored/hurt17"
+      },
+      {
+        "name": "spackenmobs:apored/hurt18"
+      },
+      {
+        "name": "spackenmobs:apored/hurt19"
+      }
+    ]
+  },
+  "entities.mr_bean.ambient": {
+    "sounds": [
+      {
+        "name": "spackenmobs:mr_bean/say1"
+      },
+      {
+        "name": "spackenmobs:mr_bean/say2"
+      }
+    ]
+  },
+  "entities.mr_bean.death": {
+    "sounds": [
+      {
+        "name": "spackenmobs:mr_bean/death"
+      }
+    ]
+  },
+  "entities.mr_bean.hurt": {
+    "sounds": [
+      {
+        "name": "spackenmobs:mr_bean/hurt"
+      }
+    ]
+  },
+  "entities.drachenlord.ambient": {
+    "sounds": [
+      {
+        "name": "spackenmobs:drachenlord/say1"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say2"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say3"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say4"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say5"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say6"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say7"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say8"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say9"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say10"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say11"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say12"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say13"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say14"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say15"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say16"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say17"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say18"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say19"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say20"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say21"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say22"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say23"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say24"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say25"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say26"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say27"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say28"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say29"
+      },
+      {
+        "name": "spackenmobs:drachenlord/say30"
+      }
+    ]
+  },
+  "entities.drachenlord.angry": {
+    "sounds": [
+      {
+        "name": "spackenmobs:drachenlord/angry1"
+      },
+      {
+        "name": "spackenmobs:drachenlord/angry2"
+      },
+      {
+        "name": "spackenmobs:drachenlord/angry3"
+      },
+      {
+        "name": "spackenmobs:drachenlord/angry4"
+      },
+      {
+        "name": "spackenmobs:drachenlord/angry5"
+      },
+      {
+        "name": "spackenmobs:drachenlord/angry6"
+      },
+      {
+        "name": "spackenmobs:drachenlord/angry7"
+      },
+      {
+        "name": "spackenmobs:drachenlord/angry8"
+      },
+      {
+        "name": "spackenmobs:drachenlord/angry9"
+      },
+      {
+        "name": "spackenmobs:drachenlord/angry10"
+      },
+      {
+        "name": "spackenmobs:drachenlord/angry11"
+      },
+      {
+        "name": "spackenmobs:drachenlord/angry12"
+      },
+      {
+        "name": "spackenmobs:drachenlord/angry13"
+      },
+      {
+        "name": "spackenmobs:drachenlord/angry14"
+      },
+      {
+        "name": "spackenmobs:drachenlord/angry15"
+      },
+      {
+        "name": "spackenmobs:drachenlord/angry16"
+      },
+      {
+        "name": "spackenmobs:drachenlord/angry17"
+      },
+      {
+        "name": "spackenmobs:drachenlord/angry18"
+      },
+      {
+        "name": "spackenmobs:drachenlord/angry19"
+      },
+      {
+        "name": "spackenmobs:drachenlord/angry20"
+      }
+    ]
+  },
+  "entities.drachenlord.death": {
+    "sounds": [
+      {
+        "name": "spackenmobs:drachenlord/death"
+      }
+    ]
+  },
+  "entities.drachenlord.hurt": {
+    "sounds": [
+      {
+        "name": "spackenmobs:drachenlord/hurt1"
+      },
+      {
+        "name": "spackenmobs:drachenlord/hurt2"
+      },
+      {
+        "name": "spackenmobs:drachenlord/hurt3"
+      },
+      {
+        "name": "spackenmobs:drachenlord/hurt4"
+      },
+      {
+        "name": "spackenmobs:drachenlord/hurt5"
+      }
+    ]
+  },
+  "entities.schalker.ambient": {
+    "sounds": [
+      {
+        "name": "spackenmobs:schalker/ambient1"
+      },
+      {
+        "name": "spackenmobs:schalker/ambient2"
+      },
+      {
+        "name": "spackenmobs:schalker/ambient3"
+      },
+      {
+        "name": "spackenmobs:schalker/ambient4"
+      },
+      {
+        "name": "spackenmobs:schalker/ambient5"
+      },
+      {
+        "name": "spackenmobs:schalker/ambient6"
+      },
+      {
+        "name": "spackenmobs:schalker/ambient7"
+      },
+      {
+        "name": "spackenmobs:schalker/ambient8"
+      },
+      {
+        "name": "spackenmobs:schalker/ambient9"
+      },
+      {
+        "name": "spackenmobs:schalker/ambient10"
+      }
+    ]
+  },
+  "entities.schalker.death": {
+    "sounds": [
+      {
+        "name": "spackenmobs:schalker/death"
+      }
+    ]
+  },
+  "entities.schalker.open": {
+    "sounds": [
+      {
+        "name": "spackenmobs:schalker/open1"
+      },
+      {
+        "name": "spackenmobs:schalker/open2"
+      },
+      {
+        "name": "spackenmobs:schalker/open3"
+      },
+      {
+        "name": "spackenmobs:schalker/open4"
+      },
+      {
+        "name": "spackenmobs:schalker/open5"
+      }
+    ]
+  },
+  "entities.schalker.shoot": {
+    "sounds": [
+      {
+        "name": "spackenmobs:schalker/shoot1"
+      },
+      {
+        "name": "spackenmobs:schalker/shoot2"
+      }
+    ]
+  },
+  "entities.jens.ambient": {
+    "sounds": [
+      {
+        "name": "spackenmobs:jens/say1"
+      },
+      {
+        "name": "spackenmobs:jens/say2"
+      },
+      {
+        "name": "spackenmobs:jens/say3"
+      },
+      {
+        "name": "spackenmobs:jens/say4"
+      },
+      {
+        "name": "spackenmobs:jens/say5"
+      },
+      {
+        "name": "spackenmobs:jens/say6"
+      },
+      {
+        "name": "spackenmobs:jens/say7"
+      },
+      {
+        "name": "spackenmobs:jens/say8"
+      },
+      {
+        "name": "spackenmobs:jens/say9"
+      },
+      {
+        "name": "spackenmobs:jens/say10"
+      },
+      {
+        "name": "spackenmobs:jens/say11"
+      },
+      {
+        "name": "spackenmobs:jens/say12"
+      },
+      {
+        "name": "spackenmobs:jens/say13"
+      },
+      {
+        "name": "spackenmobs:jens/say14"
+      },
+      {
+        "name": "spackenmobs:jens/say15"
+      },
+      {
+        "name": "spackenmobs:jens/say16"
+      },
+      {
+        "name": "spackenmobs:jens/say17"
+      }
+    ]
+  },
+  "entities.jens.death": {
+    "sounds": [
+      {
+        "name": "spackenmobs:jens/death1"
+      },
+      {
+        "name": "spackenmobs:jens/death2"
+      },
+      {
+        "name": "spackenmobs:jens/death3"
+      },
+      {
+        "name": "spackenmobs:jens/death4"
+      },
+      {
+        "name": "spackenmobs:jens/death5"
+      },
+      {
+        "name": "spackenmobs:jens/death6"
+      }
+    ]
+  },
+  "entities.jens.hurt": {
+    "sounds": [
+      {
+        "name": "spackenmobs:jens/hurt1"
+      },
+      {
+        "name": "spackenmobs:jens/hurt2"
+      },
+      {
+        "name": "spackenmobs:jens/hurt3"
+      },
+      {
+        "name": "spackenmobs:jens/hurt4"
+      },
+      {
+        "name": "spackenmobs:jens/hurt5"
+      },
+      {
+        "name": "spackenmobs:jens/hurt6"
+      },
+      {
+        "name": "spackenmobs:jens/hurt7"
+      },
+      {
+        "name": "spackenmobs:jens/hurt8"
+      },
+      {
+        "name": "spackenmobs:jens/hurt9"
+      },
+      {
+        "name": "spackenmobs:jens/hurt10"
+      }
+    ]
+  },
+  "entities.jens.eat": {
+    "sounds": [
+      {
+        "name": "spackenmobs:jens/eat"
+      }
+    ]
+  },
+  "entities.jens.poop": {
+    "sounds": [
+      {
+        "name": "spackenmobs:jens/poop1"
+      },
+      {
+        "name": "spackenmobs:jens/poop2"
+      }
+    ]
+  },
+  "entities.bakamitai_creeper.fuse": {
+    "sounds": [
+      {
+        "name": "spackenmobs:bakamitai_creeper/fuse"
+      }
+    ]
+  },
+  "entities.bakamitai_creeper.blow": {
+    "sounds": [
+      {
+        "name": "spackenmobs:bakamitai_creeper/blow"
+      }
+    ]
+  },
+  "entities.friedrich.ambient": {
+    "sounds": [
+      {
+        "name": "spackenmobs:friedrich/say1"
+      },
+      {
+        "name": "spackenmobs:friedrich/say2"
+      },
+      {
+        "name": "spackenmobs:friedrich/say3"
+      },
+      {
+        "name": "spackenmobs:friedrich/say4"
+      },
+      {
+        "name": "spackenmobs:friedrich/say5"
+      },
+      {
+        "name": "spackenmobs:friedrich/say6"
+      },
+      {
+        "name": "spackenmobs:friedrich/say7"
+      },
+      {
+        "name": "spackenmobs:friedrich/say8"
+      },
+      {
+        "name": "spackenmobs:friedrich/say9"
+      }
+    ]
+  },
+  "entities.friedrich.death": {
+    "sounds": [
+      {
+        "name": "spackenmobs:friedrich/death"
+      }
+    ]
+  },
+  "entities.friedrich.hurt": {
+    "sounds": [
+      {
+        "name": "spackenmobs:friedrich/hurt"
+      }
+    ]
+  },
+  "entities.gisela.ambient": {
+    "sounds": [
+      {
+        "name": "spackenmobs:gisela/say1"
+      },
+      {
+        "name": "spackenmobs:gisela/say2"
+      },
+      {
+        "name": "spackenmobs:gisela/say3"
+      },
+      {
+        "name": "spackenmobs:gisela/say4"
+      },
+      {
+        "name": "spackenmobs:gisela/say5"
+      },
+      {
+        "name": "spackenmobs:gisela/say6"
+      },
+      {
+        "name": "spackenmobs:gisela/say7"
+      },
+      {
+        "name": "spackenmobs:gisela/say8"
+      },
+      {
+        "name": "spackenmobs:gisela/say9"
+      },
+      {
+        "name": "spackenmobs:gisela/say10"
+      },
+      {
+        "name": "spackenmobs:gisela/say11"
+      },
+      {
+        "name": "spackenmobs:gisela/say12"
+      },
+      {
+        "name": "spackenmobs:gisela/say13"
+      },
+      {
+        "name": "spackenmobs:gisela/say14"
+      },
+      {
+        "name": "spackenmobs:gisela/say15"
+      },
+      {
+        "name": "spackenmobs:gisela/say16"
+      },
+      {
+        "name": "spackenmobs:gisela/say17"
+      },
+      {
+        "name": "spackenmobs:gisela/say18"
+      },
+      {
+        "name": "spackenmobs:gisela/say19"
+      },
+      {
+        "name": "spackenmobs:gisela/say20"
+      },
+      {
+        "name": "spackenmobs:gisela/say21"
+      },
+      {
+        "name": "spackenmobs:gisela/say22"
+      },
+      {
+        "name": "spackenmobs:gisela/say23"
+      }
+    ]
+  },
+  "entities.gisela.hurt": {
+    "sounds": [
+      {
+        "name": "spackenmobs:gisela/hurt1"
+      },
+      {
+        "name": "spackenmobs:gisela/hurt2"
+      },
+      {
+        "name": "spackenmobs:gisela/hurt3"
+      },
+      {
+        "name": "spackenmobs:gisela/hurt4"
+      },
+      {
+        "name": "spackenmobs:gisela/hurt5"
+      }
+    ]
+  },
+  "entities.mztewolf.ambient": {
+    "sounds": [
+      {
+        "name": "spackenmobs:mztewolf/say1"
+      },
+      {
+        "name": "spackenmobs:mztewolf/say2"
+      },
+      {
+        "name": "spackenmobs:mztewolf/say3"
+      }
+    ]
+  }
 }

@@ -1,6 +1,8 @@
 package mod.acgaming.spackenmobs.entity;
 
-import mod.acgaming.spackenmobs.init.SpackenmobsRegistry;
+import java.util.UUID;
+import javax.annotation.Nullable;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -17,114 +19,113 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
-import java.util.UUID;
+import mod.acgaming.spackenmobs.init.SpackenmobsRegistry;
 
 public class DrachenlordEntity extends ZombieEntity
 {
-	private int angerLevel;
-	private int randomSoundDelay;
-	private UUID angerTargetUUID;
+    public static AttributeModifierMap.MutableAttribute registerAttributes()
+    {
+        return MonsterEntity.func_234295_eP_().createMutableAttribute(Attributes.FOLLOW_RANGE, 35.0D).createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.2F).createMutableAttribute(Attributes.ATTACK_DAMAGE, 3.0D).createMutableAttribute(Attributes.ARMOR, 2.0D).createMutableAttribute(Attributes.ZOMBIE_SPAWN_REINFORCEMENTS);
+    }
 
-	public DrachenlordEntity(EntityType<? extends DrachenlordEntity> type, World worldIn)
-	{
-		super(type, worldIn);
-		this.isImmuneToFire();
-	}
+    private int angerLevel;
+    private int randomSoundDelay;
+    private UUID angerTargetUUID;
 
-	public static AttributeModifierMap.MutableAttribute registerAttributes()
-	{
-		return MonsterEntity.func_234295_eP_().createMutableAttribute(Attributes.FOLLOW_RANGE, 35.0D).createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.2F).createMutableAttribute(Attributes.ATTACK_DAMAGE, 3.0D).createMutableAttribute(Attributes.ARMOR, 2.0D).createMutableAttribute(Attributes.ZOMBIE_SPAWN_REINFORCEMENTS);
-	}
+    public DrachenlordEntity(EntityType<? extends DrachenlordEntity> type, World worldIn)
+    {
+        super(type, worldIn);
+        this.isImmuneToFire();
+    }
 
-	protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty)
-	{
-		super.setEquipmentBasedOnDifficulty(difficulty);
-		this.setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(Items.GOLDEN_AXE));
-	}
+    public void setRevengeTarget(@Nullable LivingEntity livingEntity)
+    {
+        super.setRevengeTarget(livingEntity);
 
-	public boolean attackEntityFrom(DamageSource source, float amount)
-	{
-		if (this.isInvulnerableTo(source))
-		{
-			return false;
-		}
-		else
-		{
-			Entity entity = source.getTrueSource();
+        if (livingEntity != null)
+        {
+            this.angerTargetUUID = livingEntity.getUniqueID();
+        }
+    }
 
-			if (entity instanceof PlayerEntity)
-			{
-				this.becomeAngryAt(entity);
-			}
+    protected float getSoundVolume()
+    {
+        return 0.6F;
+    }
 
-			return super.attackEntityFrom(source, amount);
-		}
-	}
+    public void becomeAngryAt(Entity entity)
+    {
+        this.angerLevel = 400 + this.rand.nextInt(400);
+        this.randomSoundDelay = this.rand.nextInt(40);
 
-	public void setRevengeTarget(@Nullable LivingEntity livingEntity)
-	{
-		super.setRevengeTarget(livingEntity);
+        if (entity instanceof LivingEntity)
+        {
+            this.setRevengeTarget((LivingEntity) entity);
+        }
+    }
 
-		if (livingEntity != null)
-		{
-			this.angerTargetUUID = livingEntity.getUniqueID();
-		}
-	}
+    public boolean isAngry()
+    {
+        return this.angerLevel > 0;
+    }
 
-	public void becomeAngryAt(Entity entity)
-	{
-		this.angerLevel = 400 + this.rand.nextInt(400);
-		this.randomSoundDelay = this.rand.nextInt(40);
+    public void tick()
+    {
+        if (this.isAngry())
+        {
+            --this.angerLevel;
+        }
+        if (this.randomSoundDelay > 0 && --this.randomSoundDelay == 0)
+        {
+            this.playSound(SpackenmobsRegistry.ENTITY_DRACHENLORD_ANGRY.get(), 1.0F, 1.0F);
+        }
+        if (this.angerLevel > 0 && this.angerTargetUUID != null && this.getRevengeTarget() == null)
+        {
+            PlayerEntity entityplayer = this.world.getPlayerByUuid(this.angerTargetUUID);
+            this.setRevengeTarget(entityplayer);
+            this.attackingPlayer = entityplayer;
+            this.recentlyHit = this.getRevengeTimer();
+        }
+        super.tick();
+    }
 
-		if (entity instanceof LivingEntity)
-		{
-			this.setRevengeTarget((LivingEntity) entity);
-		}
-	}
+    public boolean attackEntityFrom(DamageSource source, float amount)
+    {
+        if (this.isInvulnerableTo(source))
+        {
+            return false;
+        }
+        else
+        {
+            Entity entity = source.getTrueSource();
 
-	public boolean isAngry()
-	{
-		return this.angerLevel > 0;
-	}
+            if (entity instanceof PlayerEntity)
+            {
+                this.becomeAngryAt(entity);
+            }
 
-	public void tick()
-	{
-		if (this.isAngry())
-		{
-			--this.angerLevel;
-		}
-		if (this.randomSoundDelay > 0 && --this.randomSoundDelay == 0)
-		{
-			this.playSound(SpackenmobsRegistry.ENTITY_DRACHENLORD_ANGRY.get(), 1.0F, 1.0F);
-		}
-		if (this.angerLevel > 0 && this.angerTargetUUID != null && this.getRevengeTarget() == null)
-		{
-			PlayerEntity entityplayer = this.world.getPlayerByUuid(this.angerTargetUUID);
-			this.setRevengeTarget(entityplayer);
-			this.attackingPlayer = entityplayer;
-			this.recentlyHit = this.getRevengeTimer();
-		}
-		super.tick();
-	}
+            return super.attackEntityFrom(source, amount);
+        }
+    }
 
-	protected SoundEvent getAmbientSound()
-	{
-		return SpackenmobsRegistry.ENTITY_DRACHENLORD_AMBIENT.get();
-	}
+    protected SoundEvent getAmbientSound()
+    {
+        return SpackenmobsRegistry.ENTITY_DRACHENLORD_AMBIENT.get();
+    }
 
-	protected SoundEvent getHurtSound(DamageSource damageSourceIn)
-	{
-		return SpackenmobsRegistry.ENTITY_DRACHENLORD_HURT.get();
-	}
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn)
+    {
+        return SpackenmobsRegistry.ENTITY_DRACHENLORD_HURT.get();
+    }
 
-	protected SoundEvent getDeathSound()
-	{
-		return SpackenmobsRegistry.ENTITY_DRACHENLORD_DEATH.get();
-	}
+    protected SoundEvent getDeathSound()
+    {
+        return SpackenmobsRegistry.ENTITY_DRACHENLORD_DEATH.get();
+    }
 
-	protected float getSoundVolume()
-	{
-		return 0.6F;
-	}
+    protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty)
+    {
+        super.setEquipmentBasedOnDifficulty(difficulty);
+        this.setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(Items.GOLDEN_AXE));
+    }
 }
