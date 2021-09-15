@@ -1,13 +1,11 @@
 package mod.acgaming.spackenmobs.entities;
 
 import net.minecraft.block.Block;
-import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
-import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
@@ -16,7 +14,7 @@ import net.minecraft.world.World;
 
 import mod.acgaming.spackenmobs.misc.ModSoundEvents;
 
-public class EntityGisela extends EntityAnimal
+public class EntityGisela extends EntityCreature
 {
     public EntityGisela(World worldIn)
     {
@@ -24,24 +22,19 @@ public class EntityGisela extends EntityAnimal
         this.setSize(0.6F, 1.8F);
     }
 
-    public EntityGisela createChild(EntityAgeable ageable)
-    {
-        return new EntityGisela(this.world);
-    }
-
+    @Override
     protected void initEntityAI()
     {
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new EntityAIPanic(this, 2.0D));
-        this.tasks.addTask(2, new EntityAIMate(this, 1.0D));
-        this.tasks.addTask(3, new EntityAITempt(this, 1.25D, Items.SUGAR, false));
-        this.tasks.addTask(4, new EntityAIFollowParent(this, 1.25D));
-        this.tasks.addTask(5, new EntityAIWanderAvoidWater(this, 1.0D));
-        this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
-        this.tasks.addTask(7, new EntityAILookIdle(this));
-        this.targetTasks.addTask(1, new EntityAINearestAttackableTarget<>(this, EntityLiving.class, true));
+        this.tasks.addTask(2, new EntityAIWanderAvoidWater(this, 1.0D));
+        this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
+        this.tasks.addTask(4, new EntityAILookIdle(this));
+        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
+        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityLiving.class, true));
     }
 
+    @Override
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
@@ -49,21 +42,25 @@ public class EntityGisela extends EntityAnimal
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(1.25D);
     }
 
+    @Override
     protected SoundEvent getAmbientSound()
     {
         return ModSoundEvents.ENTITY_GISELA_AMBIENT;
     }
 
+    @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn)
     {
         return ModSoundEvents.ENTITY_GISELA_HURT;
     }
 
+    @Override
     protected SoundEvent getDeathSound()
     {
         return ModSoundEvents.ENTITY_GISELA_HURT;
     }
 
+    @Override
     protected void playStepSound(BlockPos pos, Block blockIn)
     {
         this.playSound(SoundEvents.ENTITY_COW_STEP, 0.15F, 1.0F);

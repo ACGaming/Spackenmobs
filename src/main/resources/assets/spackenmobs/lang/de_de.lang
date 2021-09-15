@@ -32,3 +32,6 @@ item.ram_on_a_stick.name=RAM-Rute
 item.surstroemming.name=Surströmming
 itemGroup.spackenmobs=Spackenmobs
 spackenmobs.config.title=Spackenmobs-Einstellungen
+spackenmobs.config.spawn_switches=Spawnschalter
+spackenmobs.config.spawn_values=Spawnwerte
+spackenmobs.config.misc=Sonstiges

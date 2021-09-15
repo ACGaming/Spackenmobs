@@ -50,6 +50,7 @@ public class EntityBakaMitaiCreeper extends EntityMob
         this.setSize(0.6F, 1.7F);
     }
 
+    @Override
     public void onUpdate()
     {
         if (this.isEntityAlive())
@@ -84,27 +85,32 @@ public class EntityBakaMitaiCreeper extends EntityMob
         super.onUpdate();
     }
 
+    @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn)
     {
         return SoundEvents.ENTITY_CREEPER_HURT;
     }
 
+    @Override
     protected SoundEvent getDeathSound()
     {
         return SoundEvents.ENTITY_CREEPER_DEATH;
     }
 
+    @Override
     public boolean attackEntityAsMob(Entity entityIn)
     {
         return true;
     }
 
+    @Override
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
     }
 
+    @Override
     public void onDeath(DamageSource cause)
     {
         super.onDeath(cause);
@@ -126,6 +132,7 @@ public class EntityBakaMitaiCreeper extends EntityMob
         }
     }
 
+    @Override
     public void fall(float distance, float damageMultiplier)
     {
         super.fall(distance, damageMultiplier);
@@ -158,6 +165,7 @@ public class EntityBakaMitaiCreeper extends EntityMob
         this.dataManager.set(STATE, state);
     }
 
+    @Override
     public void onStruckByLightning(EntityLightningBolt lightningBolt)
     {
         super.onStruckByLightning(lightningBolt);
@@ -184,6 +192,7 @@ public class EntityBakaMitaiCreeper extends EntityMob
         ++this.droppedSkulls;
     }
 
+    @Override
     protected void initEntityAI()
     {
         this.tasks.addTask(1, new EntityAISwimming(this));
@@ -197,6 +206,7 @@ public class EntityBakaMitaiCreeper extends EntityMob
         this.targetTasks.addTask(2, new EntityAIHurtByTarget(this, false));
     }
 
+    @Override
     protected void entityInit()
     {
         super.entityInit();
@@ -205,6 +215,7 @@ public class EntityBakaMitaiCreeper extends EntityMob
         this.dataManager.register(IGNITED, Boolean.FALSE);
     }
 
+    @Override
     public void writeEntityToNBT(NBTTagCompound compound)
     {
         super.writeEntityToNBT(compound);
@@ -219,6 +230,7 @@ public class EntityBakaMitaiCreeper extends EntityMob
         compound.setBoolean("ignited", this.hasIgnited());
     }
 
+    @Override
     public void readEntityFromNBT(NBTTagCompound compound)
     {
         super.readEntityFromNBT(compound);
@@ -241,16 +253,19 @@ public class EntityBakaMitaiCreeper extends EntityMob
     }
 
     @Nullable
+    @Override
     protected ResourceLocation getLootTable()
     {
         return LootTableList.ENTITIES_CREEPER;
     }
 
+    @Override
     public int getMaxFallHeight()
     {
         return this.getAttackTarget() == null ? 3 : 3 + (int) (this.getHealth() - 1.0F);
     }
 
+    @Override
     protected boolean processInteract(EntityPlayer player, EnumHand hand)
     {
         ItemStack itemstack = player.getHeldItem(hand);

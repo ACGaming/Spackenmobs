@@ -153,9 +153,9 @@ public class EntityJens extends EntityAnimal
     }
 
     @Override
-    public mod.acgaming.spackenmobs.entities.EntityJens createChild(EntityAgeable ageable)
+    public EntityJens createChild(EntityAgeable ageable)
     {
-        return new mod.acgaming.spackenmobs.entities.EntityJens(this.world);
+        return new EntityJens(this.world);
     }
 
     @Override
@@ -283,7 +283,7 @@ public class EntityJens extends EntityAnimal
         this.digesting = true;
         this.dataManager.set(DIGESTING, true);
 
-        this.digestTime = (ModConfigs.Jens_digest_time * 20);
+        this.digestTime = (ModConfigs.misc.Jens_digest_time * 20);
         this.dataManager.set(DIGEST_TIME, this.digestTime);
 
         for (int i = 0; i < 7; ++i)
@@ -294,7 +294,7 @@ public class EntityJens extends EntityAnimal
             this.world.spawnParticle(EnumParticleTypes.HEART, this.posX + this.rand.nextFloat() * this.width * 2.0F - this.width, this.posY + 0.5D + this.rand.nextFloat() * this.height, this.posZ + this.rand.nextFloat() * this.width * 2.0F - this.width, d0, d1, d2);
         }
 
-        this.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, ModConfigs.Jens_digest_time * 20));
+        this.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, ModConfigs.misc.Jens_digest_time * 20));
     }
 
     @Override
@@ -302,7 +302,7 @@ public class EntityJens extends EntityAnimal
     {
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new EntityAIPanic(this, 1.25D));
-        this.tasks.addTask(2, new EntityAIDance(this, ModConfigs.Jens_search_distance));
+        this.tasks.addTask(2, new EntityAIDance(this, ModConfigs.misc.Jens_search_distance));
         this.tasks.addTask(2, new EntityAIEatDroppedFish(this));
         this.tasks.addTask(3, new EntityAIMate(this, 1.0D));
         this.tasks.addTask(4, new EntityAITempt(this, 1.2D, ModItems.RAM, false));
