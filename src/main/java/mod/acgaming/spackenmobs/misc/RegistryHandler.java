@@ -1,8 +1,10 @@
 package mod.acgaming.spackenmobs.misc;
 
+import java.util.List;
+import java.util.Set;
+
+import com.google.common.collect.Lists;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.monster.*;
-import net.minecraft.entity.passive.*;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -23,61 +25,106 @@ public class RegistryHandler
     @SubscribeEvent
     public static void registerEntities(Register<EntityEntry> event)
     {
+        List<Biome> regularSpawning = Lists.newArrayList();
+        for (Biome b : Biome.REGISTRY)
+        {
+            Set<BiomeDictionary.Type> types = BiomeDictionary.getTypes(b);
+            if (!types.contains(BiomeDictionary.Type.WATER) || !types.contains(BiomeDictionary.Type.NETHER) || !types.contains(BiomeDictionary.Type.END))
+            {
+                regularSpawning.add(b);
+            }
+        }
+
         int id = 1;
 
         // Smava Creeper
         EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:smava_creeper"), EntitySmavaCreeper.class, "smava_creeper", id++, Spackenmobs.instance, 64, 1, true, 7649828, 11053224);
         if (ModConfigs.SmavaCreeper_spawn)
         {
-            EntityRegistry.addSpawn(EntitySmavaCreeper.class, ModConfigs.SmavaCreeper_weight, ModConfigs.SmavaCreeper_min, ModConfigs.SmavaCreeper_max, EnumCreatureType.MONSTER,
-                BiomeHelper.getBiomesWithMonster(EntityCreeper.class));
+            EntityRegistry.addSpawn(
+                EntitySmavaCreeper.class,
+                ModConfigs.SmavaCreeper_weight,
+                ModConfigs.SmavaCreeper_min,
+                ModConfigs.SmavaCreeper_max,
+                EnumCreatureType.MONSTER,
+                regularSpawning.toArray(new Biome[0]));
         }
 
         // Marcell D'Avis
         EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:marcell_davis"), EntityMarcellDAvis.class, "marcell_davis", id++, Spackenmobs.instance, 64, 1, true, 15759, 16777215);
         if (ModConfigs.MarcellDAvis_spawn)
         {
-            EntityRegistry.addSpawn(EntityMarcellDAvis.class, ModConfigs.MarcellDAvis_weight, ModConfigs.MarcellDAvis_min, ModConfigs.MarcellDAvis_max, EnumCreatureType.MONSTER,
-                BiomeHelper.getBiomesWithMonster(EntityZombie.class));
+            EntityRegistry.addSpawn(
+                EntityMarcellDAvis.class,
+                ModConfigs.MarcellDAvis_weight,
+                ModConfigs.MarcellDAvis_min,
+                ModConfigs.MarcellDAvis_max,
+                EnumCreatureType.MONSTER,
+                regularSpawning.toArray(new Biome[0]));
         }
 
         // Islamist
         EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:islamist"), EntityIslamist.class, "islamist", id++, Spackenmobs.instance, 64, 1, true, 15263976, 15211548);
         if (ModConfigs.Islamist_spawn)
         {
-            EntityRegistry.addSpawn(EntityIslamist.class, ModConfigs.Islamist_weight, ModConfigs.Islamist_min, ModConfigs.Islamist_max, EnumCreatureType.MONSTER,
-                BiomeHelper.getBiomesWithMonster(EntityCreeper.class));
+            EntityRegistry.addSpawn(
+                EntityIslamist.class,
+                ModConfigs.Islamist_weight,
+                ModConfigs.Islamist_min,
+                ModConfigs.Islamist_max,
+                EnumCreatureType.MONSTER,
+                regularSpawning.toArray(new Biome[0]));
         }
 
         // ApoRed
         EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:apored"), EntityApoRed.class, "apored", id++, Spackenmobs.instance, 64, 1, true, 2039583, 16711680);
         if (ModConfigs.ApoRed_spawn)
         {
-            EntityRegistry.addSpawn(EntityApoRed.class, ModConfigs.ApoRed_weight, ModConfigs.ApoRed_min, ModConfigs.ApoRed_max, EnumCreatureType.MONSTER,
-                BiomeHelper.getBiomesWithMonster(EntitySkeleton.class));
+            EntityRegistry.addSpawn(
+                EntityApoRed.class,
+                ModConfigs.ApoRed_weight,
+                ModConfigs.ApoRed_min,
+                ModConfigs.ApoRed_max,
+                EnumCreatureType.MONSTER,
+                regularSpawning.toArray(new Biome[0]));
         }
 
         // Mr. Bean
         EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:mr_bean"), EntityMrBean.class, "mr_bean", id++, Spackenmobs.instance, 64, 1, true, 4802350, 3220238);
         if (ModConfigs.MrBean_spawn)
         {
-            EntityRegistry.addSpawn(EntityMrBean.class, ModConfigs.MrBean_weight, ModConfigs.MrBean_min, ModConfigs.MrBean_max, EnumCreatureType.MONSTER,
-                BiomeHelper.getBiomesWithMonster(EntityZombie.class));
+            EntityRegistry.addSpawn(
+                EntityMrBean.class,
+                ModConfigs.MrBean_weight,
+                ModConfigs.MrBean_min,
+                ModConfigs.MrBean_max,
+                EnumCreatureType.MONSTER,
+                regularSpawning.toArray(new Biome[0]));
         }
 
         // Drachenlord
         EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:drachenlord"), EntityDrachenlord.class, "drachenlord", id++, Spackenmobs.instance, 64, 1, true, 15256745, 8738878);
         if (ModConfigs.Drachenlord_spawn)
         {
-            EntityRegistry.addSpawn(EntityDrachenlord.class, ModConfigs.Drachenlord_weight, ModConfigs.Drachenlord_min, ModConfigs.Drachenlord_max, EnumCreatureType.MONSTER,
-                BiomeHelper.getBiomesWithMonster(EntityPigZombie.class));
+            EntityRegistry.addSpawn(
+                EntityDrachenlord.class,
+                ModConfigs.Drachenlord_weight,
+                ModConfigs.Drachenlord_min,
+                ModConfigs.Drachenlord_max,
+                EnumCreatureType.MONSTER,
+                BiomeDictionary.getBiomes(BiomeDictionary.Type.NETHER).toArray(new Biome[0]));
         }
 
         // Schalker
         EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:schalker"), EntitySchalker.class, "schalker", id++, Spackenmobs.instance, 64, 1, true, 24745, 16777215);
         if (ModConfigs.Schalker_spawn)
         {
-            EntityRegistry.addSpawn(EntitySchalker.class, ModConfigs.Schalker_weight, ModConfigs.Schalker_min, ModConfigs.Schalker_max, EnumCreatureType.MONSTER,
+            EntityRegistry.addSpawn(
+                EntitySchalker.class,
+                ModConfigs.Schalker_weight,
+                ModConfigs.Schalker_min,
+                ModConfigs.Schalker_max,
+                EnumCreatureType.MONSTER,
                 BiomeDictionary.getBiomes(BiomeDictionary.Type.END).toArray(new Biome[0]));
         }
 
@@ -85,52 +132,91 @@ public class RegistryHandler
         EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:jens"), EntityJens.class, "jens", id++, Spackenmobs.instance, 64, 1, true, 6704526, 6767911);
         if (ModConfigs.Jens_spawn)
         {
-            EntityRegistry.addSpawn(EntityJens.class, ModConfigs.Jens_weight, ModConfigs.Jens_min, ModConfigs.Jens_max, EnumCreatureType.CREATURE, BiomeHelper.getBiomesWithCreature(EntityPig.class));
+            EntityRegistry.addSpawn(
+                EntityJens.class,
+                ModConfigs.Jens_weight,
+                ModConfigs.Jens_min,
+                ModConfigs.Jens_max,
+                EnumCreatureType.CREATURE,
+                regularSpawning.toArray(new Biome[0]));
         }
 
         // MZTEWolf
         EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:mztewolf"), EntityMZTEWolf.class, "mztewolf", id++, Spackenmobs.instance, 64, 1, true, 16711680, 0);
         if (ModConfigs.MZTEWolf_spawn)
         {
-            EntityRegistry.addSpawn(EntityMZTEWolf.class, ModConfigs.MZTEWolf_weight, ModConfigs.MZTEWolf_min, ModConfigs.MZTEWolf_max, EnumCreatureType.CREATURE,
-                BiomeHelper.getBiomesWithCreature(EntityWolf.class));
+            EntityRegistry.addSpawn(
+                EntityMZTEWolf.class,
+                ModConfigs.MZTEWolf_weight,
+                ModConfigs.MZTEWolf_min,
+                ModConfigs.MZTEWolf_max,
+                EnumCreatureType.CREATURE,
+                regularSpawning.toArray(new Biome[0]));
         }
 
         // Holzstammhuhn
         EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:holzstammhuhn"), EntityHolzstammhuhn.class, "holzstammhuhn", id++, Spackenmobs.instance, 64, 1, true, 12096347, 5295899);
         if (ModConfigs.Holzstammhuhn_spawn)
         {
-            EntityRegistry.addSpawn(EntityHolzstammhuhn.class, ModConfigs.Holzstammhuhn_weight, ModConfigs.Holzstammhuhn_min, ModConfigs.Holzstammhuhn_max, EnumCreatureType.CREATURE,
-                BiomeHelper.getBiomesWithCreature(EntityChicken.class));
+            EntityRegistry.addSpawn(
+                EntityHolzstammhuhn.class,
+                ModConfigs.Holzstammhuhn_weight,
+                ModConfigs.Holzstammhuhn_min,
+                ModConfigs.Holzstammhuhn_max,
+                EnumCreatureType.CREATURE,
+                regularSpawning.toArray(new Biome[0]));
         }
 
         // Baka Mitai Creeper
         EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:bakamitai_creeper"), EntityBakaMitaiCreeper.class, "bakamitai_creeper", id++, Spackenmobs.instance, 64, 1, true, 826890, 0);
         if (ModConfigs.BakaMitaiCreeper_spawn)
         {
-            EntityRegistry.addSpawn(EntityBakaMitaiCreeper.class, ModConfigs.BakaMitaiCreeper_weight, ModConfigs.BakaMitaiCreeper_min, ModConfigs.BakaMitaiCreeper_max, EnumCreatureType.MONSTER,
-                BiomeHelper.getBiomesWithMonster(EntityCreeper.class));
+            EntityRegistry.addSpawn(
+                EntityBakaMitaiCreeper.class,
+                ModConfigs.BakaMitaiCreeper_weight,
+                ModConfigs.BakaMitaiCreeper_min,
+                ModConfigs.BakaMitaiCreeper_max,
+                EnumCreatureType.MONSTER,
+                regularSpawning.toArray(new Biome[0]));
         }
 
         // Friedrich Liechtenstein
         EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:friedrich"), EntityFriedrichLiechtenstein.class, "friedrich", id++, Spackenmobs.instance, 64, 1, true, 16447728, 15878595);
         if (ModConfigs.Friedrich_spawn)
         {
-            EntityRegistry.addSpawn(EntityFriedrichLiechtenstein.class, ModConfigs.Friedrich_weight, ModConfigs.Friedrich_min, ModConfigs.Friedrich_max, EnumCreatureType.CREATURE, BiomeHelper.getBiomesWithCreature(EntityCow.class));
+            EntityRegistry.addSpawn(
+                EntityFriedrichLiechtenstein.class,
+                ModConfigs.Friedrich_weight,
+                ModConfigs.Friedrich_min,
+                ModConfigs.Friedrich_max,
+                EnumCreatureType.CREATURE,
+                regularSpawning.toArray(new Biome[0]));
         }
 
         // Gisela
         EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:gisela"), EntityGisela.class, "gisela", id++, Spackenmobs.instance, 64, 1, true, 39835, 16448250);
         if (ModConfigs.Gisela_spawn)
         {
-            EntityRegistry.addSpawn(EntityGisela.class, ModConfigs.Gisela_weight, ModConfigs.Gisela_min, ModConfigs.Gisela_max, EnumCreatureType.MONSTER, BiomeHelper.getBiomesWithCreature(EntitySheep.class));
+            EntityRegistry.addSpawn(
+                EntityGisela.class,
+                ModConfigs.Gisela_weight,
+                ModConfigs.Gisela_min,
+                ModConfigs.Gisela_max,
+                EnumCreatureType.MONSTER,
+                regularSpawning.toArray(new Biome[0]));
         }
 
         // tilera Ghast
         EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:tilera_ghast"), EntityTileraGhast.class, "tilera_ghast", id++, Spackenmobs.instance, 64, 1, true, 16447728, 15878595);
         if (ModConfigs.tileraGhast_spawn)
         {
-            EntityRegistry.addSpawn(EntityTileraGhast.class, ModConfigs.tileraGhast_weight, ModConfigs.tileraGhast_min, ModConfigs.tileraGhast_max, EnumCreatureType.MONSTER, BiomeHelper.getBiomesWithMonster(EntityGhast.class));
+            EntityRegistry.addSpawn(
+                EntityTileraGhast.class,
+                ModConfigs.tileraGhast_weight,
+                ModConfigs.tileraGhast_min,
+                ModConfigs.tileraGhast_max,
+                EnumCreatureType.MONSTER,
+                BiomeDictionary.getBiomes(BiomeDictionary.Type.NETHER).toArray(new Biome[0]));
         }
     }
 

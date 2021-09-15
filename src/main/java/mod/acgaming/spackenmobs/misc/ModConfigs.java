@@ -5,10 +5,12 @@ import net.minecraftforge.common.config.Config.LangKey;
 import net.minecraftforge.common.config.Config.Name;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@Config(modid = "spackenmobs")
+import mod.acgaming.spackenmobs.Spackenmobs;
+
+@Config(modid = Spackenmobs.MODID)
 @LangKey("spackenmobs.config.title")
 public class ModConfigs
 {
@@ -42,7 +44,7 @@ public class ModConfigs
     public static boolean tileraGhast_spawn = true;
 
     @Name("ApoRed spawn weight:")
-    public static int ApoRed_weight = 10;
+    public static int ApoRed_weight = 15;
     @Name("ApoRed min group size:")
     public static int ApoRed_min = 1;
     @Name("ApoRed max group size:")
@@ -72,7 +74,7 @@ public class ModConfigs
     @Name("Holzstammhuhn max group size:")
     public static int Holzstammhuhn_max = 1;
     @Name("Islamist spawn weight:")
-    public static int Islamist_weight = 10;
+    public static int Islamist_weight = 15;
     @Name("Islamist min group size:")
     public static int Islamist_min = 1;
     @Name("Islamist max group size:")
@@ -84,13 +86,13 @@ public class ModConfigs
     @Name("Jens max group size:")
     public static int Jens_max = 1;
     @Name("Marcell D'Avis spawn weight:")
-    public static int MarcellDAvis_weight = 10;
+    public static int MarcellDAvis_weight = 15;
     @Name("Marcell D'Avis min group size:")
     public static int MarcellDAvis_min = 1;
     @Name("Marcell D'Avis max group size:")
     public static int MarcellDAvis_max = 1;
     @Name("Mr. Bean spawn weight:")
-    public static int MrBean_weight = 10;
+    public static int MrBean_weight = 15;
     @Name("Mr. Bean min group size:")
     public static int MrBean_min = 1;
     @Name("Mr. Bean max group size:")
@@ -102,7 +104,7 @@ public class ModConfigs
     @Name("Schalker max group size:")
     public static int Schalker_max = 1;
     @Name("Smava Creeper spawn weight:")
-    public static int SmavaCreeper_weight = 10;
+    public static int SmavaCreeper_weight = 15;
     @Name("Smava Creeper min group size:")
     public static int SmavaCreeper_min = 1;
     @Name("Smava Creeper max group size:")
@@ -131,15 +133,15 @@ public class ModConfigs
     @Name("Maximum distance in blocks Jens can search:")
     public static int Jens_search_distance = 16;
 
-    @EventBusSubscriber(modid = "spackenmobs")
-    private static class EventHandler
+    @Mod.EventBusSubscriber(modid = Spackenmobs.MODID)
+    public static class EventHandler
     {
         @SubscribeEvent
-        public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event)
+        public static void onConfigChanged(final ConfigChangedEvent.OnConfigChangedEvent event)
         {
-            if (event.getModID().equals("spackenmobs"))
+            if (event.getModID().equals(Spackenmobs.MODID))
             {
-                ConfigManager.sync("spackenmobs", Config.Type.INSTANCE);
+                ConfigManager.sync(Spackenmobs.MODID, Config.Type.INSTANCE);
             }
         }
     }
