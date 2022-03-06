@@ -21,7 +21,7 @@ public class FriedrichLiechtensteinRenderer extends MobRenderer<FriedrichLiechte
         this.addLayer(new HeldItemLayer<>(this));
     }
 
-    public ResourceLocation getEntityTexture(FriedrichLiechtensteinEntity entity)
+    public ResourceLocation getTextureLocation(FriedrichLiechtensteinEntity entity)
     {
         return FRIEDRICH_TEXTURES;
     }

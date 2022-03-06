@@ -21,13 +21,13 @@ public abstract class AbstractMarcellDAvisRenderer<T extends MarcellDAvisEntity,
         this.addLayer(new BipedArmorLayer<>(this, p_i50974_3_, p_i50974_4_));
     }
 
-    public ResourceLocation getEntityTexture(MarcellDAvisEntity entity)
+    public ResourceLocation getTextureLocation(MarcellDAvisEntity entity)
     {
         return MARCELLDAVIS_TEXTURES;
     }
 
-    protected boolean func_230495_a_(T p_230495_1_)
+    protected boolean isShaking(T p_230495_1_)
     {
-        return p_230495_1_.isDrowning();
+        return p_230495_1_.isUnderWaterConverting();
     }
 }

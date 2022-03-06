@@ -12,7 +12,7 @@ public class SpackenmobsTab
     public static final ItemGroup SPACKENMOBS_TAB = new ItemGroup(Reference.MOD_ID)
     {
         @OnlyIn(Dist.CLIENT)
-        public ItemStack createIcon()
+        public ItemStack makeIcon()
         {
             return new ItemStack(SpackenmobsRegistry.SURSTROEMMING.get());
         }

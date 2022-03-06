@@ -19,7 +19,7 @@ public class JensRenderer extends MobRenderer<JensEntity, BipedModel<JensEntity>
         super(renderManagerIn, new BipedModel<>(0.0F), 0.25F);
     }
 
-    public ResourceLocation getEntityTexture(JensEntity entity)
+    public ResourceLocation getTextureLocation(JensEntity entity)
     {
         return JENS_TEXTURES;
     }

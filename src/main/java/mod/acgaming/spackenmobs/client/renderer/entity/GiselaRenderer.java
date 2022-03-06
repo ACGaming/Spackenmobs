@@ -19,7 +19,7 @@ public class GiselaRenderer extends MobRenderer<GiselaEntity, BipedModel<GiselaE
         super(renderManagerIn, new BipedModel<>(0.0F), 0.25F);
     }
 
-    public ResourceLocation getEntityTexture(GiselaEntity entity)
+    public ResourceLocation getTextureLocation(GiselaEntity entity)
     {
         return GISELA_TEXTURES;
     }

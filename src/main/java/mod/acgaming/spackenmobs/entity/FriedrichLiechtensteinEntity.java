@@ -23,69 +23,69 @@ public class FriedrichLiechtensteinEntity extends AnimalEntity
 {
     public static AttributeModifierMap.MutableAttribute registerAttributes()
     {
-        return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 20.0D).createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.2F);
+        return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 20.0D).add(Attributes.MOVEMENT_SPEED, 0.2F);
     }
 
     public FriedrichLiechtensteinEntity(EntityType<? extends FriedrichLiechtensteinEntity> type, World worldIn)
     {
         super(type, worldIn);
-        this.setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(SpackenmobsRegistry.AHOJ_BRAUSE.get()));
-        this.setItemStackToSlot(EquipmentSlotType.OFFHAND, new ItemStack(SpackenmobsRegistry.AHOJ_BRAUSE_DRINK.get()));
+        this.setItemSlot(EquipmentSlotType.MAINHAND, new ItemStack(SpackenmobsRegistry.AHOJ_BRAUSE.get()));
+        this.setItemSlot(EquipmentSlotType.OFFHAND, new ItemStack(SpackenmobsRegistry.AHOJ_BRAUSE_DRINK.get()));
     }
 
-    public ActionResultType func_230254_b_(PlayerEntity player, Hand hand)
+    public ActionResultType mobInteract(PlayerEntity player, Hand hand)
     {
-        ItemStack itemstack = player.getHeldItem(hand);
-        if (itemstack.getItem() == Items.GLASS_BOTTLE && !this.isChild())
+        ItemStack itemstack = player.getItemInHand(hand);
+        if (itemstack.getItem() == Items.GLASS_BOTTLE && !this.isBaby())
         {
             player.playSound(SpackenmobsRegistry.ENTITY_FRIEDRICH_DEATH.get(), 1.0F, 1.0F);
-            player.playSound(SoundEvents.ENTITY_COW_MILK, 1.0F, 1.0F);
+            player.playSound(SoundEvents.COW_MILK, 1.0F, 1.0F);
             for (int i = 0; i < 7; ++i)
             {
-                double d0 = this.rand.nextGaussian() * 0.02D;
-                double d1 = this.rand.nextGaussian() * 0.02D;
-                double d2 = this.rand.nextGaussian() * 0.02D;
-                this.world.addParticle(ParticleTypes.HAPPY_VILLAGER, this.getPosXRandom(1.0D), this.getPosYRandom() + 0.5D, this.getPosZRandom(1.0D), d0, d1, d2);
+                double d0 = this.random.nextGaussian() * 0.02D;
+                double d1 = this.random.nextGaussian() * 0.02D;
+                double d2 = this.random.nextGaussian() * 0.02D;
+                this.level.addParticle(ParticleTypes.HAPPY_VILLAGER, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
             }
             itemstack.shrink(1);
             if (itemstack.isEmpty())
             {
-                player.setHeldItem(hand, new ItemStack(SpackenmobsRegistry.AHOJ_BRAUSE_DRINK.get()));
+                player.setItemInHand(hand, new ItemStack(SpackenmobsRegistry.AHOJ_BRAUSE_DRINK.get()));
             }
-            else if (!player.inventory.addItemStackToInventory(new ItemStack(SpackenmobsRegistry.AHOJ_BRAUSE_DRINK.get())))
+            else if (!player.inventory.add(new ItemStack(SpackenmobsRegistry.AHOJ_BRAUSE_DRINK.get())))
             {
-                player.dropItem(new ItemStack(SpackenmobsRegistry.AHOJ_BRAUSE_DRINK.get()), false);
+                player.drop(new ItemStack(SpackenmobsRegistry.AHOJ_BRAUSE_DRINK.get()), false);
             }
-            return ActionResultType.func_233537_a_(this.world.isRemote);
+            return ActionResultType.sidedSuccess(this.level.isClientSide);
         }
-        else if (itemstack.getItem() == Items.PAPER && !this.isChild())
+        else if (itemstack.getItem() == Items.PAPER && !this.isBaby())
         {
             player.playSound(SpackenmobsRegistry.ENTITY_FRIEDRICH_AMBIENT.get(), 1.0F, 1.0F);
             for (int i = 0; i < 7; ++i)
             {
-                double d0 = this.rand.nextGaussian() * 0.02D;
-                double d1 = this.rand.nextGaussian() * 0.02D;
-                double d2 = this.rand.nextGaussian() * 0.02D;
-                this.world.addParticle(ParticleTypes.HAPPY_VILLAGER, this.getPosXRandom(1.0D), this.getPosYRandom() + 0.5D, this.getPosZRandom(1.0D), d0, d1, d2);
+                double d0 = this.random.nextGaussian() * 0.02D;
+                double d1 = this.random.nextGaussian() * 0.02D;
+                double d2 = this.random.nextGaussian() * 0.02D;
+                this.level.addParticle(ParticleTypes.HAPPY_VILLAGER, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
             }
             itemstack.shrink(1);
             if (itemstack.isEmpty())
             {
-                player.setHeldItem(hand, new ItemStack(SpackenmobsRegistry.AHOJ_BRAUSE.get()));
+                player.setItemInHand(hand, new ItemStack(SpackenmobsRegistry.AHOJ_BRAUSE.get()));
             }
-            else if (!player.inventory.addItemStackToInventory(new ItemStack(SpackenmobsRegistry.AHOJ_BRAUSE.get())))
+            else if (!player.inventory.add(new ItemStack(SpackenmobsRegistry.AHOJ_BRAUSE.get())))
             {
-                player.dropItem(new ItemStack(SpackenmobsRegistry.AHOJ_BRAUSE.get()), false);
+                player.drop(new ItemStack(SpackenmobsRegistry.AHOJ_BRAUSE.get()), false);
             }
-            return ActionResultType.func_233537_a_(this.world.isRemote);
+            return ActionResultType.sidedSuccess(this.level.isClientSide);
         }
         else
         {
-            return super.func_230254_b_(player, hand);
+            return super.mobInteract(player, hand);
         }
     }
 
-    public FriedrichLiechtensteinEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_)
+    public FriedrichLiechtensteinEntity getBreedOffspring(ServerWorld p_241840_1_, AgeableEntity p_241840_2_)
     {
         return SpackenmobsRegistry.FRIEDRICH_LIECHTENSTEIN.get().create(p_241840_1_);
     }
@@ -95,7 +95,7 @@ public class FriedrichLiechtensteinEntity extends AnimalEntity
         this.goalSelector.addGoal(0, new SwimGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 2.0D));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, Ingredient.fromItems(Items.SUGAR), false));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.25D, Ingredient.of(Items.SUGAR), false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 6.0F));
@@ -124,11 +124,11 @@ public class FriedrichLiechtensteinEntity extends AnimalEntity
 
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn)
     {
-        return this.isChild() ? sizeIn.height * 0.95F : 1.3F;
+        return this.isBaby() ? sizeIn.height * 0.95F : 1.3F;
     }
 
     protected void playStepSound(BlockPos pos, BlockState blockIn)
     {
-        this.playSound(SoundEvents.ENTITY_COW_STEP, 0.15F, 1.0F);
+        this.playSound(SoundEvents.COW_STEP, 0.15F, 1.0F);
     }
 }

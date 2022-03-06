@@ -21,7 +21,7 @@ public class ApoRedRenderer extends BipedRenderer<AbstractApoRedEntity, Skeleton
         this.addLayer(new BipedArmorLayer<>(this, new SkeletonModel(0.5F, true), new SkeletonModel(1.0F, true)));
     }
 
-    public ResourceLocation getEntityTexture(AbstractApoRedEntity entity)
+    public ResourceLocation getTextureLocation(AbstractApoRedEntity entity)
     {
         return APORED_TEXTURES;
     }

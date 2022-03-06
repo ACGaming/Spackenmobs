@@ -25,7 +25,7 @@ public class DrachenlordEntity extends ZombieEntity
 {
     public static AttributeModifierMap.MutableAttribute registerAttributes()
     {
-        return MonsterEntity.func_234295_eP_().createMutableAttribute(Attributes.FOLLOW_RANGE, 35.0D).createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.2F).createMutableAttribute(Attributes.ATTACK_DAMAGE, 3.0D).createMutableAttribute(Attributes.ARMOR, 2.0D).createMutableAttribute(Attributes.ZOMBIE_SPAWN_REINFORCEMENTS);
+        return MonsterEntity.createMonsterAttributes().add(Attributes.FOLLOW_RANGE, 35.0D).add(Attributes.MOVEMENT_SPEED, 0.2F).add(Attributes.ATTACK_DAMAGE, 3.0D).add(Attributes.ARMOR, 2.0D).add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
     }
 
     private int angerLevel;
@@ -35,16 +35,16 @@ public class DrachenlordEntity extends ZombieEntity
     public DrachenlordEntity(EntityType<? extends DrachenlordEntity> type, World worldIn)
     {
         super(type, worldIn);
-        this.isImmuneToFire();
+        this.fireImmune();
     }
 
-    public void setRevengeTarget(@Nullable LivingEntity livingEntity)
+    public void setLastHurtByMob(@Nullable LivingEntity livingEntity)
     {
-        super.setRevengeTarget(livingEntity);
+        super.setLastHurtByMob(livingEntity);
 
         if (livingEntity != null)
         {
-            this.angerTargetUUID = livingEntity.getUniqueID();
+            this.angerTargetUUID = livingEntity.getUUID();
         }
     }
 
@@ -55,12 +55,12 @@ public class DrachenlordEntity extends ZombieEntity
 
     public void becomeAngryAt(Entity entity)
     {
-        this.angerLevel = 400 + this.rand.nextInt(400);
-        this.randomSoundDelay = this.rand.nextInt(40);
+        this.angerLevel = 400 + this.random.nextInt(400);
+        this.randomSoundDelay = this.random.nextInt(40);
 
         if (entity instanceof LivingEntity)
         {
-            this.setRevengeTarget((LivingEntity) entity);
+            this.setLastHurtByMob((LivingEntity) entity);
         }
     }
 
@@ -79,17 +79,17 @@ public class DrachenlordEntity extends ZombieEntity
         {
             this.playSound(SpackenmobsRegistry.ENTITY_DRACHENLORD_ANGRY.get(), 1.0F, 1.0F);
         }
-        if (this.angerLevel > 0 && this.angerTargetUUID != null && this.getRevengeTarget() == null)
+        if (this.angerLevel > 0 && this.angerTargetUUID != null && this.getLastHurtByMob() == null)
         {
-            PlayerEntity entityplayer = this.world.getPlayerByUuid(this.angerTargetUUID);
-            this.setRevengeTarget(entityplayer);
-            this.attackingPlayer = entityplayer;
-            this.recentlyHit = this.getRevengeTimer();
+            PlayerEntity entityplayer = this.level.getPlayerByUUID(this.angerTargetUUID);
+            this.setLastHurtByMob(entityplayer);
+            this.lastHurtByPlayer = entityplayer;
+            this.lastHurtByPlayerTime = this.getLastHurtByMobTimestamp();
         }
         super.tick();
     }
 
-    public boolean attackEntityFrom(DamageSource source, float amount)
+    public boolean hurt(DamageSource source, float amount)
     {
         if (this.isInvulnerableTo(source))
         {
@@ -97,14 +97,14 @@ public class DrachenlordEntity extends ZombieEntity
         }
         else
         {
-            Entity entity = source.getTrueSource();
+            Entity entity = source.getEntity();
 
             if (entity instanceof PlayerEntity)
             {
                 this.becomeAngryAt(entity);
             }
 
-            return super.attackEntityFrom(source, amount);
+            return super.hurt(source, amount);
         }
     }
 
@@ -123,9 +123,9 @@ public class DrachenlordEntity extends ZombieEntity
         return SpackenmobsRegistry.ENTITY_DRACHENLORD_DEATH.get();
     }
 
-    protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty)
+    protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty)
     {
-        super.setEquipmentBasedOnDifficulty(difficulty);
-        this.setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(Items.GOLDEN_AXE));
+        super.populateDefaultEquipmentSlots(difficulty);
+        this.setItemSlot(EquipmentSlotType.MAINHAND, new ItemStack(Items.GOLDEN_AXE));
     }
 }

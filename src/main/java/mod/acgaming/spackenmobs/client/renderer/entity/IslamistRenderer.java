@@ -24,18 +24,18 @@ public class IslamistRenderer extends MobRenderer<IslamistEntity, CreeperModel<I
         this.addLayer(new IslamistChargeLayer(this));
     }
 
-    public ResourceLocation getEntityTexture(IslamistEntity entity)
+    public ResourceLocation getTextureLocation(IslamistEntity entity)
     {
         return ISLAMIST_TEXTURES;
     }
 
-    protected float getOverlayProgress(IslamistEntity livingEntityIn, float partialTicks)
+    protected float getWhiteOverlayProgress(IslamistEntity livingEntityIn, float partialTicks)
     {
         float f = livingEntityIn.getCreeperFlashIntensity(partialTicks);
         return (int) (f * 10.0F) % 2 == 0 ? 0.0F : MathHelper.clamp(f, 0.5F, 1.0F);
     }
 
-    protected void preRenderCallback(IslamistEntity entitylivingbaseIn, MatrixStack matrixStackIn, float partialTickTime)
+    protected void scale(IslamistEntity entitylivingbaseIn, MatrixStack matrixStackIn, float partialTickTime)
     {
         float f = entitylivingbaseIn.getCreeperFlashIntensity(partialTickTime);
         float f1 = 1.0F + MathHelper.sin(f * 100.0F) * f * 0.01F;

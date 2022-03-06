@@ -25,11 +25,11 @@ import mod.acgaming.spackenmobs.init.SpackenmobsRegistry;
 
 public class HolzstammhuhnEntity extends AnimalEntity
 {
-    private static final Ingredient TEMPTATION_ITEMS = Ingredient.fromItems(Items.STICK);
+    private static final Ingredient TEMPTATION_ITEMS = Ingredient.of(Items.STICK);
 
     public static AttributeModifierMap.MutableAttribute registerAttributes()
     {
-        return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 4.0D).createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D);
+        return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 4.0D).add(Attributes.MOVEMENT_SPEED, 0.25D);
     }
 
     public float wingRotation;
@@ -37,18 +37,18 @@ public class HolzstammhuhnEntity extends AnimalEntity
     public float oFlapSpeed;
     public float oFlap;
     public float wingRotDelta = 1.0F;
-    public int timeUntilNextEgg = this.rand.nextInt(6000) + 6000;
+    public int timeUntilNextEgg = this.random.nextInt(6000) + 6000;
     public boolean chickenJockey;
 
     public HolzstammhuhnEntity(EntityType<? extends HolzstammhuhnEntity> type, World worldIn)
     {
         super(type, worldIn);
-        this.setPathPriority(PathNodeType.WATER, 0.0F);
+        this.setPathfindingMalus(PathNodeType.WATER, 0.0F);
     }
 
-    public void livingTick()
+    public void aiStep()
     {
-        super.livingTick();
+        super.aiStep();
         this.oFlap = this.wingRotation;
         this.oFlapSpeed = this.destPos;
         this.destPos = (float) ((double) this.destPos + (double) (this.onGround ? -1 : 4) * 0.3D);
@@ -59,31 +59,31 @@ public class HolzstammhuhnEntity extends AnimalEntity
         }
 
         this.wingRotDelta = (float) ((double) this.wingRotDelta * 0.9D);
-        Vector3d vector3d = this.getMotion();
+        Vector3d vector3d = this.getDeltaMovement();
         if (!this.onGround && vector3d.y < 0.0D)
         {
-            this.setMotion(vector3d.mul(1.0D, 0.6D, 1.0D));
+            this.setDeltaMovement(vector3d.multiply(1.0D, 0.6D, 1.0D));
         }
 
         this.wingRotation += this.wingRotDelta * 2.0F;
-        if (!this.world.isRemote && this.isAlive() && !this.isChild() && !this.isChickenJockey() && --this.timeUntilNextEgg <= 0)
+        if (!this.level.isClientSide && this.isAlive() && !this.isBaby() && !this.isChickenJockey() && --this.timeUntilNextEgg <= 0)
         {
-            this.playSound(SoundEvents.ENTITY_CHICKEN_EGG, 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-            this.entityDropItem(Items.OAK_BUTTON);
-            this.timeUntilNextEgg = this.rand.nextInt(6000) + 6000;
+            this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+            this.spawnAtLocation(Items.OAK_BUTTON);
+            this.timeUntilNextEgg = this.random.nextInt(6000) + 6000;
         }
     }
 
-    public void writeAdditional(CompoundNBT compound)
+    public void addAdditionalSaveData(CompoundNBT compound)
     {
-        super.writeAdditional(compound);
+        super.addAdditionalSaveData(compound);
         compound.putBoolean("IsChickenJockey", this.chickenJockey);
         compound.putInt("EggLayTime", this.timeUntilNextEgg);
     }
 
-    public void readAdditional(CompoundNBT compound)
+    public void readAdditionalSaveData(CompoundNBT compound)
     {
-        super.readAdditional(compound);
+        super.readAdditionalSaveData(compound);
         this.chickenJockey = compound.getBoolean("IsChickenJockey");
         if (compound.contains("EggLayTime"))
         {
@@ -92,22 +92,22 @@ public class HolzstammhuhnEntity extends AnimalEntity
 
     }
 
-    public boolean canDespawn(double distanceToClosestPlayer)
+    public boolean removeWhenFarAway(double distanceToClosestPlayer)
     {
         return this.isChickenJockey();
     }
 
-    protected int getExperiencePoints(PlayerEntity player)
+    protected int getExperienceReward(PlayerEntity player)
     {
-        return this.isChickenJockey() ? 10 : super.getExperiencePoints(player);
+        return this.isChickenJockey() ? 10 : super.getExperienceReward(player);
     }
 
-    public boolean isBreedingItem(ItemStack stack)
+    public boolean isFood(ItemStack stack)
     {
         return TEMPTATION_ITEMS.test(stack);
     }
 
-    public HolzstammhuhnEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_)
+    public HolzstammhuhnEntity getBreedOffspring(ServerWorld p_241840_1_, AgeableEntity p_241840_2_)
     {
         return SpackenmobsRegistry.HOLZSTAMMHUHN.get().create(p_241840_1_);
     }
@@ -136,45 +136,45 @@ public class HolzstammhuhnEntity extends AnimalEntity
 
     protected SoundEvent getAmbientSound()
     {
-        return SoundEvents.BLOCK_WOOD_PLACE;
+        return SoundEvents.WOOD_PLACE;
     }
 
     protected SoundEvent getHurtSound(DamageSource damageSourceIn)
     {
-        return SoundEvents.BLOCK_WOOD_HIT;
+        return SoundEvents.WOOD_HIT;
     }
 
     protected SoundEvent getDeathSound()
     {
-        return SoundEvents.BLOCK_WOOD_BREAK;
+        return SoundEvents.WOOD_BREAK;
     }
 
-    public boolean onLivingFall(float distance, float damageMultiplier)
+    public boolean causeFallDamage(float distance, float damageMultiplier)
     {
         return false;
     }
 
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn)
     {
-        return this.isChild() ? sizeIn.height * 0.85F : sizeIn.height * 0.92F;
+        return this.isBaby() ? sizeIn.height * 0.85F : sizeIn.height * 0.92F;
     }
 
     protected void playStepSound(BlockPos pos, BlockState blockIn)
     {
-        this.playSound(SoundEvents.BLOCK_WOOD_STEP, 0.15F, 1.0F);
+        this.playSound(SoundEvents.WOOD_STEP, 0.15F, 1.0F);
     }
 
-    public void updatePassenger(Entity passenger)
+    public void positionRider(Entity passenger)
     {
-        super.updatePassenger(passenger);
-        float f = MathHelper.sin(this.renderYawOffset * ((float) Math.PI / 180F));
-        float f1 = MathHelper.cos(this.renderYawOffset * ((float) Math.PI / 180F));
+        super.positionRider(passenger);
+        float f = MathHelper.sin(this.yBodyRot * ((float) Math.PI / 180F));
+        float f1 = MathHelper.cos(this.yBodyRot * ((float) Math.PI / 180F));
         float f2 = 0.1F;
         float f3 = 0.0F;
-        passenger.setPosition(this.getPosX() + (double) (0.1F * f), this.getPosYHeight(0.5D) + passenger.getYOffset() + 0.0D, this.getPosZ() - (double) (0.1F * f1));
+        passenger.setPos(this.getX() + (double) (0.1F * f), this.getY(0.5D) + passenger.getMyRidingOffset() + 0.0D, this.getZ() - (double) (0.1F * f1));
         if (passenger instanceof LivingEntity)
         {
-            ((LivingEntity) passenger).renderYawOffset = this.renderYawOffset;
+            ((LivingEntity) passenger).yBodyRot = this.yBodyRot;
         }
 
     }

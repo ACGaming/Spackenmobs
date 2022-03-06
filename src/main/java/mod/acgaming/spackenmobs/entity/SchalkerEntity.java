@@ -18,7 +18,6 @@ import net.minecraft.entity.passive.GolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.ShulkerBulletEntity;
-import net.minecraft.item.DyeColor;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -37,16 +36,16 @@ import mod.acgaming.spackenmobs.init.SpackenmobsRegistry;
 
 public class SchalkerEntity extends GolemEntity implements IMob
 {
-    protected static final DataParameter<Direction> ATTACHED_FACE = EntityDataManager.createKey(SchalkerEntity.class, DataSerializers.DIRECTION);
-    protected static final DataParameter<Optional<BlockPos>> ATTACHED_BLOCK_POS = EntityDataManager.createKey(SchalkerEntity.class, DataSerializers.OPTIONAL_BLOCK_POS);
-    protected static final DataParameter<Byte> PEEK_TICK = EntityDataManager.createKey(SchalkerEntity.class, DataSerializers.BYTE);
-    protected static final DataParameter<Byte> COLOR = EntityDataManager.createKey(SchalkerEntity.class, DataSerializers.BYTE);
+    protected static final DataParameter<Direction> ATTACHED_FACE = EntityDataManager.defineId(SchalkerEntity.class, DataSerializers.DIRECTION);
+    protected static final DataParameter<Optional<BlockPos>> ATTACHED_BLOCK_POS = EntityDataManager.defineId(SchalkerEntity.class, DataSerializers.OPTIONAL_BLOCK_POS);
+    protected static final DataParameter<Byte> PEEK_TICK = EntityDataManager.defineId(SchalkerEntity.class, DataSerializers.BYTE);
+    protected static final DataParameter<Byte> COLOR = EntityDataManager.defineId(SchalkerEntity.class, DataSerializers.BYTE);
     private static final UUID COVERED_ARMOR_BONUS_ID = UUID.fromString("7E0292F2-9434-48D5-A29F-9583AF7DF27F");
     private static final AttributeModifier COVERED_ARMOR_BONUS_MODIFIER = new AttributeModifier(COVERED_ARMOR_BONUS_ID, "Covered armor bonus", 20.0D, AttributeModifier.Operation.ADDITION);
 
     public static AttributeModifierMap.MutableAttribute registerAttributes()
     {
-        return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 30.0D);
+        return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 30.0D);
     }
 
     private float prevPeekAmount;
@@ -57,23 +56,23 @@ public class SchalkerEntity extends GolemEntity implements IMob
     public SchalkerEntity(EntityType<? extends SchalkerEntity> p_i50196_1_, World p_i50196_2_)
     {
         super(p_i50196_1_, p_i50196_2_);
-        this.experienceValue = 5;
+        this.xpReward = 5;
     }
 
-    public void setPosition(double x, double y, double z)
+    public void setPos(double x, double y, double z)
     {
-        super.setPosition(x, y, z);
-        if (this.dataManager != null && this.ticksExisted != 0)
+        super.setPos(x, y, z);
+        if (this.entityData != null && this.tickCount != 0)
         {
-            Optional<BlockPos> optional = this.dataManager.get(ATTACHED_BLOCK_POS);
-            if (this.isAddedToWorld() && this.world instanceof net.minecraft.world.server.ServerWorld)
-                ((net.minecraft.world.server.ServerWorld) this.world).chunkCheck(this); // Forge - Process chunk registration after moving.
+            Optional<BlockPos> optional = this.entityData.get(ATTACHED_BLOCK_POS);
+            if (this.isAddedToWorld() && this.level instanceof net.minecraft.world.server.ServerWorld)
+                ((net.minecraft.world.server.ServerWorld) this.level).updateChunkPos(this); // Forge - Process chunk registration after moving.
             Optional<BlockPos> optional1 = Optional.of(new BlockPos(x, y, z));
             if (!optional1.equals(optional))
             {
-                this.dataManager.set(ATTACHED_BLOCK_POS, optional1);
-                this.dataManager.set(PEEK_TICK, (byte) 0);
-                this.isAirBorne = true;
+                this.entityData.set(ATTACHED_BLOCK_POS, optional1);
+                this.entityData.set(PEEK_TICK, (byte) 0);
+                this.hasImpulse = true;
             }
 
         }
@@ -92,40 +91,35 @@ public class SchalkerEntity extends GolemEntity implements IMob
 
     }
 
-    protected boolean canTriggerWalking()
+    protected boolean isMovementNoisy()
     {
         return false;
     }
 
-    public boolean func_241845_aY()
-    {
-        return this.isAlive();
-    }
-
-    public float getCollisionBorderSize()
+    public float getPickRadius()
     {
         return 0.0F;
     }
 
-    public SoundCategory getSoundCategory()
+    public SoundCategory getSoundSource()
     {
         return SoundCategory.HOSTILE;
     }
 
-    public boolean attackEntityFrom(DamageSource source, float amount)
+    public boolean hurt(DamageSource source, float amount)
     {
         if (this.isClosed())
         {
-            Entity entity = source.getImmediateSource();
+            Entity entity = source.getDirectEntity();
             if (entity instanceof AbstractArrowEntity)
             {
                 return false;
             }
         }
 
-        if (super.attackEntityFrom(source, amount))
+        if (super.hurt(source, amount))
         {
-            if ((double) this.getHealth() < (double) this.getMaxHealth() * 0.5D && this.rand.nextInt(4) == 0)
+            if ((double) this.getHealth() < (double) this.getMaxHealth() * 0.5D && this.random.nextInt(4) == 0)
             {
                 this.tryTeleportToNewPosition();
             }
@@ -143,19 +137,24 @@ public class SchalkerEntity extends GolemEntity implements IMob
         return 0.6F;
     }
 
-    public void applyEntityCollision(Entity entityIn)
+    public void push(Entity entityIn)
     {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public void setPositionAndRotationDirect(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean teleport)
+    public void lerpTo(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean teleport)
     {
-        this.newPosRotationIncrements = 0;
+        this.lerpSteps = 0;
     }
 
-    public void notifyDataManagerChange(DataParameter<?> key)
+    public boolean isPickable()
     {
-        if (ATTACHED_BLOCK_POS.equals(key) && this.world.isRemote && !this.isPassenger())
+        return this.isAlive();
+    }
+
+    public void onSyncedDataUpdated(DataParameter<?> key)
+    {
+        if (ATTACHED_BLOCK_POS.equals(key) && this.level.isClientSide && !this.isPassenger())
         {
             BlockPos blockpos = this.getAttachmentPos();
             if (blockpos != null)
@@ -169,11 +168,11 @@ public class SchalkerEntity extends GolemEntity implements IMob
                     this.clientSideTeleportInterpolation = 6;
                 }
 
-                this.forceSetPosition((double) blockpos.getX() + 0.5D, blockpos.getY(), (double) blockpos.getZ() + 0.5D);
+                this.setPosAndOldPos((double) blockpos.getX() + 0.5D, blockpos.getY(), (double) blockpos.getZ() + 0.5D);
             }
         }
 
-        super.notifyDataManagerChange(key);
+        super.onSyncedDataUpdated(key);
     }
 
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn)
@@ -183,34 +182,34 @@ public class SchalkerEntity extends GolemEntity implements IMob
 
     public Direction getAttachmentFacing()
     {
-        return this.dataManager.get(ATTACHED_FACE);
+        return this.entityData.get(ATTACHED_FACE);
     }
 
     @Nullable
     public BlockPos getAttachmentPos()
     {
-        return this.dataManager.get(ATTACHED_BLOCK_POS).orElse(null);
+        return this.entityData.get(ATTACHED_BLOCK_POS).orElse(null);
     }
 
     public void setAttachmentPos(@Nullable BlockPos pos)
     {
-        this.dataManager.set(ATTACHED_BLOCK_POS, Optional.ofNullable(pos));
+        this.entityData.set(ATTACHED_BLOCK_POS, Optional.ofNullable(pos));
     }
 
     public int getPeekTick()
     {
-        return this.dataManager.get(PEEK_TICK);
+        return this.entityData.get(PEEK_TICK);
     }
 
     public void updateArmorModifier(int p_184691_1_)
     {
-        if (!this.world.isRemote)
+        if (!this.level.isClientSide)
         {
             Objects.requireNonNull(this.getAttribute(Attributes.ARMOR)).removeModifier(COVERED_ARMOR_BONUS_MODIFIER);
             if (p_184691_1_ == 0)
             {
-                Objects.requireNonNull(this.getAttribute(Attributes.ARMOR)).applyPersistentModifier(COVERED_ARMOR_BONUS_MODIFIER);
-                this.playSound(SoundEvents.ENTITY_SHULKER_CLOSE, 1.0F, 1.0F);
+                Objects.requireNonNull(this.getAttribute(Attributes.ARMOR)).addPermanentModifier(COVERED_ARMOR_BONUS_MODIFIER);
+                this.playSound(SoundEvents.SHULKER_CLOSE, 1.0F, 1.0F);
             }
             else
             {
@@ -218,7 +217,7 @@ public class SchalkerEntity extends GolemEntity implements IMob
             }
         }
 
-        this.dataManager.set(PEEK_TICK, (byte) p_184691_1_);
+        this.entityData.set(PEEK_TICK, (byte) p_184691_1_);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -245,37 +244,29 @@ public class SchalkerEntity extends GolemEntity implements IMob
         return this.currentAttachmentPosition != null && this.getAttachmentPos() != null;
     }
 
-    @Nullable
-    @OnlyIn(Dist.CLIENT)
-    public DyeColor getColor()
-    {
-        byte obyte = this.dataManager.get(COLOR);
-        return obyte <= 15 ? DyeColor.byId(obyte) : null;
-    }
-
     protected void registerGoals()
     {
         this.goalSelector.addGoal(1, new LookAtGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.addGoal(4, new SchalkerEntity.AttackGoal());
         this.goalSelector.addGoal(7, new SchalkerEntity.PeekGoal());
         this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
-        this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setCallsForHelp());
+        this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
         this.targetSelector.addGoal(2, new SchalkerEntity.AttackNearestGoal(this));
         this.targetSelector.addGoal(3, new SchalkerEntity.DefenseAttackGoal(this));
     }
 
-    protected BodyController createBodyController()
+    protected BodyController createBodyControl()
     {
         return new BodyHelperController(this);
     }
 
-    protected void registerData()
+    protected void defineSynchedData()
     {
-        super.registerData();
-        this.dataManager.register(ATTACHED_FACE, Direction.DOWN);
-        this.dataManager.register(ATTACHED_BLOCK_POS, Optional.empty());
-        this.dataManager.register(PEEK_TICK, (byte) 0);
-        this.dataManager.register(COLOR, (byte) 16);
+        super.defineSynchedData();
+        this.entityData.define(ATTACHED_FACE, Direction.DOWN);
+        this.entityData.define(ATTACHED_BLOCK_POS, Optional.empty());
+        this.entityData.define(PEEK_TICK, (byte) 0);
+        this.entityData.define(COLOR, (byte) 16);
     }
 
     public void playAmbientSound()
@@ -289,48 +280,48 @@ public class SchalkerEntity extends GolemEntity implements IMob
     public void tick()
     {
         super.tick();
-        BlockPos blockpos = this.dataManager.get(ATTACHED_BLOCK_POS).orElse(null);
-        if (blockpos == null && !this.world.isRemote)
+        BlockPos blockpos = this.entityData.get(ATTACHED_BLOCK_POS).orElse(null);
+        if (blockpos == null && !this.level.isClientSide)
         {
-            blockpos = this.getPosition();
-            this.dataManager.set(ATTACHED_BLOCK_POS, Optional.of(blockpos));
+            blockpos = this.blockPosition();
+            this.entityData.set(ATTACHED_BLOCK_POS, Optional.of(blockpos));
         }
 
         if (this.isPassenger())
         {
             blockpos = null;
-            float f = Objects.requireNonNull(this.getRidingEntity()).rotationYaw;
-            this.rotationYaw = f;
-            this.renderYawOffset = f;
-            this.prevRenderYawOffset = f;
+            float f = Objects.requireNonNull(this.getVehicle()).yRot;
+            this.yRot = f;
+            this.yBodyRot = f;
+            this.yBodyRotO = f;
             this.clientSideTeleportInterpolation = 0;
         }
-        else if (!this.world.isRemote)
+        else if (!this.level.isClientSide)
         {
             assert blockpos != null;
-            BlockState blockstate = this.world.getBlockState(blockpos);
-            if (!blockstate.isAir(this.world, blockpos))
+            BlockState blockstate = this.level.getBlockState(blockpos);
+            if (!blockstate.isAir(this.level, blockpos))
             {
-                if (blockstate.isIn(Blocks.MOVING_PISTON))
+                if (blockstate.is(Blocks.MOVING_PISTON))
                 {
-                    Direction direction = blockstate.get(PistonBlock.FACING);
-                    if (this.world.isAirBlock(blockpos.offset(direction)))
+                    Direction direction = blockstate.getValue(PistonBlock.FACING);
+                    if (this.level.isEmptyBlock(blockpos.relative(direction)))
                     {
-                        blockpos = blockpos.offset(direction);
-                        this.dataManager.set(ATTACHED_BLOCK_POS, Optional.of(blockpos));
+                        blockpos = blockpos.relative(direction);
+                        this.entityData.set(ATTACHED_BLOCK_POS, Optional.of(blockpos));
                     }
                     else
                     {
                         this.tryTeleportToNewPosition();
                     }
                 }
-                else if (blockstate.isIn(Blocks.PISTON_HEAD))
+                else if (blockstate.is(Blocks.PISTON_HEAD))
                 {
-                    Direction direction3 = blockstate.get(PistonHeadBlock.FACING);
-                    if (this.world.isAirBlock(blockpos.offset(direction3)))
+                    Direction direction3 = blockstate.getValue(PistonHeadBlock.FACING);
+                    if (this.level.isEmptyBlock(blockpos.relative(direction3)))
                     {
-                        blockpos = blockpos.offset(direction3);
-                        this.dataManager.set(ATTACHED_BLOCK_POS, Optional.of(blockpos));
+                        blockpos = blockpos.relative(direction3);
+                        this.entityData.set(ATTACHED_BLOCK_POS, Optional.of(blockpos));
                     }
                     else
                     {
@@ -344,12 +335,12 @@ public class SchalkerEntity extends GolemEntity implements IMob
             }
 
             Direction direction4 = this.getAttachmentFacing();
-            if (!this.func_234298_a_(blockpos, direction4))
+            if (!this.canAttachOnBlockFace(blockpos, direction4))
             {
-                Direction direction1 = this.func_234299_g_(blockpos);
+                Direction direction1 = this.findAttachableFace(blockpos);
                 if (direction1 != null)
                 {
-                    this.dataManager.set(ATTACHED_FACE, direction1);
+                    this.entityData.set(ATTACHED_FACE, direction1);
                 }
                 else
                 {
@@ -371,7 +362,7 @@ public class SchalkerEntity extends GolemEntity implements IMob
 
         if (blockpos != null)
         {
-            if (this.world.isRemote)
+            if (this.level.isClientSide)
             {
                 if (this.clientSideTeleportInterpolation > 0 && this.currentAttachmentPosition != null)
                 {
@@ -383,24 +374,24 @@ public class SchalkerEntity extends GolemEntity implements IMob
                 }
             }
 
-            this.forceSetPosition((double) blockpos.getX() + 0.5D, blockpos.getY(), (double) blockpos.getZ() + 0.5D);
+            this.setPosAndOldPos((double) blockpos.getX() + 0.5D, blockpos.getY(), (double) blockpos.getZ() + 0.5D);
             double d2 = 0.5D - (double) MathHelper.sin((0.5F + this.peekAmount) * (float) Math.PI) * 0.5D;
             double d0 = 0.5D - (double) MathHelper.sin((0.5F + this.prevPeekAmount) * (float) Math.PI) * 0.5D;
-            if (this.isAddedToWorld() && this.world instanceof net.minecraft.world.server.ServerWorld)
-                ((net.minecraft.world.server.ServerWorld) this.world).chunkCheck(this); // Forge - Process chunk registration after moving.
+            if (this.isAddedToWorld() && this.level instanceof net.minecraft.world.server.ServerWorld)
+                ((net.minecraft.world.server.ServerWorld) this.level).updateChunkPos(this); // Forge - Process chunk registration after moving.
             Direction direction2 = this.getAttachmentFacing().getOpposite();
-            this.setBoundingBox((new AxisAlignedBB(this.getPosX() - 0.5D, this.getPosY(), this.getPosZ() - 0.5D, this.getPosX() + 0.5D, this.getPosY() + 1.0D, this.getPosZ() + 0.5D)).expand((double) direction2.getXOffset() * d2, (double) direction2.getYOffset() * d2, (double) direction2.getZOffset() * d2));
+            this.setBoundingBox((new AxisAlignedBB(this.getX() - 0.5D, this.getY(), this.getZ() - 0.5D, this.getX() + 0.5D, this.getY() + 1.0D, this.getZ() + 0.5D)).expandTowards((double) direction2.getStepX() * d2, (double) direction2.getStepY() * d2, (double) direction2.getStepZ() * d2));
             double d1 = d2 - d0;
             if (d1 > 0.0D)
             {
-                List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getBoundingBox());
+                List<Entity> list = this.level.getEntities(this, this.getBoundingBox());
                 if (!list.isEmpty())
                 {
                     for (Entity entity : list)
                     {
-                        if (!(entity instanceof SchalkerEntity) && !entity.noClip)
+                        if (!(entity instanceof SchalkerEntity) && !entity.noPhysics)
                         {
-                            entity.move(MoverType.SHULKER, new Vector3d(d1 * (double) direction2.getXOffset(), d1 * (double) direction2.getYOffset(), d1 * (double) direction2.getZOffset()));
+                            entity.move(MoverType.SHULKER, new Vector3d(d1 * (double) direction2.getStepX(), d1 * (double) direction2.getStepY(), d1 * (double) direction2.getStepZ()));
                         }
                     }
                 }
@@ -409,12 +400,12 @@ public class SchalkerEntity extends GolemEntity implements IMob
 
     }
 
-    public void writeAdditional(CompoundNBT compound)
+    public void addAdditionalSaveData(CompoundNBT compound)
     {
-        super.writeAdditional(compound);
-        compound.putByte("AttachFace", (byte) this.dataManager.get(ATTACHED_FACE).getIndex());
-        compound.putByte("Peek", this.dataManager.get(PEEK_TICK));
-        compound.putByte("Color", this.dataManager.get(COLOR));
+        super.addAdditionalSaveData(compound);
+        compound.putByte("AttachFace", (byte) this.entityData.get(ATTACHED_FACE).get3DDataValue());
+        compound.putByte("Peek", this.entityData.get(PEEK_TICK));
+        compound.putByte("Color", this.entityData.get(COLOR));
         BlockPos blockpos = this.getAttachmentPos();
         if (blockpos != null)
         {
@@ -425,44 +416,44 @@ public class SchalkerEntity extends GolemEntity implements IMob
 
     }
 
-    public void readAdditional(CompoundNBT compound)
+    public void readAdditionalSaveData(CompoundNBT compound)
     {
-        super.readAdditional(compound);
-        this.dataManager.set(ATTACHED_FACE, Direction.byIndex(compound.getByte("AttachFace")));
-        this.dataManager.set(PEEK_TICK, compound.getByte("Peek"));
-        this.dataManager.set(COLOR, compound.getByte("Color"));
+        super.readAdditionalSaveData(compound);
+        this.entityData.set(ATTACHED_FACE, Direction.from3DDataValue(compound.getByte("AttachFace")));
+        this.entityData.set(PEEK_TICK, compound.getByte("Peek"));
+        this.entityData.set(COLOR, compound.getByte("Color"));
         if (compound.contains("APX"))
         {
             int i = compound.getInt("APX");
             int j = compound.getInt("APY");
             int k = compound.getInt("APZ");
-            this.dataManager.set(ATTACHED_BLOCK_POS, Optional.of(new BlockPos(i, j, k)));
+            this.entityData.set(ATTACHED_BLOCK_POS, Optional.of(new BlockPos(i, j, k)));
         }
         else
         {
-            this.dataManager.set(ATTACHED_BLOCK_POS, Optional.empty());
+            this.entityData.set(ATTACHED_BLOCK_POS, Optional.empty());
         }
 
     }
 
-    public void livingTick()
+    public void aiStep()
     {
-        super.livingTick();
-        this.setMotion(Vector3d.ZERO);
-        if (!this.isAIDisabled())
+        super.aiStep();
+        this.setDeltaMovement(Vector3d.ZERO);
+        if (!this.isNoAi())
         {
-            this.prevRenderYawOffset = 0.0F;
-            this.renderYawOffset = 0.0F;
+            this.yBodyRotO = 0.0F;
+            this.yBodyRot = 0.0F;
         }
 
     }
 
-    public int getVerticalFaceSpeed()
+    public int getMaxHeadXRot()
     {
         return 180;
     }
 
-    public int getHorizontalFaceSpeed()
+    public int getMaxHeadYRot()
     {
         return 180;
     }
@@ -474,7 +465,7 @@ public class SchalkerEntity extends GolemEntity implements IMob
 
     protected SoundEvent getHurtSound(DamageSource damageSourceIn)
     {
-        return this.isClosed() ? SoundEvents.ENTITY_SHULKER_HURT_CLOSED : SoundEvents.ENTITY_SHULKER_HURT;
+        return this.isClosed() ? SoundEvents.SHULKER_HURT_CLOSED : SoundEvents.SHULKER_HURT;
     }
 
     protected SoundEvent getDeathSound()
@@ -483,11 +474,11 @@ public class SchalkerEntity extends GolemEntity implements IMob
     }
 
     @Nullable
-    protected Direction func_234299_g_(BlockPos p_234299_1_)
+    protected Direction findAttachableFace(BlockPos p_234299_1_)
     {
         for (Direction direction : Direction.values())
         {
-            if (this.func_234298_a_(p_234299_1_, direction))
+            if (this.canAttachOnBlockFace(p_234299_1_, direction))
             {
                 return direction;
             }
@@ -498,16 +489,16 @@ public class SchalkerEntity extends GolemEntity implements IMob
 
     protected boolean tryTeleportToNewPosition()
     {
-        if (!this.isAIDisabled() && this.isAlive())
+        if (!this.isNoAi() && this.isAlive())
         {
-            BlockPos blockpos = this.getPosition();
+            BlockPos blockpos = this.blockPosition();
 
             for (int i = 0; i < 5; ++i)
             {
-                BlockPos blockpos1 = blockpos.add(8 - this.rand.nextInt(17), 8 - this.rand.nextInt(17), 8 - this.rand.nextInt(17));
-                if (blockpos1.getY() > 0 && this.world.isAirBlock(blockpos1) && this.world.getWorldBorder().contains(blockpos1) && this.world.hasNoCollisions(this, new AxisAlignedBB(blockpos1)))
+                BlockPos blockpos1 = blockpos.offset(8 - this.random.nextInt(17), 8 - this.random.nextInt(17), 8 - this.random.nextInt(17));
+                if (blockpos1.getY() > 0 && this.level.isEmptyBlock(blockpos1) && this.level.getWorldBorder().isWithinBounds(blockpos1) && this.level.noCollision(this, new AxisAlignedBB(blockpos1)))
                 {
-                    Direction direction = this.func_234299_g_(blockpos1);
+                    Direction direction = this.findAttachableFace(blockpos1);
                     if (direction != null)
                     {
                         net.minecraftforge.event.entity.living.EnderTeleportEvent event = new net.minecraftforge.event.entity.living.EnderTeleportEvent(this, blockpos1.getX(), blockpos1.getY(), blockpos1.getZ(), 0);
@@ -517,11 +508,11 @@ public class SchalkerEntity extends GolemEntity implements IMob
 
                     if (direction != null)
                     {
-                        this.dataManager.set(ATTACHED_FACE, direction);
-                        this.playSound(SoundEvents.ENTITY_SHULKER_TELEPORT, 1.0F, 1.0F);
-                        this.dataManager.set(ATTACHED_BLOCK_POS, Optional.of(blockpos1));
-                        this.dataManager.set(PEEK_TICK, (byte) 0);
-                        this.setAttackTarget(null);
+                        this.entityData.set(ATTACHED_FACE, direction);
+                        this.playSound(SoundEvents.SHULKER_TELEPORT, 1.0F, 1.0F);
+                        this.entityData.set(ATTACHED_BLOCK_POS, Optional.of(blockpos1));
+                        this.entityData.set(PEEK_TICK, (byte) 0);
+                        this.setTarget(null);
                         return true;
                     }
                 }
@@ -535,9 +526,9 @@ public class SchalkerEntity extends GolemEntity implements IMob
         }
     }
 
-    private boolean func_234298_a_(BlockPos p_234298_1_, Direction p_234298_2_)
+    private boolean canAttachOnBlockFace(BlockPos p_234298_1_, Direction p_234298_2_)
     {
-        return this.world.isDirectionSolid(p_234298_1_.offset(p_234298_2_), this, p_234298_2_.getOpposite()) && this.world.hasNoCollisions(this, ShulkerAABBHelper.getOpenedCollisionBox(p_234298_1_, p_234298_2_.getOpposite()));
+        return this.level.loadedAndEntityCanStandOnFace(p_234298_1_.relative(p_234298_2_), this, p_234298_2_.getOpposite()) && this.level.noCollision(this, ShulkerAABBHelper.openBoundingBox(p_234298_1_, p_234298_2_.getOpposite()));
     }
 
     private boolean isClosed()
@@ -553,21 +544,21 @@ public class SchalkerEntity extends GolemEntity implements IMob
                 p_200826_0_ instanceof IMob);
         }
 
-        public boolean shouldExecute()
+        public boolean canUse()
         {
-            return this.goalOwner.getTeam() != null && super.shouldExecute();
+            return this.mob.getTeam() != null && super.canUse();
         }
 
-        protected AxisAlignedBB getTargetableArea(double targetDistance)
+        protected AxisAlignedBB getTargetSearchArea(double targetDistance)
         {
-            Direction direction = ((SchalkerEntity) this.goalOwner).getAttachmentFacing();
+            Direction direction = ((SchalkerEntity) this.mob).getAttachmentFacing();
             if (direction.getAxis() == Direction.Axis.X)
             {
-                return this.goalOwner.getBoundingBox().grow(4.0D, targetDistance, targetDistance);
+                return this.mob.getBoundingBox().inflate(4.0D, targetDistance, targetDistance);
             }
             else
             {
-                return direction.getAxis() == Direction.Axis.Z ? this.goalOwner.getBoundingBox().grow(targetDistance, targetDistance, 4.0D) : this.goalOwner.getBoundingBox().grow(targetDistance, 4.0D, targetDistance);
+                return direction.getAxis() == Direction.Axis.Z ? this.mob.getBoundingBox().inflate(targetDistance, targetDistance, 4.0D) : this.mob.getBoundingBox().inflate(targetDistance, 4.0D, targetDistance);
             }
         }
     }
@@ -579,7 +570,7 @@ public class SchalkerEntity extends GolemEntity implements IMob
             super(p_i50612_2_);
         }
 
-        public void updateRenderAngles()
+        public void clientTick()
         {
         }
     }
@@ -590,15 +581,15 @@ public class SchalkerEntity extends GolemEntity implements IMob
 
         public AttackGoal()
         {
-            this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+            this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
         }
 
-        public boolean shouldExecute()
+        public boolean canUse()
         {
-            LivingEntity livingentity = SchalkerEntity.this.getAttackTarget();
+            LivingEntity livingentity = SchalkerEntity.this.getTarget();
             if (livingentity != null && livingentity.isAlive())
             {
-                return SchalkerEntity.this.world.getDifficulty() != Difficulty.PEACEFUL;
+                return SchalkerEntity.this.level.getDifficulty() != Difficulty.PEACEFUL;
             }
             else
             {
@@ -606,38 +597,38 @@ public class SchalkerEntity extends GolemEntity implements IMob
             }
         }
 
-        public void startExecuting()
+        public void start()
         {
             this.attackTime = 20;
             SchalkerEntity.this.updateArmorModifier(100);
         }
 
-        public void resetTask()
+        public void stop()
         {
             SchalkerEntity.this.updateArmorModifier(0);
         }
 
         public void tick()
         {
-            if (SchalkerEntity.this.world.getDifficulty() != Difficulty.PEACEFUL)
+            if (SchalkerEntity.this.level.getDifficulty() != Difficulty.PEACEFUL)
             {
                 --this.attackTime;
-                LivingEntity livingentity = SchalkerEntity.this.getAttackTarget();
+                LivingEntity livingentity = SchalkerEntity.this.getTarget();
                 assert livingentity != null;
-                SchalkerEntity.this.getLookController().setLookPositionWithEntity(livingentity, 180.0F, 180.0F);
-                double d0 = SchalkerEntity.this.getDistanceSq(livingentity);
+                SchalkerEntity.this.getLookControl().setLookAt(livingentity, 180.0F, 180.0F);
+                double d0 = SchalkerEntity.this.distanceToSqr(livingentity);
                 if (d0 < 400.0D)
                 {
                     if (this.attackTime <= 0)
                     {
-                        this.attackTime = 20 + SchalkerEntity.this.rand.nextInt(10) * 20 / 2;
-                        SchalkerEntity.this.world.addEntity(new ShulkerBulletEntity(SchalkerEntity.this.world, SchalkerEntity.this, livingentity, SchalkerEntity.this.getAttachmentFacing().getAxis()));
-                        SchalkerEntity.this.playSound(SpackenmobsRegistry.ENTITY_SCHALKER_SHOOT.get(), 2.0F, (SchalkerEntity.this.rand.nextFloat() - SchalkerEntity.this.rand.nextFloat()) * 0.2F + 1.0F);
+                        this.attackTime = 20 + SchalkerEntity.this.random.nextInt(10) * 20 / 2;
+                        SchalkerEntity.this.level.addFreshEntity(new ShulkerBulletEntity(SchalkerEntity.this.level, SchalkerEntity.this, livingentity, SchalkerEntity.this.getAttachmentFacing().getAxis()));
+                        SchalkerEntity.this.playSound(SpackenmobsRegistry.ENTITY_SCHALKER_SHOOT.get(), 2.0F, (SchalkerEntity.this.random.nextFloat() - SchalkerEntity.this.random.nextFloat()) * 0.2F + 1.0F);
                     }
                 }
                 else
                 {
-                    SchalkerEntity.this.setAttackTarget(null);
+                    SchalkerEntity.this.setTarget(null);
                 }
 
                 super.tick();
@@ -652,21 +643,21 @@ public class SchalkerEntity extends GolemEntity implements IMob
             super(schalker, PlayerEntity.class, true);
         }
 
-        public boolean shouldExecute()
+        public boolean canUse()
         {
-            return SchalkerEntity.this.world.getDifficulty() != Difficulty.PEACEFUL && super.shouldExecute();
+            return SchalkerEntity.this.level.getDifficulty() != Difficulty.PEACEFUL && super.canUse();
         }
 
-        protected AxisAlignedBB getTargetableArea(double targetDistance)
+        protected AxisAlignedBB getTargetSearchArea(double targetDistance)
         {
-            Direction direction = ((SchalkerEntity) this.goalOwner).getAttachmentFacing();
+            Direction direction = ((SchalkerEntity) this.mob).getAttachmentFacing();
             if (direction.getAxis() == Direction.Axis.X)
             {
-                return this.goalOwner.getBoundingBox().grow(4.0D, targetDistance, targetDistance);
+                return this.mob.getBoundingBox().inflate(4.0D, targetDistance, targetDistance);
             }
             else
             {
-                return direction.getAxis() == Direction.Axis.Z ? this.goalOwner.getBoundingBox().grow(targetDistance, targetDistance, 4.0D) : this.goalOwner.getBoundingBox().grow(targetDistance, 4.0D, targetDistance);
+                return direction.getAxis() == Direction.Axis.Z ? this.mob.getBoundingBox().inflate(targetDistance, targetDistance, 4.0D) : this.mob.getBoundingBox().inflate(targetDistance, 4.0D, targetDistance);
             }
         }
     }
@@ -679,25 +670,25 @@ public class SchalkerEntity extends GolemEntity implements IMob
         {
         }
 
-        public boolean shouldExecute()
+        public boolean canUse()
         {
-            return SchalkerEntity.this.getAttackTarget() == null && SchalkerEntity.this.rand.nextInt(40) == 0;
+            return SchalkerEntity.this.getTarget() == null && SchalkerEntity.this.random.nextInt(40) == 0;
         }
 
-        public boolean shouldContinueExecuting()
+        public boolean canContinueToUse()
         {
-            return SchalkerEntity.this.getAttackTarget() == null && this.peekTime > 0;
+            return SchalkerEntity.this.getTarget() == null && this.peekTime > 0;
         }
 
-        public void startExecuting()
+        public void start()
         {
-            this.peekTime = 20 * (1 + SchalkerEntity.this.rand.nextInt(3));
+            this.peekTime = 20 * (1 + SchalkerEntity.this.random.nextInt(3));
             SchalkerEntity.this.updateArmorModifier(30);
         }
 
-        public void resetTask()
+        public void stop()
         {
-            if (SchalkerEntity.this.getAttackTarget() == null)
+            if (SchalkerEntity.this.getTarget() == null)
             {
                 SchalkerEntity.this.updateArmorModifier(0);
             }

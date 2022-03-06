@@ -23,18 +23,18 @@ public class BakaMitaiCreeperRenderer extends MobRenderer<BakaMitaiCreeperEntity
         this.addLayer(new BakaMitaiCreeperChargeLayer(this));
     }
 
-    public ResourceLocation getEntityTexture(BakaMitaiCreeperEntity entity)
+    public ResourceLocation getTextureLocation(BakaMitaiCreeperEntity entity)
     {
         return CREEPER_TEXTURES;
     }
 
-    protected float getOverlayProgress(BakaMitaiCreeperEntity livingEntityIn, float partialTicks)
+    protected float getWhiteOverlayProgress(BakaMitaiCreeperEntity livingEntityIn, float partialTicks)
     {
         float f = livingEntityIn.getCreeperFlashIntensity(partialTicks);
         return (int) (f * 10.0F) % 2 == 0 ? 0.0F : MathHelper.clamp(f, 0.5F, 1.0F);
     }
 
-    protected void preRenderCallback(BakaMitaiCreeperEntity entitylivingbaseIn, MatrixStack matrixStackIn, float partialTickTime)
+    protected void scale(BakaMitaiCreeperEntity entitylivingbaseIn, MatrixStack matrixStackIn, float partialTickTime)
     {
         float f = entitylivingbaseIn.getCreeperFlashIntensity(partialTickTime);
         float f1 = 1.0F + MathHelper.sin(f * 100.0F) * f * 0.01F;

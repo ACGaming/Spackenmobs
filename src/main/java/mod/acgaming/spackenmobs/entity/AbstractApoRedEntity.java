@@ -35,23 +35,23 @@ public abstract class AbstractApoRedEntity extends MonsterEntity implements IRan
 {
     public static AttributeModifierMap.MutableAttribute registerAttributes()
     {
-        return MonsterEntity.func_234295_eP_().createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D);
+        return MonsterEntity.createMonsterAttributes().add(Attributes.MOVEMENT_SPEED, 0.25D);
     }
 
     private final RangedBowAttackGoal<AbstractApoRedEntity> aiArrowAttack = new RangedBowAttackGoal<>(this, 1.0D, 20, 15.0F);
     private final MeleeAttackGoal aiAttackOnCollide = new MeleeAttackGoal(this, 1.2D, false)
     {
 
-        public void startExecuting()
+        public void start()
         {
-            super.startExecuting();
-            AbstractApoRedEntity.this.setAggroed(true);
+            super.start();
+            AbstractApoRedEntity.this.setAggressive(true);
         }
 
-        public void resetTask()
+        public void stop()
         {
-            super.resetTask();
-            AbstractApoRedEntity.this.setAggroed(false);
+            super.stop();
+            AbstractApoRedEntity.this.setAggressive(false);
         }
     };
 
@@ -61,18 +61,18 @@ public abstract class AbstractApoRedEntity extends MonsterEntity implements IRan
         this.setCombatTask();
     }
 
-    public CreatureAttribute getCreatureAttribute()
+    public CreatureAttribute getMobType()
     {
         return CreatureAttribute.UNDEAD;
     }
 
-    public void updateRidden()
+    public void rideTick()
     {
-        super.updateRidden();
-        if (this.getRidingEntity() instanceof CreatureEntity)
+        super.rideTick();
+        if (this.getVehicle() instanceof CreatureEntity)
         {
-            CreatureEntity creatureentity = (CreatureEntity) this.getRidingEntity();
-            this.renderYawOffset = creatureentity.renderYawOffset;
+            CreatureEntity creatureentity = (CreatureEntity) this.getVehicle();
+            this.yBodyRot = creatureentity.yBodyRot;
         }
 
     }
@@ -82,21 +82,21 @@ public abstract class AbstractApoRedEntity extends MonsterEntity implements IRan
         return 1.74F;
     }
 
-    public void livingTick()
+    public void aiStep()
     {
-        boolean flag = this.isInDaylight();
+        boolean flag = this.isSunBurnTick();
         if (flag)
         {
-            ItemStack itemstack = this.getItemStackFromSlot(EquipmentSlotType.HEAD);
+            ItemStack itemstack = this.getItemBySlot(EquipmentSlotType.HEAD);
             if (!itemstack.isEmpty())
             {
-                if (itemstack.isDamageable())
+                if (itemstack.isDamageableItem())
                 {
-                    itemstack.setDamage(itemstack.getDamage() + this.rand.nextInt(2));
-                    if (itemstack.getDamage() >= itemstack.getMaxDamage())
+                    itemstack.setDamageValue(itemstack.getDamageValue() + this.random.nextInt(2));
+                    if (itemstack.getDamageValue() >= itemstack.getMaxDamage())
                     {
-                        this.sendBreakAnimation(EquipmentSlotType.HEAD);
-                        this.setItemStackToSlot(EquipmentSlotType.HEAD, ItemStack.EMPTY);
+                        this.broadcastBreakEvent(EquipmentSlotType.HEAD);
+                        this.setItemSlot(EquipmentSlotType.HEAD, ItemStack.EMPTY);
                     }
                 }
 
@@ -105,29 +105,29 @@ public abstract class AbstractApoRedEntity extends MonsterEntity implements IRan
 
             if (flag)
             {
-                this.setFire(8);
+                this.setSecondsOnFire(8);
             }
         }
 
-        super.livingTick();
+        super.aiStep();
     }
 
     public void setCombatTask()
     {
-        if (this.world != null && !this.world.isRemote)
+        if (this.level != null && !this.level.isClientSide)
         {
             this.goalSelector.removeGoal(this.aiAttackOnCollide);
             this.goalSelector.removeGoal(this.aiArrowAttack);
-            ItemStack itemstack = this.getHeldItem(ProjectileHelper.getHandWith(this, Items.BOW));
+            ItemStack itemstack = this.getItemInHand(ProjectileHelper.getWeaponHoldingHand(this, Items.BOW));
             if (itemstack.getItem() instanceof net.minecraft.item.BowItem)
             {
                 int i = 20;
-                if (this.world.getDifficulty() != Difficulty.HARD)
+                if (this.level.getDifficulty() != Difficulty.HARD)
                 {
                     i = 40;
                 }
 
-                this.aiArrowAttack.setAttackCooldown(i);
+                this.aiArrowAttack.setMinAttackInterval(i);
                 this.goalSelector.addGoal(4, this.aiArrowAttack);
             }
             else
@@ -138,19 +138,19 @@ public abstract class AbstractApoRedEntity extends MonsterEntity implements IRan
         }
     }
 
-    public void attackEntityWithRangedAttack(LivingEntity target, float distanceFactor)
+    public void performRangedAttack(LivingEntity target, float distanceFactor)
     {
-        ItemStack itemstack = this.findAmmo(this.getHeldItem(ProjectileHelper.getHandWith(this, Items.BOW)));
+        ItemStack itemstack = this.getProjectile(this.getItemInHand(ProjectileHelper.getWeaponHoldingHand(this, Items.BOW)));
         AbstractArrowEntity abstractarrowentity = this.fireArrow(itemstack, distanceFactor);
-        if (this.getHeldItemMainhand().getItem() instanceof net.minecraft.item.BowItem)
-            abstractarrowentity = ((net.minecraft.item.BowItem) this.getHeldItemMainhand().getItem()).customArrow(abstractarrowentity);
-        double d0 = target.getPosX() - this.getPosX();
-        double d1 = target.getPosYHeight(0.3333333333333333D) - abstractarrowentity.getPosY();
-        double d2 = target.getPosZ() - this.getPosZ();
+        if (this.getMainHandItem().getItem() instanceof net.minecraft.item.BowItem)
+            abstractarrowentity = ((net.minecraft.item.BowItem) this.getMainHandItem().getItem()).customArrow(abstractarrowentity);
+        double d0 = target.getX() - this.getX();
+        double d1 = target.getY(0.3333333333333333D) - abstractarrowentity.getY();
+        double d2 = target.getZ() - this.getZ();
         double d3 = MathHelper.sqrt(d0 * d0 + d2 * d2);
-        abstractarrowentity.shoot(d0, d1 + d3 * (double) 0.2F, d2, 1.6F, (float) (14 - this.world.getDifficulty().getId() * 4));
-        this.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
-        this.world.addEntity(abstractarrowentity);
+        abstractarrowentity.shoot(d0, d1 + d3 * (double) 0.2F, d2, 1.6F, (float) (14 - this.level.getDifficulty().getId() * 4));
+        this.playSound(SoundEvents.SKELETON_SHOOT, 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
+        this.level.addFreshEntity(abstractarrowentity);
     }
 
     protected void registerGoals()
@@ -164,53 +164,53 @@ public abstract class AbstractApoRedEntity extends MonsterEntity implements IRan
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolemEntity.class, true));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, TurtleEntity.class, 10, true, false, TurtleEntity.TARGET_DRY_BABY));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, TurtleEntity.class, 10, true, false, TurtleEntity.BABY_ON_LAND_SELECTOR));
     }
 
-    public boolean func_230280_a_(ShootableItem p_230280_1_)
+    public boolean canFireProjectileWeapon(ShootableItem p_230280_1_)
     {
         return p_230280_1_ == Items.BOW;
     }
 
-    public void readAdditional(CompoundNBT compound)
+    public void readAdditionalSaveData(CompoundNBT compound)
     {
-        super.readAdditional(compound);
+        super.readAdditionalSaveData(compound);
         this.setCombatTask();
     }
 
-    public void setItemStackToSlot(EquipmentSlotType slotIn, ItemStack stack)
+    public void setItemSlot(EquipmentSlotType slotIn, ItemStack stack)
     {
-        super.setItemStackToSlot(slotIn, stack);
-        if (!this.world.isRemote)
+        super.setItemSlot(slotIn, stack);
+        if (!this.level.isClientSide)
         {
             this.setCombatTask();
         }
 
     }
 
-    protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty)
+    protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty)
     {
-        super.setEquipmentBasedOnDifficulty(difficulty);
-        this.setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(Items.BOW));
+        super.populateDefaultEquipmentSlots(difficulty);
+        this.setItemSlot(EquipmentSlotType.MAINHAND, new ItemStack(Items.BOW));
     }
 
     @Nullable
-    public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag)
+    public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag)
     {
-        spawnDataIn = super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-        this.setEquipmentBasedOnDifficulty(difficultyIn);
-        this.setEnchantmentBasedOnDifficulty(difficultyIn);
+        spawnDataIn = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+        this.populateDefaultEquipmentSlots(difficultyIn);
+        this.populateDefaultEquipmentEnchantments(difficultyIn);
         this.setCombatTask();
-        this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * difficultyIn.getClampedAdditionalDifficulty());
-        if (this.getItemStackFromSlot(EquipmentSlotType.HEAD).isEmpty())
+        this.setCanPickUpLoot(this.random.nextFloat() < 0.55F * difficultyIn.getSpecialMultiplier());
+        if (this.getItemBySlot(EquipmentSlotType.HEAD).isEmpty())
         {
             LocalDate localdate = LocalDate.now();
             int i = localdate.get(ChronoField.DAY_OF_MONTH);
             int j = localdate.get(ChronoField.MONTH_OF_YEAR);
-            if (j == 10 && i == 31 && this.rand.nextFloat() < 0.25F)
+            if (j == 10 && i == 31 && this.random.nextFloat() < 0.25F)
             {
-                this.setItemStackToSlot(EquipmentSlotType.HEAD, new ItemStack(this.rand.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
-                this.inventoryArmorDropChances[EquipmentSlotType.HEAD.getIndex()] = 0.0F;
+                this.setItemSlot(EquipmentSlotType.HEAD, new ItemStack(this.random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
+                this.armorDropChances[EquipmentSlotType.HEAD.getIndex()] = 0.0F;
             }
         }
 
@@ -222,7 +222,7 @@ public abstract class AbstractApoRedEntity extends MonsterEntity implements IRan
         this.playSound(this.getStepSound(), 0.15F, 1.0F);
     }
 
-    public double getYOffset()
+    public double getMyRidingOffset()
     {
         return -0.6D;
     }
@@ -231,6 +231,6 @@ public abstract class AbstractApoRedEntity extends MonsterEntity implements IRan
 
     protected AbstractArrowEntity fireArrow(ItemStack arrowStack, float distanceFactor)
     {
-        return ProjectileHelper.fireArrow(this, arrowStack, distanceFactor);
+        return ProjectileHelper.getMobArrow(this, arrowStack, distanceFactor);
     }
 }

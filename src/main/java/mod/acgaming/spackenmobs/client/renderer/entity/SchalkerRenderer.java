@@ -46,7 +46,7 @@ public class SchalkerRenderer extends MobRenderer<SchalkerEntity, SchalkerModel<
         }
     }
 
-    public ResourceLocation getEntityTexture(SchalkerEntity entity)
+    public ResourceLocation getTextureLocation(SchalkerEntity entity)
     {
         return SCHALKER_TEXTURES;
     }
@@ -61,20 +61,20 @@ public class SchalkerRenderer extends MobRenderer<SchalkerEntity, SchalkerModel<
         {
             if (livingEntityIn.getClientTeleportInterp() > 0 && livingEntityIn.isAttachedToBlock())
             {
-                Vector3d vector3d = Vector3d.copy(Objects.requireNonNull(livingEntityIn.getAttachmentPos()));
-                Vector3d vector3d1 = Vector3d.copy(livingEntityIn.getOldAttachPos());
-                return camera.isBoundingBoxInFrustum(new AxisAlignedBB(vector3d1.x, vector3d1.y, vector3d1.z, vector3d.x, vector3d.y, vector3d.z));
+                Vector3d vector3d = Vector3d.atLowerCornerOf(Objects.requireNonNull(livingEntityIn.getAttachmentPos()));
+                Vector3d vector3d1 = Vector3d.atLowerCornerOf(livingEntityIn.getOldAttachPos());
+                return camera.isVisible(new AxisAlignedBB(vector3d1.x, vector3d1.y, vector3d1.z, vector3d.x, vector3d.y, vector3d.z));
             }
 
             return false;
         }
     }
 
-    protected void applyRotations(SchalkerEntity entityLiving, MatrixStack matrixStackIn, float ageInTicks, float rotationYaw, float partialTicks)
+    protected void setupRotations(SchalkerEntity entityLiving, MatrixStack matrixStackIn, float ageInTicks, float rotationYaw, float partialTicks)
     {
-        super.applyRotations(entityLiving, matrixStackIn, ageInTicks, rotationYaw + 180.0F, partialTicks);
+        super.setupRotations(entityLiving, matrixStackIn, ageInTicks, rotationYaw + 180.0F, partialTicks);
         matrixStackIn.translate(0.0D, 0.5D, 0.0D);
-        matrixStackIn.rotate(entityLiving.getAttachmentFacing().getOpposite().getRotation());
+        matrixStackIn.mulPose(entityLiving.getAttachmentFacing().getOpposite().getRotation());
         matrixStackIn.translate(0.0D, -0.5D, 0.0D);
     }
 }

@@ -21,13 +21,13 @@ public abstract class AbstractDrachenlordRenderer<T extends DrachenlordEntity, M
         this.addLayer(new BipedArmorLayer<>(this, p_i50974_3_, p_i50974_4_));
     }
 
-    public ResourceLocation getEntityTexture(DrachenlordEntity entity)
+    public ResourceLocation getTextureLocation(DrachenlordEntity entity)
     {
         return DRACHENLORD_TEXTURES;
     }
 
-    protected boolean func_230495_a_(T p_230495_1_)
+    protected boolean isShaking(T p_230495_1_)
     {
-        return p_230495_1_.isDrowning();
+        return p_230495_1_.isUnderWaterConverting();
     }
 }

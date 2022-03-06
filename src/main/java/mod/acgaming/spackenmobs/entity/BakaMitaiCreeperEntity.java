@@ -38,13 +38,13 @@ import mod.acgaming.spackenmobs.init.SpackenmobsRegistry;
 )
 public class BakaMitaiCreeperEntity extends MonsterEntity implements IChargeableMob
 {
-    private static final DataParameter<Integer> STATE = EntityDataManager.createKey(BakaMitaiCreeperEntity.class, DataSerializers.VARINT);
-    private static final DataParameter<Boolean> POWERED = EntityDataManager.createKey(BakaMitaiCreeperEntity.class, DataSerializers.BOOLEAN);
-    private static final DataParameter<Boolean> IGNITED = EntityDataManager.createKey(BakaMitaiCreeperEntity.class, DataSerializers.BOOLEAN);
+    private static final DataParameter<Integer> STATE = EntityDataManager.defineId(BakaMitaiCreeperEntity.class, DataSerializers.INT);
+    private static final DataParameter<Boolean> POWERED = EntityDataManager.defineId(BakaMitaiCreeperEntity.class, DataSerializers.BOOLEAN);
+    private static final DataParameter<Boolean> IGNITED = EntityDataManager.defineId(BakaMitaiCreeperEntity.class, DataSerializers.BOOLEAN);
 
     public static AttributeModifierMap.MutableAttribute registerAttributes()
     {
-        return MonsterEntity.func_234295_eP_().createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D);
+        return MonsterEntity.createMonsterAttributes().add(Attributes.MOVEMENT_SPEED, 0.25D);
     }
 
     private int lastActiveTime;
@@ -58,9 +58,9 @@ public class BakaMitaiCreeperEntity extends MonsterEntity implements IChargeable
         super(type, worldIn);
     }
 
-    public boolean onLivingFall(float distance, float damageMultiplier)
+    public boolean causeFallDamage(float distance, float damageMultiplier)
     {
-        boolean flag = super.onLivingFall(distance, damageMultiplier);
+        boolean flag = super.causeFallDamage(distance, damageMultiplier);
         this.timeSinceIgnited = (int) ((float) this.timeSinceIgnited + distance * 1.5F);
         if (this.timeSinceIgnited > this.fuseTime - 5)
         {
@@ -70,9 +70,9 @@ public class BakaMitaiCreeperEntity extends MonsterEntity implements IChargeable
         return flag;
     }
 
-    public boolean isCharged()
+    public boolean isPowered()
     {
-        return this.dataManager.get(POWERED);
+        return this.entityData.get(POWERED);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -83,33 +83,33 @@ public class BakaMitaiCreeperEntity extends MonsterEntity implements IChargeable
 
     public int getCreeperState()
     {
-        return this.dataManager.get(STATE);
+        return this.entityData.get(STATE);
     }
 
     public void setCreeperState(int state)
     {
-        this.dataManager.set(STATE, state);
+        this.entityData.set(STATE, state);
     }
 
-    public void func_241841_a(ServerWorld p_241841_1_, LightningBoltEntity p_241841_2_)
+    public void thunderHit(ServerWorld p_241841_1_, LightningBoltEntity p_241841_2_)
     {
-        super.func_241841_a(p_241841_1_, p_241841_2_);
-        this.dataManager.set(POWERED, true);
+        super.thunderHit(p_241841_1_, p_241841_2_);
+        this.entityData.set(POWERED, true);
     }
 
     public boolean hasIgnited()
     {
-        return this.dataManager.get(IGNITED);
+        return this.entityData.get(IGNITED);
     }
 
     public void ignite()
     {
-        this.dataManager.set(IGNITED, true);
+        this.entityData.set(IGNITED, true);
     }
 
     public boolean ableToCauseSkullDrop()
     {
-        return this.isCharged() && this.droppedSkulls < 1;
+        return this.isPowered() && this.droppedSkulls < 1;
     }
 
     public void incrementDroppedSkulls()
@@ -131,12 +131,12 @@ public class BakaMitaiCreeperEntity extends MonsterEntity implements IChargeable
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
     }
 
-    protected void registerData()
+    protected void defineSynchedData()
     {
-        super.registerData();
-        this.dataManager.register(STATE, -1);
-        this.dataManager.register(POWERED, false);
-        this.dataManager.register(IGNITED, false);
+        super.defineSynchedData();
+        this.entityData.define(STATE, -1);
+        this.entityData.define(POWERED, false);
+        this.entityData.define(IGNITED, false);
     }
 
     public void tick()
@@ -171,10 +171,10 @@ public class BakaMitaiCreeperEntity extends MonsterEntity implements IChargeable
         super.tick();
     }
 
-    public void writeAdditional(CompoundNBT compound)
+    public void addAdditionalSaveData(CompoundNBT compound)
     {
-        super.writeAdditional(compound);
-        if (this.dataManager.get(POWERED))
+        super.addAdditionalSaveData(compound);
+        if (this.entityData.get(POWERED))
         {
             compound.putBoolean("powered", true);
         }
@@ -184,10 +184,10 @@ public class BakaMitaiCreeperEntity extends MonsterEntity implements IChargeable
         compound.putBoolean("ignited", this.hasIgnited());
     }
 
-    public void readAdditional(CompoundNBT compound)
+    public void readAdditionalSaveData(CompoundNBT compound)
     {
-        super.readAdditional(compound);
-        this.dataManager.set(POWERED, compound.getBoolean("powered"));
+        super.readAdditionalSaveData(compound);
+        this.entityData.set(POWERED, compound.getBoolean("powered"));
         if (compound.contains("Fuse", 99))
         {
             this.fuseTime = compound.getShort("Fuse");
@@ -205,73 +205,73 @@ public class BakaMitaiCreeperEntity extends MonsterEntity implements IChargeable
 
     }
 
-    public int getMaxFallHeight()
+    public int getMaxFallDistance()
     {
-        return this.getAttackTarget() == null ? 3 : 3 + (int) (this.getHealth() - 1.0F);
+        return this.getTarget() == null ? 3 : 3 + (int) (this.getHealth() - 1.0F);
     }
 
-    protected void dropSpecialItems(DamageSource source, int looting, boolean recentlyHitIn)
+    protected void dropCustomDeathLoot(DamageSource source, int looting, boolean recentlyHitIn)
     {
-        super.dropSpecialItems(source, looting, recentlyHitIn);
-        Entity entity = source.getTrueSource();
+        super.dropCustomDeathLoot(source, looting, recentlyHitIn);
+        Entity entity = source.getEntity();
         if (entity != this && entity instanceof BakaMitaiCreeperEntity)
         {
             BakaMitaiCreeperEntity creeperentity = (BakaMitaiCreeperEntity) entity;
             if (creeperentity.ableToCauseSkullDrop())
             {
                 creeperentity.incrementDroppedSkulls();
-                this.entityDropItem(Items.CREEPER_HEAD);
+                this.spawnAtLocation(Items.CREEPER_HEAD);
             }
         }
     }
 
-    protected ActionResultType func_230254_b_(PlayerEntity p_230254_1_, Hand p_230254_2_)
+    protected ActionResultType mobInteract(PlayerEntity p_230254_1_, Hand p_230254_2_)
     {
-        ItemStack itemstack = p_230254_1_.getHeldItem(p_230254_2_);
+        ItemStack itemstack = p_230254_1_.getItemInHand(p_230254_2_);
         if (itemstack.getItem() == Items.FLINT_AND_STEEL)
         {
-            this.world.playSound(p_230254_1_, this.getPosX(), this.getPosY(), this.getPosZ(), SoundEvents.ITEM_FLINTANDSTEEL_USE, this.getSoundCategory(), 1.0F, this.rand.nextFloat() * 0.4F + 0.8F);
-            if (!this.world.isRemote)
+            this.level.playSound(p_230254_1_, this.getX(), this.getY(), this.getZ(), SoundEvents.FLINTANDSTEEL_USE, this.getSoundSource(), 1.0F, this.random.nextFloat() * 0.4F + 0.8F);
+            if (!this.level.isClientSide)
             {
                 this.ignite();
-                itemstack.damageItem(1, p_230254_1_, (player) ->
+                itemstack.hurtAndBreak(1, p_230254_1_, (player) ->
                 {
-                    player.sendBreakAnimation(p_230254_2_);
+                    player.broadcastBreakEvent(p_230254_2_);
                 });
             }
 
-            return ActionResultType.func_233537_a_(this.world.isRemote);
+            return ActionResultType.sidedSuccess(this.level.isClientSide);
         }
         else
         {
-            return super.func_230254_b_(p_230254_1_, p_230254_2_);
+            return super.mobInteract(p_230254_1_, p_230254_2_);
         }
     }
 
-    public boolean attackEntityAsMob(Entity entityIn)
+    public boolean doHurtTarget(Entity entityIn)
     {
         return true;
     }
 
     protected SoundEvent getHurtSound(DamageSource damageSourceIn)
     {
-        return SoundEvents.ENTITY_CREEPER_HURT;
+        return SoundEvents.CREEPER_HURT;
     }
 
     protected SoundEvent getDeathSound()
     {
-        return SoundEvents.ENTITY_CREEPER_DEATH;
+        return SoundEvents.CREEPER_DEATH;
     }
 
     private void explode()
     {
-        if (!this.world.isRemote)
+        if (!this.level.isClientSide)
         {
-            Explosion.Mode explosion$mode = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.world, this) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE;
-            float f = this.isCharged() ? 2.0F : 1.0F;
+            Explosion.Mode explosion$mode = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE;
+            float f = this.isPowered() ? 2.0F : 1.0F;
             this.dead = true;
             this.playSound(SpackenmobsRegistry.ENTITY_BAKAMITAI_CREEPER_BLOW.get(), 2.0F, 1.0F);
-            this.world.createExplosion(this, this.getPosX(), this.getPosY(), this.getPosZ(), (float) this.explosionRadius * f, explosion$mode);
+            this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float) this.explosionRadius * f, explosion$mode);
             this.remove();
             this.spawnLingeringCloud();
         }
@@ -280,10 +280,10 @@ public class BakaMitaiCreeperEntity extends MonsterEntity implements IChargeable
 
     private void spawnLingeringCloud()
     {
-        Collection<EffectInstance> collection = this.getActivePotionEffects();
+        Collection<EffectInstance> collection = this.getActiveEffects();
         if (!collection.isEmpty())
         {
-            AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(this.world, this.getPosX(), this.getPosY(), this.getPosZ());
+            AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(this.level, this.getX(), this.getY(), this.getZ());
             areaeffectcloudentity.setRadius(2.5F);
             areaeffectcloudentity.setRadiusOnUse(-0.5F);
             areaeffectcloudentity.setWaitTime(10);
@@ -295,7 +295,7 @@ public class BakaMitaiCreeperEntity extends MonsterEntity implements IChargeable
                 areaeffectcloudentity.addEffect(new EffectInstance(effectinstance));
             }
 
-            this.world.addEntity(areaeffectcloudentity);
+            this.level.addFreshEntity(areaeffectcloudentity);
         }
 
     }

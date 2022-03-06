@@ -21,8 +21,8 @@ public class JensEatDroppedFishGoal extends Goal
     public JensEatDroppedFishGoal(JensEntity jens)
     {
         this.jens = jens;
-        this.world = jens.world;
-        this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
+        this.world = jens.level;
+        this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK, Goal.Flag.JUMP));
     }
 
     public ItemEntity getNearbyFood()
@@ -35,10 +35,10 @@ public class JensEatDroppedFishGoal extends Goal
         return null;
     }
 
-    public boolean shouldExecute()
+    public boolean canUse()
     {
         ItemEntity getNearbyFood = getNearbyFood();
-        if (getNearbyFood != null && !this.jens.isChild() && !this.jens.digesting
+        if (getNearbyFood != null && !this.jens.isBaby() && !this.jens.digesting
             && this.jens.isFishItem(getNearbyFood.getItem()))
         {
             execute(this.jens, getNearbyFood);
@@ -48,9 +48,9 @@ public class JensEatDroppedFishGoal extends Goal
 
     public boolean execute(JensEntity jens, ItemEntity item)
     {
-        if (jens.getNavigator().tryMoveToXYZ(item.getPosX(), item.getPosY(), item.getPosZ(), 1.25D))
+        if (jens.getNavigation().moveTo(item.getX(), item.getY(), item.getZ(), 1.25D))
         {
-            if (jens.getDistance(item) < 1.5F)
+            if (jens.distanceTo(item) < 1.5F)
             {
                 eatItem(item);
                 jens.digestFish();
@@ -71,9 +71,9 @@ public class JensEatDroppedFishGoal extends Goal
 
     List<ItemEntity> getItems()
     {
-        return this.world.getEntitiesWithinAABB(ItemEntity.class,
-            new AxisAlignedBB(this.jens.getPosX() - this.searchDistance, this.jens.getPosY() - this.searchDistance,
-                this.jens.getPosZ() - this.searchDistance, this.jens.getPosX() + this.searchDistance,
-                this.jens.getPosY() + this.searchDistance, this.jens.getPosZ() + this.searchDistance));
+        return this.world.getEntitiesOfClass(ItemEntity.class,
+            new AxisAlignedBB(this.jens.getX() - this.searchDistance, this.jens.getY() - this.searchDistance,
+                this.jens.getZ() - this.searchDistance, this.jens.getX() + this.searchDistance,
+                this.jens.getY() + this.searchDistance, this.jens.getZ() + this.searchDistance));
     }
 }

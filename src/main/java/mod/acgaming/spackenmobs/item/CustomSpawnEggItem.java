@@ -57,26 +57,26 @@ public class CustomSpawnEggItem extends Item
         EGGS.put(type, this);
     }
 
-    public ActionResultType onItemUse(ItemUseContext context)
+    public ActionResultType useOn(ItemUseContext context)
     {
-        World worldIn = context.getWorld();
-        if (!worldIn.isRemote)
+        World worldIn = context.getLevel();
+        if (!worldIn.isClientSide)
         {
-            ItemStack stack = context.getItem();
-            BlockPos pos = context.getPos();
-            Direction dir = context.getFace();
+            ItemStack stack = context.getItemInHand();
+            BlockPos pos = context.getClickedPos();
+            Direction dir = context.getClickedFace();
             BlockState state = worldIn.getBlockState(pos);
             Block block = state.getBlock();
             if (block == Blocks.SPAWNER)
             {
-                TileEntity tile = worldIn.getTileEntity(pos);
+                TileEntity tile = worldIn.getBlockEntity(pos);
                 if (tile instanceof MobSpawnerTileEntity)
                 {
-                    AbstractSpawner spawner = ((MobSpawnerTileEntity) tile).getSpawnerBaseLogic();
+                    AbstractSpawner spawner = ((MobSpawnerTileEntity) tile).getSpawner();
                     EntityType<?> type = this.getType(stack.getTag());
-                    spawner.setEntityType(type);
-                    tile.markDirty();
-                    worldIn.notifyBlockUpdate(pos, state, state, 3);
+                    spawner.setEntityId(type);
+                    tile.setChanged();
+                    worldIn.sendBlockUpdated(pos, state, state, 3);
                     stack.shrink(1);
                     return ActionResultType.SUCCESS;
                 }
@@ -89,7 +89,7 @@ public class CustomSpawnEggItem extends Item
             }
             else
             {
-                pos2 = pos.offset(dir);
+                pos2 = pos.relative(dir);
             }
 
             EntityType<?> type = this.getType(stack.getTag());
@@ -102,46 +102,46 @@ public class CustomSpawnEggItem extends Item
         return ActionResultType.SUCCESS;
     }
 
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn)
+    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn)
     {
-        ItemStack itemstack = playerIn.getHeldItem(handIn);
-        BlockRayTraceResult raytraceresult = rayTrace(worldIn, playerIn, RayTraceContext.FluidMode.SOURCE_ONLY);
+        ItemStack itemstack = playerIn.getItemInHand(handIn);
+        BlockRayTraceResult raytraceresult = getPlayerPOVHitResult(worldIn, playerIn, RayTraceContext.FluidMode.SOURCE_ONLY);
         if (raytraceresult.getType() != RayTraceResult.Type.BLOCK)
         {
-            return ActionResult.resultPass(itemstack);
+            return ActionResult.pass(itemstack);
         }
-        else if (worldIn.isRemote)
+        else if (worldIn.isClientSide)
         {
-            return ActionResult.resultSuccess(itemstack);
+            return ActionResult.success(itemstack);
         }
         else
         {
-            BlockPos blockpos = raytraceresult.getPos();
+            BlockPos blockpos = raytraceresult.getBlockPos();
             if (!(worldIn.getBlockState(blockpos).getBlock() instanceof FlowingFluidBlock))
             {
-                return ActionResult.resultPass(itemstack);
+                return ActionResult.pass(itemstack);
             }
-            else if (worldIn.isBlockModifiable(playerIn, blockpos) && playerIn.canPlayerEdit(blockpos, raytraceresult.getFace(), itemstack))
+            else if (worldIn.mayInteract(playerIn, blockpos) && playerIn.mayUseItemAt(blockpos, raytraceresult.getDirection(), itemstack))
             {
                 EntityType<?> entitytype = this.getType(itemstack.getTag());
                 if (entitytype.spawn((ServerWorld) worldIn, itemstack, playerIn, blockpos, SpawnReason.SPAWN_EGG, false, false) == null)
                 {
-                    return ActionResult.resultPass(itemstack);
+                    return ActionResult.pass(itemstack);
                 }
                 else
                 {
-                    if (!playerIn.abilities.isCreativeMode)
+                    if (!playerIn.abilities.instabuild)
                     {
                         itemstack.shrink(1);
                     }
 
-                    playerIn.addStat(Stats.ITEM_USED.get(this));
-                    return ActionResult.resultSuccess(itemstack);
+                    playerIn.awardStat(Stats.ITEM_USED.get(this));
+                    return ActionResult.success(itemstack);
                 }
             }
             else
             {
-                return ActionResult.resultFail(itemstack);
+                return ActionResult.fail(itemstack);
             }
         }
     }
@@ -159,7 +159,7 @@ public class CustomSpawnEggItem extends Item
             CompoundNBT lvt_2_1_ = compound.getCompound("EntityTag");
             if (lvt_2_1_.contains("id", 8))
             {
-                return EntityType.byKey(lvt_2_1_.getString("id")).orElse(this.typeIn.get());
+                return EntityType.byString(lvt_2_1_.getString("id")).orElse(this.typeIn.get());
             }
         }
 

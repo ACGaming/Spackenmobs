@@ -15,22 +15,22 @@ public class BakaMitaiCreeperSwellGoal extends Goal
     public BakaMitaiCreeperSwellGoal(BakaMitaiCreeperEntity entitybakamitaicreeperIn)
     {
         this.swellingCreeper = entitybakamitaicreeperIn;
-        this.setMutexFlags(EnumSet.of(Flag.MOVE));
+        this.setFlags(EnumSet.of(Flag.MOVE));
     }
 
-    public boolean shouldExecute()
+    public boolean canUse()
     {
-        LivingEntity livingentity = this.swellingCreeper.getAttackTarget();
-        return this.swellingCreeper.getCreeperState() > 0 || livingentity != null && this.swellingCreeper.getDistanceSq(livingentity) < 9.0D;
+        LivingEntity livingentity = this.swellingCreeper.getTarget();
+        return this.swellingCreeper.getCreeperState() > 0 || livingentity != null && this.swellingCreeper.distanceToSqr(livingentity) < 9.0D;
     }
 
-    public void startExecuting()
+    public void start()
     {
-        this.swellingCreeper.getNavigator().clearPath();
-        this.creeperAttackTarget = this.swellingCreeper.getAttackTarget();
+        this.swellingCreeper.getNavigation().stop();
+        this.creeperAttackTarget = this.swellingCreeper.getTarget();
     }
 
-    public void resetTask()
+    public void stop()
     {
         this.creeperAttackTarget = null;
     }
@@ -41,11 +41,11 @@ public class BakaMitaiCreeperSwellGoal extends Goal
         {
             this.swellingCreeper.setCreeperState(-1);
         }
-        else if (this.swellingCreeper.getDistanceSq(this.creeperAttackTarget) > 49.0D)
+        else if (this.swellingCreeper.distanceToSqr(this.creeperAttackTarget) > 49.0D)
         {
             this.swellingCreeper.setCreeperState(-1);
         }
-        else if (!this.swellingCreeper.getEntitySenses().canSee(this.creeperAttackTarget))
+        else if (!this.swellingCreeper.getSensing().canSee(this.creeperAttackTarget))
         {
             this.swellingCreeper.setCreeperState(-1);
         }

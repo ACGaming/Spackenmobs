@@ -24,25 +24,25 @@ public class MZTEWolfBegGoal extends Goal
     public MZTEWolfBegGoal(MZTEWolfEntity wolf, float minDistance)
     {
         this.wolf = wolf;
-        this.world = wolf.world;
+        this.world = wolf.level;
         this.minPlayerDistance = minDistance;
-        this.playerPredicate = (new EntityPredicate()).setDistance(minDistance).allowInvulnerable().allowFriendlyFire().setSkipAttackChecks();
-        this.setMutexFlags(EnumSet.of(Goal.Flag.LOOK));
+        this.playerPredicate = (new EntityPredicate()).range(minDistance).allowInvulnerable().allowSameTeam().allowNonAttackable();
+        this.setFlags(EnumSet.of(Goal.Flag.LOOK));
     }
 
-    public boolean shouldExecute()
+    public boolean canUse()
     {
-        this.player = this.world.getClosestPlayer(this.playerPredicate, this.wolf);
+        this.player = this.world.getNearestPlayer(this.playerPredicate, this.wolf);
         return this.player != null && this.hasTemptationItemInHand(this.player);
     }
 
-    public boolean shouldContinueExecuting()
+    public boolean canContinueToUse()
     {
         if (!this.player.isAlive())
         {
             return false;
         }
-        else if (this.wolf.getDistanceSq(this.player) > (double) (this.minPlayerDistance * this.minPlayerDistance))
+        else if (this.wolf.distanceToSqr(this.player) > (double) (this.minPlayerDistance * this.minPlayerDistance))
         {
             return false;
         }
@@ -52,13 +52,13 @@ public class MZTEWolfBegGoal extends Goal
         }
     }
 
-    public void startExecuting()
+    public void start()
     {
         this.wolf.setBegging(true);
-        this.timeoutCounter = 40 + this.wolf.getRNG().nextInt(40);
+        this.timeoutCounter = 40 + this.wolf.getRandom().nextInt(40);
     }
 
-    public void resetTask()
+    public void stop()
     {
         this.wolf.setBegging(false);
         this.player = null;
@@ -66,7 +66,7 @@ public class MZTEWolfBegGoal extends Goal
 
     public void tick()
     {
-        this.wolf.getLookController().setLookPosition(this.player.getPosX(), this.player.getPosYEye(), this.player.getPosZ(), 10.0F, (float) this.wolf.getVerticalFaceSpeed());
+        this.wolf.getLookControl().setLookAt(this.player.getX(), this.player.getEyeY(), this.player.getZ(), 10.0F, (float) this.wolf.getMaxHeadXRot());
         --this.timeoutCounter;
     }
 
@@ -74,12 +74,12 @@ public class MZTEWolfBegGoal extends Goal
     {
         for (Hand hand : Hand.values())
         {
-            ItemStack itemstack = player.getHeldItem(hand);
-            if (this.wolf.isTamed() && itemstack.getItem() == Items.BONE)
+            ItemStack itemstack = player.getItemInHand(hand);
+            if (this.wolf.isTame() && itemstack.getItem() == Items.BONE)
             {
                 return true;
             }
-            if (this.wolf.isBreedingItem(itemstack))
+            if (this.wolf.isFood(itemstack))
             {
                 return true;
             }

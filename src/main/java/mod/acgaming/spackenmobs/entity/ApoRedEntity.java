@@ -22,17 +22,17 @@ public class ApoRedEntity extends AbstractApoRedEntity
         return SpackenmobsRegistry.ENTITY_APORED_AMBIENT.get();
     }
 
-    protected void dropSpecialItems(DamageSource source, int looting, boolean recentlyHitIn)
+    protected void dropCustomDeathLoot(DamageSource source, int looting, boolean recentlyHitIn)
     {
-        super.dropSpecialItems(source, looting, recentlyHitIn);
-        Entity entity = source.getTrueSource();
+        super.dropCustomDeathLoot(source, looting, recentlyHitIn);
+        Entity entity = source.getEntity();
         if (entity instanceof SmavaCreeperEntity)
         {
             SmavaCreeperEntity smavacreeperentity = (SmavaCreeperEntity) entity;
             if (smavacreeperentity.ableToCauseSkullDrop())
             {
                 smavacreeperentity.incrementDroppedSkulls();
-                this.entityDropItem(Items.SKELETON_SKULL);
+                this.spawnAtLocation(Items.SKELETON_SKULL);
             }
         }
     }
@@ -49,7 +49,7 @@ public class ApoRedEntity extends AbstractApoRedEntity
 
     protected SoundEvent getStepSound()
     {
-        return SoundEvents.ENTITY_ZOMBIE_STEP;
+        return SoundEvents.ZOMBIE_STEP;
     }
 
     protected float getSoundVolume()

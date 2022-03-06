@@ -21,7 +21,7 @@ public class JensDanceGoal extends Goal
         this.searchRadius = ConfigurationHandler.GENERAL.jens_search_distance.get();
     }
 
-    public boolean shouldExecute()
+    public boolean canUse()
     {
         for (int x = -this.searchRadius; x <= this.searchRadius; x++)
         {
@@ -29,7 +29,7 @@ public class JensDanceGoal extends Goal
             {
                 for (int z = -this.searchRadius; z <= this.searchRadius; z++)
                 {
-                    if (this.jens.world.getBlockState(this.jens.getPosition().add(x, y, z)).getBlock() == Blocks.JUKEBOX && this.jens.world.getBlockState(this.jens.getPosition().add(x, y, z)).get(JukeboxBlock.HAS_RECORD))
+                    if (this.jens.level.getBlockState(this.jens.blockPosition().offset(x, y, z)).getBlock() == Blocks.JUKEBOX && this.jens.level.getBlockState(this.jens.blockPosition().offset(x, y, z)).getValue(JukeboxBlock.HAS_RECORD))
                         return true;
                 }
             }
@@ -37,17 +37,17 @@ public class JensDanceGoal extends Goal
         return false;
     }
 
-    public boolean shouldContinueExecuting()
+    public boolean canContinueToUse()
     {
-        return shouldExecute();
+        return canUse();
     }
 
-    public void startExecuting()
+    public void start()
     {
         this.danceStage = 1;
     }
 
-    public void resetTask()
+    public void stop()
     {
         this.lastDanceMoveTime = 0;
         this.danceStage = 0;
@@ -60,20 +60,20 @@ public class JensDanceGoal extends Goal
             switch (this.danceStage)
             {
                 case 1:
-                    this.danceStage = this.jens.world.rand.nextBoolean() ? 1 : 2;
-                    this.jens.setMotion(0, 0.5, 0);
+                    this.danceStage = this.jens.level.random.nextBoolean() ? 1 : 2;
+                    this.jens.setDeltaMovement(0, 0.5, 0);
                     break;
                 case 2:
-                    this.jens.setSneaking(true);
-                    this.jens.setMotion(0, -3, 0);
+                    this.jens.setShiftKeyDown(true);
+                    this.jens.setDeltaMovement(0, -3, 0);
                     this.danceStage = 3;
                     break;
                 case 3:
-                    this.danceStage = this.jens.world.rand.nextBoolean() ? 1 : 2;
-                    this.jens.setSneaking(false);
+                    this.danceStage = this.jens.level.random.nextBoolean() ? 1 : 2;
+                    this.jens.setShiftKeyDown(false);
                     break;
             }
-            this.lastDanceMoveTime = this.jens.world.rand.nextInt(20) + 10;
+            this.lastDanceMoveTime = this.jens.level.random.nextInt(20) + 10;
         }
         this.lastDanceMoveTime--;
     }

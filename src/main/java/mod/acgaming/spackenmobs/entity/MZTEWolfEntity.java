@@ -44,14 +44,14 @@ public class MZTEWolfEntity extends TameableEntity implements IAngerable
         EntityType<?> entitytype = p_213440_0_.getType();
         return entitytype == EntityType.SHEEP || entitytype == EntityType.RABBIT || entitytype == EntityType.FOX;
     };
-    private static final DataParameter<Boolean> BEGGING = EntityDataManager.createKey(MZTEWolfEntity.class, DataSerializers.BOOLEAN);
-    private static final DataParameter<Integer> COLLAR_COLOR = EntityDataManager.createKey(MZTEWolfEntity.class, DataSerializers.VARINT);
-    private static final DataParameter<Integer> field_234232_bz_ = EntityDataManager.createKey(MZTEWolfEntity.class, DataSerializers.VARINT);
-    private static final RangedInteger field_234230_bG_ = TickRangeConverter.convertRange(20, 39);
+    private static final DataParameter<Boolean> BEGGING = EntityDataManager.defineId(MZTEWolfEntity.class, DataSerializers.BOOLEAN);
+    private static final DataParameter<Integer> COLLAR_COLOR = EntityDataManager.defineId(MZTEWolfEntity.class, DataSerializers.INT);
+    private static final DataParameter<Integer> DATA_REMAINING_ANGER_TIME = EntityDataManager.defineId(MZTEWolfEntity.class, DataSerializers.INT);
+    private static final RangedInteger PERSISTENT_ANGER_TIME = TickRangeConverter.rangeOfSeconds(20, 39);
 
     public static AttributeModifierMap.MutableAttribute registerAttributes()
     {
-        return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.3F).createMutableAttribute(Attributes.MAX_HEALTH, 8.0D).createMutableAttribute(Attributes.ATTACK_DAMAGE, 2.0D);
+        return MobEntity.createMobAttributes().add(Attributes.MOVEMENT_SPEED, 0.3F).add(Attributes.MAX_HEALTH, 8.0D).add(Attributes.ATTACK_DAMAGE, 2.0D);
     }
 
     private float headRotationCourse;
@@ -60,33 +60,33 @@ public class MZTEWolfEntity extends TameableEntity implements IAngerable
     private boolean isShaking;
     private float timeWolfIsShaking;
     private float prevTimeWolfIsShaking;
-    private UUID field_234231_bH_;
+    private UUID persistentAngerTarget;
 
     public MZTEWolfEntity(EntityType<? extends MZTEWolfEntity> type, World worldIn)
     {
         super(type, worldIn);
-        this.setTamed(false);
+        this.setTame(false);
     }
 
-    public void livingTick()
+    public void aiStep()
     {
-        super.livingTick();
-        if (!this.world.isRemote && this.isWet && !this.isShaking && !this.hasPath() && this.onGround)
+        super.aiStep();
+        if (!this.level.isClientSide && this.isWet && !this.isShaking && !this.isPathFinding() && this.onGround)
         {
             this.isShaking = true;
             this.timeWolfIsShaking = 0.0F;
             this.prevTimeWolfIsShaking = 0.0F;
-            this.world.setEntityState(this, (byte) 8);
+            this.level.broadcastEntityEvent(this, (byte) 8);
         }
 
-        if (!this.world.isRemote)
+        if (!this.level.isClientSide)
         {
-            this.func_241359_a_((ServerWorld) this.world, true);
+            this.updatePersistentAnger((ServerWorld) this.level, true);
         }
 
     }
 
-    public boolean attackEntityFrom(DamageSource source, float amount)
+    public boolean hurt(DamageSource source, float amount)
     {
         if (this.isInvulnerableTo(source))
         {
@@ -94,56 +94,56 @@ public class MZTEWolfEntity extends TameableEntity implements IAngerable
         }
         else
         {
-            Entity entity = source.getTrueSource();
-            this.func_233687_w_(false);
+            Entity entity = source.getEntity();
+            this.setOrderedToSit(false);
             if (entity != null && !(entity instanceof PlayerEntity) && !(entity instanceof AbstractArrowEntity))
             {
                 amount = (amount + 1.0F) / 2.0F;
             }
 
-            return super.attackEntityFrom(source, amount);
+            return super.hurt(source, amount);
         }
     }
 
-    public boolean isBreedingItem(ItemStack stack)
+    public boolean isFood(ItemStack stack)
     {
         Item item = stack.getItem();
-        return item.isFood() && item.getFood().isMeat();
+        return item.isEdible() && item.getFoodProperties().isMeat();
     }
 
-    public ActionResultType func_230254_b_(PlayerEntity p_230254_1_, Hand p_230254_2_)
+    public ActionResultType mobInteract(PlayerEntity p_230254_1_, Hand p_230254_2_)
     {
-        ItemStack itemstack = p_230254_1_.getHeldItem(p_230254_2_);
+        ItemStack itemstack = p_230254_1_.getItemInHand(p_230254_2_);
         Item item = itemstack.getItem();
-        if (this.world.isRemote)
+        if (this.level.isClientSide)
         {
-            boolean flag = this.isOwner(p_230254_1_) || this.isTamed() || item == Items.BONE && !this.isTamed() && !this.func_233678_J__();
+            boolean flag = this.isOwnedBy(p_230254_1_) || this.isTame() || item == Items.BONE && !this.isTame() && !this.isAngry();
             return flag ? ActionResultType.CONSUME : ActionResultType.PASS;
         }
         else
         {
-            if (this.isTamed())
+            if (this.isTame())
             {
-                if (this.isBreedingItem(itemstack) && this.getHealth() < this.getMaxHealth())
+                if (this.isFood(itemstack) && this.getHealth() < this.getMaxHealth())
                 {
-                    if (!p_230254_1_.abilities.isCreativeMode)
+                    if (!p_230254_1_.abilities.instabuild)
                     {
                         itemstack.shrink(1);
                     }
 
-                    this.heal((float) item.getFood().getHealing());
+                    this.heal((float) item.getFoodProperties().getNutrition());
                     return ActionResultType.SUCCESS;
                 }
 
                 if (!(item instanceof DyeItem))
                 {
-                    ActionResultType actionresulttype = super.func_230254_b_(p_230254_1_, p_230254_2_);
-                    if ((!actionresulttype.isSuccessOrConsume() || this.isChild()) && this.isOwner(p_230254_1_))
+                    ActionResultType actionresulttype = super.mobInteract(p_230254_1_, p_230254_2_);
+                    if ((!actionresulttype.consumesAction() || this.isBaby()) && this.isOwnedBy(p_230254_1_))
                     {
-                        this.func_233687_w_(!this.isSitting());
-                        this.isJumping = false;
-                        this.navigator.clearPath();
-                        this.setAttackTarget(null);
+                        this.setOrderedToSit(!this.isOrderedToSit());
+                        this.jumping = false;
+                        this.navigation.stop();
+                        this.setTarget(null);
                         return ActionResultType.SUCCESS;
                     }
 
@@ -154,7 +154,7 @@ public class MZTEWolfEntity extends TameableEntity implements IAngerable
                 if (dyecolor != this.getCollarColor())
                 {
                     this.setCollarColor(dyecolor);
-                    if (!p_230254_1_.abilities.isCreativeMode)
+                    if (!p_230254_1_.abilities.instabuild)
                     {
                         itemstack.shrink(1);
                     }
@@ -162,40 +162,40 @@ public class MZTEWolfEntity extends TameableEntity implements IAngerable
                     return ActionResultType.SUCCESS;
                 }
             }
-            else if (item == Items.BONE && !this.func_233678_J__())
+            else if (item == Items.BONE && !this.isAngry())
             {
-                if (!p_230254_1_.abilities.isCreativeMode)
+                if (!p_230254_1_.abilities.instabuild)
                 {
                     itemstack.shrink(1);
                 }
 
-                if (this.rand.nextInt(3) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, p_230254_1_))
+                if (this.random.nextInt(3) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, p_230254_1_))
                 {
-                    this.setTamedBy(p_230254_1_);
-                    this.navigator.clearPath();
-                    this.setAttackTarget(null);
-                    this.func_233687_w_(true);
-                    this.world.setEntityState(this, (byte) 7);
+                    this.tame(p_230254_1_);
+                    this.navigation.stop();
+                    this.setTarget(null);
+                    this.setOrderedToSit(true);
+                    this.level.broadcastEntityEvent(this, (byte) 7);
                 }
                 else
                 {
-                    this.world.setEntityState(this, (byte) 6);
+                    this.level.broadcastEntityEvent(this, (byte) 6);
                 }
 
                 return ActionResultType.SUCCESS;
             }
 
-            return super.func_230254_b_(p_230254_1_, p_230254_2_);
+            return super.mobInteract(p_230254_1_, p_230254_2_);
         }
     }
 
-    public boolean canMateWith(AnimalEntity otherAnimal)
+    public boolean canMate(AnimalEntity otherAnimal)
     {
         if (otherAnimal == this)
         {
             return false;
         }
-        else if (!this.isTamed())
+        else if (!this.isTame())
         {
             return false;
         }
@@ -206,11 +206,11 @@ public class MZTEWolfEntity extends TameableEntity implements IAngerable
         else
         {
             MZTEWolfEntity wolfentity = (MZTEWolfEntity) otherAnimal;
-            if (!wolfentity.isTamed())
+            if (!wolfentity.isTame())
             {
                 return false;
             }
-            else if (wolfentity.isEntitySleeping())
+            else if (wolfentity.isInSittingPose())
             {
                 return false;
             }
@@ -258,65 +258,65 @@ public class MZTEWolfEntity extends TameableEntity implements IAngerable
     @OnlyIn(Dist.CLIENT)
     public float getTailRotation()
     {
-        if (this.func_233678_J__())
+        if (this.isAngry())
         {
             return 1.5393804F;
         }
         else
         {
-            return this.isTamed() ? (0.55F - (this.getMaxHealth() - this.getHealth()) * 0.02F) * (float) Math.PI : ((float) Math.PI / 5F);
+            return this.isTame() ? (0.55F - (this.getMaxHealth() - this.getHealth()) * 0.02F) * (float) Math.PI : ((float) Math.PI / 5F);
         }
     }
 
-    public int getAngerTime()
+    public int getRemainingPersistentAngerTime()
     {
-        return this.dataManager.get(field_234232_bz_);
+        return this.entityData.get(DATA_REMAINING_ANGER_TIME);
     }
 
-    public void setAngerTime(int time)
+    public void setRemainingPersistentAngerTime(int time)
     {
-        this.dataManager.set(field_234232_bz_, time);
+        this.entityData.set(DATA_REMAINING_ANGER_TIME, time);
     }
 
     @Nullable
-    public UUID getAngerTarget()
+    public UUID getPersistentAngerTarget()
     {
-        return this.field_234231_bH_;
+        return this.persistentAngerTarget;
     }
 
-    public void setAngerTarget(@Nullable UUID target)
+    public void setPersistentAngerTarget(@Nullable UUID target)
     {
-        this.field_234231_bH_ = target;
+        this.persistentAngerTarget = target;
     }
 
-    public void func_230258_H__()
+    public void startPersistentAngerTimer()
     {
-        this.setAngerTime(field_234230_bG_.getRandomWithinRange(this.rand));
+        this.setRemainingPersistentAngerTime(PERSISTENT_ANGER_TIME.randomValue(this.random));
     }
 
     public DyeColor getCollarColor()
     {
-        return DyeColor.byId(this.dataManager.get(COLLAR_COLOR));
+        return DyeColor.byId(this.entityData.get(COLLAR_COLOR));
     }
 
     public void setCollarColor(DyeColor collarcolor)
     {
-        this.dataManager.set(COLLAR_COLOR, collarcolor.getId());
+        this.entityData.set(COLLAR_COLOR, collarcolor.getId());
     }
 
-    public MZTEWolfEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_)
+    public MZTEWolfEntity getBreedOffspring(ServerWorld p_241840_1_, AgeableEntity p_241840_2_)
     {
         return SpackenmobsRegistry.MZTEWOLF.get().create(p_241840_1_);
     }
 
     public boolean isBegging()
     {
-        return this.dataManager.get(BEGGING);
+        return this.entityData.get(BEGGING);
     }
 
     public void setBegging(boolean beg)
     {
-        this.dataManager.set(BEGGING, beg);
+        this.entityData.set(BEGGING, beg);
     }
 
     protected void registerGoals()
@@ -334,10 +334,10 @@ public class MZTEWolfEntity extends TameableEntity implements IAngerable
         this.goalSelector.addGoal(10, new LookRandomlyGoal(this));
         this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
-        this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setCallsForHelp());
-        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, this::func_233680_b_));
+        this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setAlertOthers());
+        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, this::isAngryAt));
         this.targetSelector.addGoal(5, new NonTamedTargetGoal<>(this, AnimalEntity.class, false, TARGET_ENTITIES));
-        this.targetSelector.addGoal(6, new NonTamedTargetGoal<>(this, TurtleEntity.class, false, TurtleEntity.TARGET_DRY_BABY));
+        this.targetSelector.addGoal(6, new NonTamedTargetGoal<>(this, TurtleEntity.class, false, TurtleEntity.BABY_ON_LAND_SELECTOR));
         this.targetSelector.addGoal(7, new NearestAttackableTargetGoal<>(this, AbstractSkeletonEntity.class, false));
         this.targetSelector.addGoal(8, new ResetAngerGoal<>(this, true));
     }
@@ -357,20 +357,20 @@ public class MZTEWolfEntity extends TameableEntity implements IAngerable
                 this.headRotationCourse += (0.0F - this.headRotationCourse) * 0.4F;
             }
 
-            if (this.isInWaterRainOrBubbleColumn())
+            if (this.isInWaterRainOrBubble())
             {
                 this.isWet = true;
-                if (this.isShaking && !this.world.isRemote)
+                if (this.isShaking && !this.level.isClientSide)
                 {
-                    this.world.setEntityState(this, (byte) 56);
-                    this.func_242326_eZ();
+                    this.level.broadcastEntityEvent(this, (byte) 56);
+                    this.cancelShake();
                 }
             }
             else if ((this.isWet || this.isShaking) && this.isShaking)
             {
                 if (this.timeWolfIsShaking == 0.0F)
                 {
-                    this.playSound(SoundEvents.ENTITY_WOLF_SHAKE, this.getSoundVolume(), (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
+                    this.playSound(SoundEvents.WOLF_SHAKE, this.getSoundVolume(), (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
                 }
 
                 this.prevTimeWolfIsShaking = this.timeWolfIsShaking;
@@ -385,15 +385,15 @@ public class MZTEWolfEntity extends TameableEntity implements IAngerable
 
                 if (this.timeWolfIsShaking > 0.4F)
                 {
-                    float f = (float) this.getPosY();
+                    float f = (float) this.getY();
                     int i = (int) (MathHelper.sin((this.timeWolfIsShaking - 0.4F) * (float) Math.PI) * 7.0F);
-                    Vector3d vector3d = this.getMotion();
+                    Vector3d vector3d = this.getDeltaMovement();
 
                     for (int j = 0; j < i; ++j)
                     {
-                        float f1 = (this.rand.nextFloat() * 2.0F - 1.0F) * this.getWidth() * 0.5F;
-                        float f2 = (this.rand.nextFloat() * 2.0F - 1.0F) * this.getWidth() * 0.5F;
-                        this.world.addParticle(ParticleTypes.SPLASH, this.getPosX() + (double) f1, f + 0.8F, this.getPosZ() + (double) f2, vector3d.x, vector3d.y, vector3d.z);
+                        float f1 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getBbWidth() * 0.5F;
+                        float f2 = (this.random.nextFloat() * 2.0F - 1.0F) * this.getBbWidth() * 0.5F;
+                        this.level.addParticle(ParticleTypes.SPLASH, this.getX() + (double) f1, f + 0.8F, this.getZ() + (double) f2, vector3d.x, vector3d.y, vector3d.z);
                     }
                 }
             }
@@ -403,13 +403,13 @@ public class MZTEWolfEntity extends TameableEntity implements IAngerable
 
     protected SoundEvent getAmbientSound()
     {
-        if (this.func_233678_J__())
+        if (this.isAngry())
         {
-            return SoundEvents.ENTITY_WOLF_GROWL;
+            return SoundEvents.WOLF_GROWL;
         }
-        else if (this.rand.nextInt(3) == 0)
+        else if (this.random.nextInt(3) == 0)
         {
-            return this.isTamed() && this.getHealth() < 10.0F ? SoundEvents.ENTITY_WOLF_WHINE : SoundEvents.ENTITY_WOLF_PANT;
+            return this.isTame() && this.getHealth() < 10.0F ? SoundEvents.WOLF_WHINE : SoundEvents.WOLF_PANT;
         }
         else
         {
@@ -417,60 +417,60 @@ public class MZTEWolfEntity extends TameableEntity implements IAngerable
         }
     }
 
-    public int getVerticalFaceSpeed()
+    public int getMaxHeadXRot()
     {
-        return this.isEntitySleeping() ? 20 : super.getVerticalFaceSpeed();
+        return this.isInSittingPose() ? 20 : super.getMaxHeadXRot();
     }
 
-    public int getMaxSpawnedInChunk()
+    public int getMaxSpawnClusterSize()
     {
         return 8;
     }
 
-    public boolean attackEntityAsMob(Entity entityIn)
+    public boolean doHurtTarget(Entity entityIn)
     {
-        boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), (float) ((int) this.getAttributeValue(Attributes.ATTACK_DAMAGE)));
+        boolean flag = entityIn.hurt(DamageSource.mobAttack(this), (float) ((int) this.getAttributeValue(Attributes.ATTACK_DAMAGE)));
         if (flag)
         {
-            this.applyEnchantments(this, entityIn);
+            this.doEnchantDamageEffects(this, entityIn);
         }
 
         return flag;
     }
 
-    protected void registerData()
+    protected void defineSynchedData()
     {
-        super.registerData();
-        this.dataManager.register(BEGGING, false);
-        this.dataManager.register(COLLAR_COLOR, DyeColor.RED.getId());
-        this.dataManager.register(field_234232_bz_, 0);
+        super.defineSynchedData();
+        this.entityData.define(BEGGING, false);
+        this.entityData.define(COLLAR_COLOR, DyeColor.RED.getId());
+        this.entityData.define(DATA_REMAINING_ANGER_TIME, 0);
     }
 
-    public void writeAdditional(CompoundNBT compound)
+    public void addAdditionalSaveData(CompoundNBT compound)
     {
-        super.writeAdditional(compound);
+        super.addAdditionalSaveData(compound);
         compound.putByte("CollarColor", (byte) this.getCollarColor().getId());
-        this.writeAngerNBT(compound);
+        this.addPersistentAngerSaveData(compound);
     }
 
-    public void readAdditional(CompoundNBT compound)
+    public void readAdditionalSaveData(CompoundNBT compound)
     {
-        super.readAdditional(compound);
+        super.readAdditionalSaveData(compound);
         if (compound.contains("CollarColor", 99))
         {
             this.setCollarColor(DyeColor.byId(compound.getInt("CollarColor")));
         }
 
-        this.readAngerNBT((ServerWorld) this.world, compound);
+        this.readPersistentAngerSaveData((ServerWorld) this.level, compound);
     }
 
-    public boolean canBeLeashedTo(PlayerEntity player)
+    public boolean canBeLeashed(PlayerEntity player)
     {
-        return !this.func_233678_J__() && super.canBeLeashedTo(player);
+        return !this.isAngry() && super.canBeLeashed(player);
     }
 
     @OnlyIn(Dist.CLIENT)
-    public void handleStatusUpdate(byte id)
+    public void handleEntityEvent(byte id)
     {
         if (id == 8)
         {
@@ -480,18 +480,18 @@ public class MZTEWolfEntity extends TameableEntity implements IAngerable
         }
         else if (id == 56)
         {
-            this.func_242326_eZ();
+            this.cancelShake();
         }
         else
         {
-            super.handleStatusUpdate(id);
+            super.handleEntityEvent(id);
         }
 
     }
 
-    public void setTamed(boolean tamed)
+    public void setTame(boolean tamed)
     {
-        super.setTamed(tamed);
+        super.setTame(tamed);
         if (tamed)
         {
             this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(20.0D);
@@ -505,26 +505,26 @@ public class MZTEWolfEntity extends TameableEntity implements IAngerable
         this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(4.0D);
     }
 
-    public boolean shouldAttackEntity(LivingEntity target, LivingEntity owner)
+    public boolean wantsToAttack(LivingEntity target, LivingEntity owner)
     {
         if (!(target instanceof CreeperEntity) && !(target instanceof GhastEntity))
         {
             if (target instanceof MZTEWolfEntity)
             {
                 MZTEWolfEntity wolfentity = (MZTEWolfEntity) target;
-                return !wolfentity.isTamed() || wolfentity.getOwner() != owner;
+                return !wolfentity.isTame() || wolfentity.getOwner() != owner;
             }
-            else if (target instanceof PlayerEntity && owner instanceof PlayerEntity && !((PlayerEntity) owner).canAttackPlayer((PlayerEntity) target))
+            else if (target instanceof PlayerEntity && owner instanceof PlayerEntity && !((PlayerEntity) owner).canHarmPlayer((PlayerEntity) target))
             {
                 return false;
             }
-            else if (target instanceof AbstractHorseEntity && ((AbstractHorseEntity) target).isTame())
+            else if (target instanceof AbstractHorseEntity && ((AbstractHorseEntity) target).isTamed())
             {
                 return false;
             }
             else
             {
-                return !(target instanceof TameableEntity) || !((TameableEntity) target).isTamed();
+                return !(target instanceof TameableEntity) || !((TameableEntity) target).isTame();
             }
         }
         else
@@ -533,34 +533,34 @@ public class MZTEWolfEntity extends TameableEntity implements IAngerable
         }
     }
 
-    public void onDeath(DamageSource cause)
+    public void die(DamageSource cause)
     {
         this.isWet = false;
         this.isShaking = false;
         this.prevTimeWolfIsShaking = 0.0F;
         this.timeWolfIsShaking = 0.0F;
-        super.onDeath(cause);
+        super.die(cause);
     }
 
     protected void playStepSound(BlockPos pos, BlockState blockIn)
     {
-        this.playSound(SoundEvents.ENTITY_WOLF_STEP, 0.15F, 1.0F);
+        this.playSound(SoundEvents.WOLF_STEP, 0.15F, 1.0F);
     }
 
     @OnlyIn(Dist.CLIENT)
-    public Vector3d func_241205_ce_()
+    public Vector3d getLeashOffset()
     {
-        return new Vector3d(0.0D, 0.6F * this.getEyeHeight(), this.getWidth() * 0.4F);
+        return new Vector3d(0.0D, 0.6F * this.getEyeHeight(), this.getBbWidth() * 0.4F);
     }
 
     protected SoundEvent getHurtSound(DamageSource damageSourceIn)
     {
-        return SoundEvents.ENTITY_WOLF_HURT;
+        return SoundEvents.WOLF_HURT;
     }
 
     protected SoundEvent getDeathSound()
     {
-        return SoundEvents.ENTITY_WOLF_DEATH;
+        return SoundEvents.WOLF_DEATH;
     }
 
     protected float getSoundVolume()
@@ -573,7 +573,7 @@ public class MZTEWolfEntity extends TameableEntity implements IAngerable
         return sizeIn.height * 0.8F;
     }
 
-    private void func_242326_eZ()
+    private void cancelShake()
     {
         this.isShaking = false;
         this.timeWolfIsShaking = 0.0F;
@@ -590,11 +590,11 @@ public class MZTEWolfEntity extends TameableEntity implements IAngerable
             this.wolf = wolfIn;
         }
 
-        public boolean shouldExecute()
+        public boolean canUse()
         {
-            if (super.shouldExecute() && this.avoidTarget instanceof LlamaEntity)
+            if (super.canUse() && this.toAvoid instanceof LlamaEntity)
             {
-                return !this.wolf.isTamed() && this.avoidLlama((LlamaEntity) this.avoidTarget);
+                return !this.wolf.isTame() && this.avoidLlama((LlamaEntity) this.toAvoid);
             }
             else
             {
@@ -602,21 +602,21 @@ public class MZTEWolfEntity extends TameableEntity implements IAngerable
             }
         }
 
-        public void startExecuting()
+        public void start()
         {
-            MZTEWolfEntity.this.setAttackTarget(null);
-            super.startExecuting();
+            MZTEWolfEntity.this.setTarget(null);
+            super.start();
         }
 
         public void tick()
         {
-            MZTEWolfEntity.this.setAttackTarget(null);
+            MZTEWolfEntity.this.setTarget(null);
             super.tick();
         }
 
         private boolean avoidLlama(LlamaEntity llamaIn)
         {
-            return llamaIn.getStrength() >= MZTEWolfEntity.this.rand.nextInt(5);
+            return llamaIn.getStrength() >= MZTEWolfEntity.this.random.nextInt(5);
         }
     }
 }

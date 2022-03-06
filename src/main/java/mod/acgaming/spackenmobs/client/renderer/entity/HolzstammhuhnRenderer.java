@@ -20,12 +20,12 @@ public class HolzstammhuhnRenderer extends MobRenderer<HolzstammhuhnEntity, Chic
         super(renderManagerIn, new ChickenModel<>(), 0.3F);
     }
 
-    public ResourceLocation getEntityTexture(HolzstammhuhnEntity entity)
+    public ResourceLocation getTextureLocation(HolzstammhuhnEntity entity)
     {
         return HOLZSTAMMHUHN_TEXTURES;
     }
 
-    protected float handleRotationFloat(HolzstammhuhnEntity livingBase, float partialTicks)
+    protected float getBob(HolzstammhuhnEntity livingBase, float partialTicks)
     {
         float f = MathHelper.lerp(partialTicks, livingBase.oFlap, livingBase.wingRotation);
         float f1 = MathHelper.lerp(partialTicks, livingBase.oFlapSpeed, livingBase.destPos);

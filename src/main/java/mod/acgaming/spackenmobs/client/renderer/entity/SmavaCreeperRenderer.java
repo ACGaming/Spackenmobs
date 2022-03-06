@@ -24,18 +24,18 @@ public class SmavaCreeperRenderer extends MobRenderer<SmavaCreeperEntity, Creepe
         this.addLayer(new SmavaCreeperChargeLayer(this));
     }
 
-    public ResourceLocation getEntityTexture(SmavaCreeperEntity entity)
+    public ResourceLocation getTextureLocation(SmavaCreeperEntity entity)
     {
         return SMAVA_CREEPER_TEXTURES;
     }
 
-    protected float getOverlayProgress(SmavaCreeperEntity livingEntityIn, float partialTicks)
+    protected float getWhiteOverlayProgress(SmavaCreeperEntity livingEntityIn, float partialTicks)
     {
         float f = livingEntityIn.getCreeperFlashIntensity(partialTicks);
         return (int) (f * 10.0F) % 2 == 0 ? 0.0F : MathHelper.clamp(f, 0.5F, 1.0F);
     }
 
-    protected void preRenderCallback(SmavaCreeperEntity entitylivingbaseIn, MatrixStack matrixStackIn, float partialTickTime)
+    protected void scale(SmavaCreeperEntity entitylivingbaseIn, MatrixStack matrixStackIn, float partialTickTime)
     {
         float f = entitylivingbaseIn.getCreeperFlashIntensity(partialTickTime);
         float f1 = 1.0F + MathHelper.sin(f * 100.0F) * f * 0.01F;

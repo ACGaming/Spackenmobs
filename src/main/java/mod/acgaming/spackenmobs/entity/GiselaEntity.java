@@ -20,7 +20,7 @@ public class GiselaEntity extends AnimalEntity
 {
     public static AttributeModifierMap.MutableAttribute registerAttributes()
     {
-        return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 20.0D).createMutableAttribute(Attributes.MOVEMENT_SPEED, 1.25F);
+        return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 20.0D).add(Attributes.MOVEMENT_SPEED, 1.25F);
     }
 
     public GiselaEntity(EntityType<? extends GiselaEntity> type, World worldIn)
@@ -28,12 +28,12 @@ public class GiselaEntity extends AnimalEntity
         super(type, worldIn);
     }
 
-    public int getTalkInterval()
+    public int getAmbientSoundInterval()
     {
         return 20;
     }
 
-    public GiselaEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_)
+    public GiselaEntity getBreedOffspring(ServerWorld p_241840_1_, AgeableEntity p_241840_2_)
     {
         return SpackenmobsRegistry.GISELA.get().create(p_241840_1_);
     }
@@ -71,11 +71,11 @@ public class GiselaEntity extends AnimalEntity
 
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn)
     {
-        return this.isChild() ? sizeIn.height * 0.95F : 1.3F;
+        return this.isBaby() ? sizeIn.height * 0.95F : 1.3F;
     }
 
     protected void playStepSound(BlockPos pos, BlockState blockIn)
     {
-        this.playSound(SoundEvents.ENTITY_COW_STEP, 0.15F, 1.0F);
+        this.playSound(SoundEvents.COW_STEP, 0.15F, 1.0F);
     }
 }

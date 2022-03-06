@@ -35,18 +35,18 @@ import mod.acgaming.spackenmobs.util.ConfigurationHandler;
 
 public class JensEntity extends AnimalEntity implements IRideable, IEquipable
 {
-    private static final DataParameter<Boolean> DIGESTING = EntityDataManager.createKey(JensEntity.class, DataSerializers.BOOLEAN);
-    private static final DataParameter<Integer> DIGEST_TIME = EntityDataManager.createKey(JensEntity.class, DataSerializers.VARINT);
-    private static final Ingredient TEMPTATION_ITEMS = Ingredient.fromItems(Items.COD, Items.SALMON, Items.TROPICAL_FISH, SpackenmobsRegistry.RAM.get());
-    private static final Ingredient BREEDING_ITEMS = Ingredient.fromItems(SpackenmobsRegistry.RAM.get());
-    private static final Ingredient FISH_ITEMS = Ingredient.fromItems(Items.COD, Items.SALMON, Items.TROPICAL_FISH);
+    private static final DataParameter<Boolean> DIGESTING = EntityDataManager.defineId(JensEntity.class, DataSerializers.BOOLEAN);
+    private static final DataParameter<Integer> DIGEST_TIME = EntityDataManager.defineId(JensEntity.class, DataSerializers.INT);
+    private static final Ingredient TEMPTATION_ITEMS = Ingredient.of(Items.COD, Items.SALMON, Items.TROPICAL_FISH, SpackenmobsRegistry.RAM.get());
+    private static final Ingredient BREEDING_ITEMS = Ingredient.of(SpackenmobsRegistry.RAM.get());
+    private static final Ingredient FISH_ITEMS = Ingredient.of(Items.COD, Items.SALMON, Items.TROPICAL_FISH);
 
     public static AttributeModifierMap.MutableAttribute registerAttributes()
     {
-        return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 20.0D).createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D);
+        return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 20.0D).add(Attributes.MOVEMENT_SPEED, 0.25D);
     }
 
-    private final BoostHelper field_234214_bx_ = new BoostHelper(this.dataManager, DIGEST_TIME, DIGESTING);
+    private final BoostHelper steering = new BoostHelper(this.entityData, DIGEST_TIME, DIGESTING);
     public boolean digesting;
     public int digestTime;
 
@@ -55,96 +55,96 @@ public class JensEntity extends AnimalEntity implements IRideable, IEquipable
         super(p_i50250_1_, p_i50250_2_);
     }
 
-    public boolean func_230264_L__()
+    public boolean isSaddleable()
     {
-        return this.isAlive() && !this.isChild();
+        return this.isAlive() && !this.isBaby();
     }
 
-    public void func_230266_a_(@Nullable SoundCategory p_230266_1_)
+    public void equipSaddle(@Nullable SoundCategory p_230266_1_)
     {
-        this.field_234214_bx_.setSaddledFromBoolean(true);
+        this.steering.setSaddle(true);
         if (p_230266_1_ != null)
         {
-            this.world.playMovingSound(null, this, SoundEvents.ENTITY_PIG_SADDLE, p_230266_1_, 0.5F, 1.0F);
+            this.level.playSound(null, this, SoundEvents.PIG_SADDLE, p_230266_1_, 0.5F, 1.0F);
         }
     }
 
     @Override
-    public boolean isHorseSaddled()
+    public boolean isSaddled()
     {
         return true;
     }
 
-    public void livingTick()
+    public void aiStep()
     {
-        super.livingTick();
+        super.aiStep();
 
         if (this.digesting && this.digestTime > 0)
         {
             this.digestTime--;
-            this.dataManager.set(DIGEST_TIME, this.digestTime);
+            this.entityData.set(DIGEST_TIME, this.digestTime);
         }
 
         if (this.digesting && this.digestTime <= 0)
         {
             for (int i = 0; i < 7; ++i)
             {
-                double d0 = this.rand.nextGaussian() * 0.02D;
-                double d1 = this.rand.nextGaussian() * 0.02D;
-                double d2 = this.rand.nextGaussian() * 0.02D;
-                this.world.addParticle(ParticleTypes.POOF, this.getPosXRandom(1.0D), this.getPosYRandom() + 0.5D, this.getPosZRandom(1.0D), d0, d1, d2);
+                double d0 = this.random.nextGaussian() * 0.02D;
+                double d1 = this.random.nextGaussian() * 0.02D;
+                double d2 = this.random.nextGaussian() * 0.02D;
+                this.level.addParticle(ParticleTypes.POOF, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
             }
-            this.playSound(SpackenmobsRegistry.ENTITY_JENS_POOP.get(), 1.0F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-            this.entityDropItem(SpackenmobsRegistry.SURSTROEMMING.get());
-            this.clearActivePotions();
+            this.playSound(SpackenmobsRegistry.ENTITY_JENS_POOP.get(), 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);
+            this.spawnAtLocation(SpackenmobsRegistry.SURSTROEMMING.get());
+            this.removeAllEffects();
 
             this.digesting = false;
-            this.dataManager.set(DIGESTING, false);
+            this.entityData.set(DIGESTING, false);
 
             this.digestTime = 0;
-            this.dataManager.set(DIGEST_TIME, 0);
+            this.entityData.set(DIGEST_TIME, 0);
         }
     }
 
-    public void writeAdditional(CompoundNBT compound)
+    public void addAdditionalSaveData(CompoundNBT compound)
     {
-        super.writeAdditional(compound);
+        super.addAdditionalSaveData(compound);
         compound.putBoolean("Digesting", this.digesting);
         compound.putInt("DigestTime", this.digestTime);
     }
 
-    public void readAdditional(CompoundNBT compound)
+    public void readAdditionalSaveData(CompoundNBT compound)
     {
-        super.readAdditional(compound);
+        super.readAdditionalSaveData(compound);
         this.digesting = compound.getBoolean("Digesting");
         this.digestTime = compound.getInt("DigestTime");
     }
 
-    public boolean isBreedingItem(ItemStack stack)
+    public boolean isFood(ItemStack stack)
     {
         return BREEDING_ITEMS.test(stack);
     }
 
-    public ActionResultType func_230254_b_(PlayerEntity player, Hand hand)
+    public ActionResultType mobInteract(PlayerEntity player, Hand hand)
     {
-        boolean breeding_item = this.isBreedingItem(player.getHeldItem(hand));
-        boolean fish_item = this.isFishItem(player.getHeldItem(hand));
+        boolean breeding_item = this.isFood(player.getItemInHand(hand));
+        boolean fish_item = this.isFishItem(player.getItemInHand(hand));
 
-        if (!breeding_item && !this.isBeingRidden() && !player.isSecondaryUseActive())
+        if (!breeding_item && !this.isVehicle() && !player.isSecondaryUseActive())
         {
-            if (!this.world.isRemote)
+            if (!this.level.isClientSide)
             {
                 player.startRiding(this);
             }
-            return ActionResultType.func_233537_a_(this.world.isRemote);
+            return ActionResultType.sidedSuccess(this.level.isClientSide);
         }
         else
         {
-            ActionResultType actionresulttype = super.func_230254_b_(player, hand);
-            if (fish_item && !this.isChild() && !this.digesting && !actionresulttype.isSuccessOrConsume())
+            ActionResultType actionresulttype = super.mobInteract(player, hand);
+            if (fish_item && !this.isBaby() && !this.digesting && !actionresulttype.consumesAction())
             {
-                ItemStack itemstack = player.getHeldItem(hand);
-                itemstack.interactWithEntity(player, this, hand);
+                ItemStack itemstack = player.getItemInHand(hand);
+                itemstack.interactLivingEntity(player, this, hand);
                 digestFish();
                 return ActionResultType.PASS;
             }
@@ -157,56 +157,56 @@ public class JensEntity extends AnimalEntity implements IRideable, IEquipable
 
     public void digestFish()
     {
-        this.playSound(SoundEvents.ENTITY_PLAYER_BURP, 1.0F, 1.0F);
+        this.playSound(SoundEvents.PLAYER_BURP, 1.0F, 1.0F);
         this.playSound(SpackenmobsRegistry.ENTITY_JENS_EAT.get(), 1.0F, 1.0F);
 
         this.digesting = true;
-        this.dataManager.set(DIGESTING, true);
+        this.entityData.set(DIGESTING, true);
 
         this.digestTime = (ConfigurationHandler.GENERAL.jens_digest_time.get() * 20);
-        this.dataManager.set(DIGEST_TIME, this.digestTime);
+        this.entityData.set(DIGEST_TIME, this.digestTime);
 
         for (int i = 0; i < 7; ++i)
         {
-            double d0 = this.rand.nextGaussian() * 0.02D;
-            double d1 = this.rand.nextGaussian() * 0.02D;
-            double d2 = this.rand.nextGaussian() * 0.02D;
-            this.world.addParticle(ParticleTypes.HEART, this.getPosXRandom(1.0D), this.getPosYRandom() + 0.5D, this.getPosZRandom(1.0D), d0, d1, d2);
+            double d0 = this.random.nextGaussian() * 0.02D;
+            double d1 = this.random.nextGaussian() * 0.02D;
+            double d2 = this.random.nextGaussian() * 0.02D;
+            this.level.addParticle(ParticleTypes.HEART, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
         }
 
-        this.addPotionEffect(new EffectInstance(Effects.NAUSEA, ConfigurationHandler.GENERAL.jens_digest_time.get() * 20, 1));
+        this.addEffect(new EffectInstance(Effects.CONFUSION, ConfigurationHandler.GENERAL.jens_digest_time.get() * 20, 1));
     }
 
     public boolean boost()
     {
-        return this.field_234214_bx_.boost(this.getRNG());
+        return this.steering.boost(this.getRandom());
     }
 
-    public void travelTowards(Vector3d travelVec)
+    public void travelWithInput(Vector3d travelVec)
     {
         super.travel(travelVec);
     }
 
-    public float getMountedSpeed()
+    public float getSteeringSpeed()
     {
         return (float) this.getAttributeValue(Attributes.MOVEMENT_SPEED) * 0.5F;
     }
 
-    public JensEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_)
+    public JensEntity getBreedOffspring(ServerWorld p_241840_1_, AgeableEntity p_241840_2_)
     {
         return SpackenmobsRegistry.JENS.get().create(p_241840_1_);
     }
 
-    protected void registerData()
+    protected void defineSynchedData()
     {
-        super.registerData();
-        this.dataManager.register(DIGESTING, false);
-        this.dataManager.register(DIGEST_TIME, 0);
+        super.defineSynchedData();
+        this.entityData.define(DIGESTING, false);
+        this.entityData.define(DIGEST_TIME, 0);
     }
 
-    public void notifyDataManagerChange(DataParameter<?> key)
+    public void onSyncedDataUpdated(DataParameter<?> key)
     {
-        super.notifyDataManagerChange(key);
+        super.onSyncedDataUpdated(key);
     }
 
     public boolean isFishItem(ItemStack stack)
@@ -221,7 +221,7 @@ public class JensEntity extends AnimalEntity implements IRideable, IEquipable
         this.goalSelector.addGoal(2, new JensDanceGoal(this));
         this.goalSelector.addGoal(2, new JensEatDroppedFishGoal(this));
         this.goalSelector.addGoal(3, new BreedGoal(this, 1.0D));
-        this.goalSelector.addGoal(4, new TemptGoal(this, 1.2D, Ingredient.fromItems(SpackenmobsRegistry.RAM_ON_A_STICK.get()), false));
+        this.goalSelector.addGoal(4, new TemptGoal(this, 1.2D, Ingredient.of(SpackenmobsRegistry.RAM_ON_A_STICK.get()), false));
         this.goalSelector.addGoal(4, new TemptGoal(this, 1.2D, false, TEMPTATION_ITEMS));
         this.goalSelector.addGoal(5, new FollowParentGoal(this, 1.1D));
         this.goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
@@ -234,7 +234,7 @@ public class JensEntity extends AnimalEntity implements IRideable, IEquipable
         return SpackenmobsRegistry.ENTITY_JENS_AMBIENT.get();
     }
 
-    public boolean canBeSteered()
+    public boolean canBeControlledByRider()
     {
         Entity entity = this.getControllingPassenger();
         if (!(entity instanceof PlayerEntity))
@@ -244,19 +244,19 @@ public class JensEntity extends AnimalEntity implements IRideable, IEquipable
         else
         {
             PlayerEntity playerentity = (PlayerEntity) entity;
-            return playerentity.getHeldItemMainhand().getItem() == SpackenmobsRegistry.RAM_ON_A_STICK.get() || playerentity.getHeldItemOffhand().getItem() == SpackenmobsRegistry.RAM_ON_A_STICK.get();
+            return playerentity.getMainHandItem().getItem() == SpackenmobsRegistry.RAM_ON_A_STICK.get() || playerentity.getOffhandItem().getItem() == SpackenmobsRegistry.RAM_ON_A_STICK.get();
         }
     }
 
     protected void playStepSound(BlockPos pos, BlockState blockIn)
     {
-        this.playSound(SoundEvents.ENTITY_PIG_STEP, 0.15F, 1.0F);
+        this.playSound(SoundEvents.PIG_STEP, 0.15F, 1.0F);
     }
 
     @OnlyIn(Dist.CLIENT)
-    public Vector3d func_241205_ce_()
+    public Vector3d getLeashOffset()
     {
-        return new Vector3d(0.0D, 0.6F * this.getEyeHeight(), this.getWidth() * 0.4F);
+        return new Vector3d(0.0D, 0.6F * this.getEyeHeight(), this.getBbWidth() * 0.4F);
     }
 
     @Nullable
@@ -265,31 +265,31 @@ public class JensEntity extends AnimalEntity implements IRideable, IEquipable
         return this.getPassengers().isEmpty() ? null : this.getPassengers().get(0);
     }
 
-    public Vector3d func_230268_c_(LivingEntity livingEntity)
+    public Vector3d getDismountLocationForPassenger(LivingEntity livingEntity)
     {
-        Direction direction = this.getAdjustedHorizontalFacing();
+        Direction direction = this.getMotionDirection();
         if (direction.getAxis() == Direction.Axis.Y)
         {
-            return super.func_230268_c_(livingEntity);
+            return super.getDismountLocationForPassenger(livingEntity);
         }
         else
         {
-            int[][] aint = TransportationHelper.func_234632_a_(direction);
-            BlockPos blockpos = this.getPosition();
+            int[][] aint = TransportationHelper.offsetsForDirection(direction);
+            BlockPos blockpos = this.blockPosition();
             BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
 
-            for (Pose pose : livingEntity.getAvailablePoses())
+            for (Pose pose : livingEntity.getDismountPoses())
             {
-                AxisAlignedBB axisalignedbb = livingEntity.getPoseAABB(pose);
+                AxisAlignedBB axisalignedbb = livingEntity.getLocalBoundsForPose(pose);
 
                 for (int[] aint1 : aint)
                 {
-                    blockpos$mutable.setPos(blockpos.getX() + aint1[0], blockpos.getY(), blockpos.getZ() + aint1[1]);
-                    double d0 = this.world.func_242403_h(blockpos$mutable);
-                    if (TransportationHelper.func_234630_a_(d0))
+                    blockpos$mutable.set(blockpos.getX() + aint1[0], blockpos.getY(), blockpos.getZ() + aint1[1]);
+                    double d0 = this.level.getBlockFloorHeight(blockpos$mutable);
+                    if (TransportationHelper.isBlockFloorValid(d0))
                     {
-                        Vector3d vector3d = Vector3d.copyCenteredWithVerticalOffset(blockpos$mutable, d0);
-                        if (TransportationHelper.func_234631_a_(this.world, livingEntity, axisalignedbb.offset(vector3d)))
+                        Vector3d vector3d = Vector3d.upFromBottomCenterOf(blockpos$mutable, d0);
+                        if (TransportationHelper.canDismountTo(this.level, livingEntity, axisalignedbb.move(vector3d)))
                         {
                             livingEntity.setPose(pose);
                             return vector3d;
@@ -297,13 +297,13 @@ public class JensEntity extends AnimalEntity implements IRideable, IEquipable
                     }
                 }
             }
-            return super.func_230268_c_(livingEntity);
+            return super.getDismountLocationForPassenger(livingEntity);
         }
     }
 
-    protected void dropInventory()
+    protected void dropEquipment()
     {
-        super.dropInventory();
+        super.dropEquipment();
     }
 
     protected SoundEvent getHurtSound(DamageSource damageSourceIn)
@@ -323,6 +323,6 @@ public class JensEntity extends AnimalEntity implements IRideable, IEquipable
 
     public void travel(Vector3d travelVector)
     {
-        this.ride(this, this.field_234214_bx_, travelVector);
+        this.travel(this, this.steering, travelVector);
     }
 }

@@ -23,10 +23,10 @@ public class MZTEWolfCollarLayer extends LayerRenderer<MZTEWolfEntity, MZTEWolfM
 
     public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, MZTEWolfEntity entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch)
     {
-        if (entitylivingbaseIn.isTamed() && !entitylivingbaseIn.isInvisible())
+        if (entitylivingbaseIn.isTame() && !entitylivingbaseIn.isInvisible())
         {
-            float[] afloat = entitylivingbaseIn.getCollarColor().getColorComponentValues();
-            renderCutoutModel(this.getEntityModel(), WOLF_COLLAR, matrixStackIn, bufferIn, packedLightIn, entitylivingbaseIn, afloat[0], afloat[1], afloat[2]);
+            float[] afloat = entitylivingbaseIn.getCollarColor().getTextureDiffuseColors();
+            renderColoredCutoutModel(this.getParentModel(), WOLF_COLLAR, matrixStackIn, bufferIn, packedLightIn, entitylivingbaseIn, afloat[0], afloat[1], afloat[2]);
         }
     }
 }

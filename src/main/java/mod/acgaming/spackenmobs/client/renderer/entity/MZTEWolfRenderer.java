@@ -30,29 +30,29 @@ public class MZTEWolfRenderer extends MobRenderer<MZTEWolfEntity, MZTEWolfModel<
         if (entityIn.isWolfWet())
         {
             float f = entityIn.getShadingWhileWet(partialTicks);
-            this.entityModel.setTint(f, f, f);
+            this.model.setColor(f, f, f);
         }
 
         super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
         if (entityIn.isWolfWet())
         {
-            this.entityModel.setTint(1.0F, 1.0F, 1.0F);
+            this.model.setColor(1.0F, 1.0F, 1.0F);
         }
     }
 
-    public ResourceLocation getEntityTexture(MZTEWolfEntity entity)
+    public ResourceLocation getTextureLocation(MZTEWolfEntity entity)
     {
-        if (entity.isTamed())
+        if (entity.isTame())
         {
             return TAMED_MZTEWOLF_TEXTURES;
         }
         else
         {
-            return entity.func_233678_J__() ? ANGRY_MZTEWOLF_TEXTURES : MZTEWOLF_TEXTURES;
+            return entity.isAngry() ? ANGRY_MZTEWOLF_TEXTURES : MZTEWOLF_TEXTURES;
         }
     }
 
-    protected float handleRotationFloat(MZTEWolfEntity livingBase, float partialTicks)
+    protected float getBob(MZTEWolfEntity livingBase, float partialTicks)
     {
         return livingBase.getTailRotation();
     }
