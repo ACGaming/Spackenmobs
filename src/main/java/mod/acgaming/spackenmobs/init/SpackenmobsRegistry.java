@@ -54,11 +54,6 @@ public class SpackenmobsRegistry
         () -> register("holzstammhuhn", EntityType.Builder.of(HolzstammhuhnEntity::new, EntityClassification.CREATURE)
             .sized(0.4F, 0.7F).clientTrackingRange(10)));
     public static final RegistryObject<Item> HOLZSTAMMHUHN_SPAWN_EGG = ITEMS.register("holzstammhuhn_spawn_egg", () -> new CustomSpawnEggItem(SpackenmobsRegistry.HOLZSTAMMHUHN::get, 12096347, 5295899, itemBuilder()));
-    // Islamist
-    public static final RegistryObject<EntityType<IslamistEntity>> ISLAMIST = ENTITIES.register("islamist",
-        () -> register("islamist", EntityType.Builder.of(IslamistEntity::new, EntityClassification.MONSTER)
-            .sized(0.6F, 1.7F).clientTrackingRange(10)));
-    public static final RegistryObject<Item> ISLAMIST_SPAWN_EGG = ITEMS.register("islamist_spawn_egg", () -> new CustomSpawnEggItem(SpackenmobsRegistry.ISLAMIST::get, 15263976, 15211548, itemBuilder()));
     // Jens
     public static final RegistryObject<EntityType<JensEntity>> JENS = ENTITIES.register("jens",
         () -> register("jens", EntityType.Builder.of(JensEntity::new, EntityClassification.CREATURE)
@@ -121,11 +116,6 @@ public class SpackenmobsRegistry
     public static final RegistryObject<SoundEvent> ENTITY_GISELA_AMBIENT = SOUND_EVENTS.register("entities.gisela.ambient", () -> createSound("entities.gisela.ambient"));
     public static final RegistryObject<SoundEvent> ENTITY_GISELA_HURT = SOUND_EVENTS.register("entities.gisela.hurt", () -> createSound("entities.gisela.hurt"));
     //public static final RegistryObject<SoundEvent> ENTITY_GISELA_DEATH = SOUND_EVENTS.register("entities.gisela.death", () -> createSound("entities.gisela.death"));
-    // Islamist
-    public static final RegistryObject<SoundEvent> ENTITY_ISLAMIST_FUSE = SOUND_EVENTS.register("entities.islamist.fuse", () -> createSound("entities.islamist.fuse"));
-    public static final RegistryObject<SoundEvent> ENTITY_ISLAMIST_BLOW = SOUND_EVENTS.register("entities.islamist.blow", () -> createSound("entities.islamist.blow"));
-    public static final RegistryObject<SoundEvent> ENTITY_ISLAMIST_HURT = SOUND_EVENTS.register("entities.islamist.hurt", () -> createSound("entities.islamist.hurt"));
-    public static final RegistryObject<SoundEvent> ENTITY_ISLAMIST_AMBIENT = SOUND_EVENTS.register("entities.islamist.ambient", () -> createSound("entities.islamist.ambient"));
     // Jens
     public static final RegistryObject<SoundEvent> ENTITY_JENS_AMBIENT = SOUND_EVENTS.register("entities.jens.ambient", () -> createSound("entities.jens.ambient"));
     public static final RegistryObject<SoundEvent> ENTITY_JENS_HURT = SOUND_EVENTS.register("entities.jens.hurt", () -> createSound("entities.jens.hurt"));

@@ -39,9 +39,9 @@ public class ConfigurationHandler
         public final ForgeConfigSpec.IntValue bakamitai_creeper_max;
         public final ForgeConfigSpec.IntValue bakamitai_creeper_weight;
 
-        public final ForgeConfigSpec.IntValue dagibee_min;
-        public final ForgeConfigSpec.IntValue dagibee_max;
-        public final ForgeConfigSpec.IntValue dagibee_weight;
+        //public final ForgeConfigSpec.IntValue dagibee_min;
+        //public final ForgeConfigSpec.IntValue dagibee_max;
+        //public final ForgeConfigSpec.IntValue dagibee_weight;
 
         public final ForgeConfigSpec.IntValue drachenlord_min;
         public final ForgeConfigSpec.IntValue drachenlord_max;
@@ -58,10 +58,6 @@ public class ConfigurationHandler
         public final ForgeConfigSpec.IntValue holzstammhuhn_min;
         public final ForgeConfigSpec.IntValue holzstammhuhn_max;
         public final ForgeConfigSpec.IntValue holzstammhuhn_weight;
-
-        public final ForgeConfigSpec.IntValue islamist_min;
-        public final ForgeConfigSpec.IntValue islamist_max;
-        public final ForgeConfigSpec.IntValue islamist_weight;
 
         public final ForgeConfigSpec.IntValue jens_min;
         public final ForgeConfigSpec.IntValue jens_max;
@@ -100,9 +96,9 @@ public class ConfigurationHandler
             bakamitai_creeper_max = builder.defineInRange("bakamitai_creeper_max", 1, 1, 64);
             bakamitai_creeper_weight = builder.defineInRange("bakamitai_creeper_weight", 60, 0, 200);
 
-            dagibee_min = builder.defineInRange("dagibee_min", 1, 1, 64);
-            dagibee_max = builder.defineInRange("dagibee_max", 1, 1, 64);
-            dagibee_weight = builder.defineInRange("dagibee_weight", 8, 0, 200);
+            //dagibee_min = builder.defineInRange("dagibee_min", 1, 1, 64);
+            //dagibee_max = builder.defineInRange("dagibee_max", 1, 1, 64);
+            //dagibee_weight = builder.defineInRange("dagibee_weight", 8, 0, 200);
 
             drachenlord_min = builder.defineInRange("drachenlord_min", 1, 1, 64);
             drachenlord_max = builder.defineInRange("drachenlord_max", 1, 1, 64);
@@ -119,10 +115,6 @@ public class ConfigurationHandler
             holzstammhuhn_min = builder.defineInRange("holzstammhuhn_min", 1, 1, 64);
             holzstammhuhn_max = builder.defineInRange("holzstammhuhn_max", 1, 1, 64);
             holzstammhuhn_weight = builder.defineInRange("holzstammhuhn_weight", 8, 0, 200);
-
-            islamist_min = builder.defineInRange("islamist_min", 1, 1, 64);
-            islamist_max = builder.defineInRange("islamist_max", 1, 1, 64);
-            islamist_weight = builder.defineInRange("islamist_weight", 60, 0, 200);
 
             jens_min = builder.defineInRange("jens_min", 1, 1, 64);
             jens_max = builder.defineInRange("jens_max", 1, 1, 64);

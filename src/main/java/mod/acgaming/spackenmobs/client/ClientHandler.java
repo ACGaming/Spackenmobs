@@ -19,7 +19,6 @@ public class ClientHandler
         RenderingRegistry.registerEntityRenderingHandler(SpackenmobsRegistry.FRIEDRICH_LIECHTENSTEIN.get(), FriedrichLiechtensteinRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(SpackenmobsRegistry.GISELA.get(), GiselaRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(SpackenmobsRegistry.HOLZSTAMMHUHN.get(), HolzstammhuhnRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(SpackenmobsRegistry.ISLAMIST.get(), IslamistRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(SpackenmobsRegistry.JENS.get(), JensRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(SpackenmobsRegistry.MARCELLDAVIS.get(), MarcellDAvisRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(SpackenmobsRegistry.MRBEAN.get(), MrBeanRenderer::new);

@@ -39,7 +39,6 @@ public class SpackenmobsEntities
                 registerSpawn(monster_spawns, entry, ConfigurationHandler.SPAWN.apored_weight.get(), ConfigurationHandler.SPAWN.apored_min.get(), ConfigurationHandler.SPAWN.apored_max.get(), EntityType.SKELETON, SpackenmobsRegistry.APORED.get());
                 registerSpawn(monster_spawns, entry, ConfigurationHandler.SPAWN.bakamitai_creeper_weight.get(), ConfigurationHandler.SPAWN.bakamitai_creeper_min.get(), ConfigurationHandler.SPAWN.bakamitai_creeper_max.get(), EntityType.CREEPER, SpackenmobsRegistry.BAKAMITAI_CREEPER.get());
                 registerSpawn(monster_spawns, entry, ConfigurationHandler.SPAWN.drachenlord_weight.get(), ConfigurationHandler.SPAWN.drachenlord_min.get(), ConfigurationHandler.SPAWN.drachenlord_max.get(), EntityType.PIGLIN, SpackenmobsRegistry.DRACHENLORD.get());
-                registerSpawn(monster_spawns, entry, ConfigurationHandler.SPAWN.islamist_weight.get(), ConfigurationHandler.SPAWN.islamist_min.get(), ConfigurationHandler.SPAWN.islamist_max.get(), EntityType.CREEPER, SpackenmobsRegistry.ISLAMIST.get());
                 registerSpawn(monster_spawns, entry, ConfigurationHandler.SPAWN.marcell_davis_weight.get(), ConfigurationHandler.SPAWN.marcell_davis_min.get(), ConfigurationHandler.SPAWN.marcell_davis_max.get(), EntityType.ZOMBIE, SpackenmobsRegistry.MARCELLDAVIS.get());
                 registerSpawn(monster_spawns, entry, ConfigurationHandler.SPAWN.mr_bean_weight.get(), ConfigurationHandler.SPAWN.mr_bean_min.get(), ConfigurationHandler.SPAWN.mr_bean_max.get(), EntityType.ZOMBIE, SpackenmobsRegistry.MRBEAN.get());
                 registerSpawn(monster_spawns, entry, ConfigurationHandler.SPAWN.schalker_weight.get(), ConfigurationHandler.SPAWN.schalker_min.get(), ConfigurationHandler.SPAWN.schalker_max.get(), EntityType.SHULKER, SpackenmobsRegistry.SCHALKER.get());
@@ -67,7 +66,6 @@ public class SpackenmobsEntities
         EntitySpawnPlacementRegistry.register(SpackenmobsRegistry.FRIEDRICH_LIECHTENSTEIN.get(), PlacementType.ON_GROUND, Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::checkAnimalSpawnRules);
         EntitySpawnPlacementRegistry.register(SpackenmobsRegistry.GISELA.get(), PlacementType.ON_GROUND, Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::checkAnimalSpawnRules);
         EntitySpawnPlacementRegistry.register(SpackenmobsRegistry.HOLZSTAMMHUHN.get(), PlacementType.ON_GROUND, Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::checkAnimalSpawnRules);
-        EntitySpawnPlacementRegistry.register(SpackenmobsRegistry.ISLAMIST.get(), PlacementType.ON_GROUND, Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::checkMonsterSpawnRules);
         EntitySpawnPlacementRegistry.register(SpackenmobsRegistry.JENS.get(), PlacementType.ON_GROUND, Type.MOTION_BLOCKING_NO_LEAVES, AnimalEntity::checkAnimalSpawnRules);
         EntitySpawnPlacementRegistry.register(SpackenmobsRegistry.MARCELLDAVIS.get(), PlacementType.ON_GROUND, Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::checkMonsterSpawnRules);
         EntitySpawnPlacementRegistry.register(SpackenmobsRegistry.MRBEAN.get(), PlacementType.ON_GROUND, Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::checkMonsterSpawnRules);
@@ -82,7 +80,6 @@ public class SpackenmobsEntities
         GlobalEntityTypeAttributes.put(SpackenmobsRegistry.FRIEDRICH_LIECHTENSTEIN.get(), FriedrichLiechtensteinEntity.registerAttributes().build());
         GlobalEntityTypeAttributes.put(SpackenmobsRegistry.GISELA.get(), GiselaEntity.registerAttributes().build());
         GlobalEntityTypeAttributes.put(SpackenmobsRegistry.HOLZSTAMMHUHN.get(), HolzstammhuhnEntity.registerAttributes().build());
-        GlobalEntityTypeAttributes.put(SpackenmobsRegistry.ISLAMIST.get(), IslamistEntity.registerAttributes().build());
         GlobalEntityTypeAttributes.put(SpackenmobsRegistry.JENS.get(), JensEntity.registerAttributes().build());
         GlobalEntityTypeAttributes.put(SpackenmobsRegistry.MARCELLDAVIS.get(), MarcellDAvisEntity.registerAttributes().build());
         GlobalEntityTypeAttributes.put(SpackenmobsRegistry.MRBEAN.get(), MrBeanEntity.registerAttributes().build());

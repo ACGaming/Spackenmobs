@@ -270,61 +270,6 @@
       }
     ]
   },
-  "entities.islamist.fuse": {
-    "sounds": [
-      {
-        "name": "spackenmobs:islamist/fuse1"
-      },
-      {
-        "name": "spackenmobs:islamist/fuse2"
-      },
-      {
-        "name": "spackenmobs:islamist/fuse3"
-      },
-      {
-        "name": "spackenmobs:islamist/fuse4"
-      }
-    ]
-  },
-  "entities.islamist.blow": {
-    "sounds": [
-      {
-        "name": "spackenmobs:islamist/blow"
-      }
-    ]
-  },
-  "entities.islamist.hurt": {
-    "sounds": [
-      {
-        "name": "spackenmobs:islamist/say1"
-      },
-      {
-        "name": "spackenmobs:islamist/say2"
-      },
-      {
-        "name": "spackenmobs:islamist/say3"
-      },
-      {
-        "name": "spackenmobs:islamist/say4"
-      }
-    ]
-  },
-  "entities.islamist.ambient": {
-    "sounds": [
-      {
-        "name": "spackenmobs:islamist/say1"
-      },
-      {
-        "name": "spackenmobs:islamist/say2"
-      },
-      {
-        "name": "spackenmobs:islamist/say3"
-      },
-      {
-        "name": "spackenmobs:islamist/say4"
-      }
-    ]
-  },
   "entities.apored.ambient": {
     "sounds": [
       {
