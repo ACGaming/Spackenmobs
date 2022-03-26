@@ -38,8 +38,6 @@ public class ModConfigs
         public boolean Friedrich_spawn = true;
         @Name("Allow Holzstammhuhn to spawn?")
         public boolean Holzstammhuhn_spawn = true;
-        @Name("Allow Islamist to spawn?")
-        public boolean Islamist_spawn = true;
         @Name("Allow Jens to spawn?")
         public boolean Jens_spawn = true;
         @Name("Allow Marcell D'Avis to spawn?")
@@ -55,7 +53,7 @@ public class ModConfigs
         @Name("Allow Gisela to spawn?")
         public boolean Gisela_spawn = true;
         @Name("Allow tilera Ghast to spawn?")
-        public boolean tileraGhast_spawn = true;
+        public boolean tileraGhast_spawn = false;
     }
 
     public static class SpawnValues
@@ -90,12 +88,6 @@ public class ModConfigs
         public int Holzstammhuhn_min = 1;
         @Name("Holzstammhuhn max group size:")
         public int Holzstammhuhn_max = 1;
-        @Name("Islamist spawn weight:")
-        public int Islamist_weight = 15;
-        @Name("Islamist min group size:")
-        public int Islamist_min = 1;
-        @Name("Islamist max group size:")
-        public int Islamist_max = 1;
         @Name("Jens spawn weight:")
         public int Jens_weight = 10;
         @Name("Jens min group size:")

@@ -63,19 +63,6 @@ public class RegistryHandler
                 regularSpawning.toArray(new Biome[0]));
         }
 
-        // Islamist
-        EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:islamist"), EntityIslamist.class, "islamist", id++, Spackenmobs.instance, 64, 1, true, 15263976, 15211548);
-        if (ModConfigs.spawn_switches.Islamist_spawn)
-        {
-            EntityRegistry.addSpawn(
-                EntityIslamist.class,
-                ModConfigs.spawn_values.Islamist_weight,
-                ModConfigs.spawn_values.Islamist_min,
-                ModConfigs.spawn_values.Islamist_max,
-                EnumCreatureType.MONSTER,
-                regularSpawning.toArray(new Biome[0]));
-        }
-
         // ApoRed
         EntityRegistry.registerModEntity(new ResourceLocation("spackenmobs:apored"), EntityApoRed.class, "apored", id++, Spackenmobs.instance, 64, 1, true, 2039583, 16711680);
         if (ModConfigs.spawn_switches.ApoRed_spawn)
@@ -238,16 +225,6 @@ public class RegistryHandler
         event.getRegistry().register(ModSoundEvents.ENTITY_SMAVACREEPER_HURT);
         ModSoundEvents.ENTITY_SMAVACREEPER_AMBIENT.setRegistryName(new ResourceLocation("spackenmobs:entities.smava_creeper.ambient"));
         event.getRegistry().register(ModSoundEvents.ENTITY_SMAVACREEPER_AMBIENT);
-
-        // Islamist
-        ModSoundEvents.ENTITY_ISLAMIST_FUSE.setRegistryName(new ResourceLocation("spackenmobs:entities.islamist.fuse"));
-        event.getRegistry().register(ModSoundEvents.ENTITY_ISLAMIST_FUSE);
-        ModSoundEvents.ENTITY_ISLAMIST_BLOW.setRegistryName(new ResourceLocation("spackenmobs:entities.islamist.blow"));
-        event.getRegistry().register(ModSoundEvents.ENTITY_ISLAMIST_BLOW);
-        ModSoundEvents.ENTITY_ISLAMIST_HURT.setRegistryName(new ResourceLocation("spackenmobs:entities.islamist.hurt"));
-        event.getRegistry().register(ModSoundEvents.ENTITY_ISLAMIST_HURT);
-        ModSoundEvents.ENTITY_ISLAMIST_AMBIENT.setRegistryName(new ResourceLocation("spackenmobs:entities.islamist.ambient"));
-        event.getRegistry().register(ModSoundEvents.ENTITY_ISLAMIST_AMBIENT);
 
         // Marcell D'Avis
         ModSoundEvents.ENTITY_MARCELLDAVIS_AMBIENT.setRegistryName(new ResourceLocation("spackenmobs:entities.marcell_davis.ambient"));

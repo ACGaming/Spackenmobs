@@ -15,7 +15,6 @@ public class ModEntities
         RenderingRegistry.registerEntityRenderingHandler(EntityFriedrichLiechtenstein.class, RenderFriedrichLiechtenstein.FACTORY);
         RenderingRegistry.registerEntityRenderingHandler(EntityGisela.class, RenderGisela.FACTORY);
         RenderingRegistry.registerEntityRenderingHandler(EntityHolzstammhuhn.class, RenderHolzstammhuhn.FACTORY);
-        RenderingRegistry.registerEntityRenderingHandler(EntityIslamist.class, RenderIslamist.FACTORY);
         RenderingRegistry.registerEntityRenderingHandler(EntityJens.class, RenderJens.FACTORY);
         RenderingRegistry.registerEntityRenderingHandler(EntityMZTEWolf.class, RenderMZTEWolf.FACTORY);
         RenderingRegistry.registerEntityRenderingHandler(EntityMarcellDAvis.class, RenderMarcellDAvis.FACTORY);

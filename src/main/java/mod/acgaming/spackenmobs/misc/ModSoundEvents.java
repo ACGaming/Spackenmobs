@@ -18,11 +18,6 @@ public class ModSoundEvents
     public static final SoundEvent ENTITY_MARCELLDAVIS_HURT = new SoundEvent(new ResourceLocation("spackenmobs:entities.marcell_davis.hurt"));
     public static final SoundEvent ENTITY_MARCELLDAVIS_DEATH = new SoundEvent(new ResourceLocation("spackenmobs:entities.marcell_davis.death"));
 
-    public static final SoundEvent ENTITY_ISLAMIST_FUSE = new SoundEvent(new ResourceLocation("spackenmobs:entities.islamist.fuse"));
-    public static final SoundEvent ENTITY_ISLAMIST_BLOW = new SoundEvent(new ResourceLocation("spackenmobs:entities.islamist.blow"));
-    public static final SoundEvent ENTITY_ISLAMIST_HURT = new SoundEvent(new ResourceLocation("spackenmobs:entities.islamist.hurt"));
-    public static final SoundEvent ENTITY_ISLAMIST_AMBIENT = new SoundEvent(new ResourceLocation("spackenmobs:entities.islamist.ambient"));
-
     public static final SoundEvent ENTITY_APORED_AMBIENT = new SoundEvent(new ResourceLocation("spackenmobs:entities.apored.ambient"));
     public static final SoundEvent ENTITY_APORED_HURT = new SoundEvent(new ResourceLocation("spackenmobs:entities.apored.hurt"));
     public static final SoundEvent ENTITY_APORED_DEATH = new SoundEvent(new ResourceLocation("spackenmobs:entities.apored.death"));
