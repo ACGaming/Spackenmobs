@@ -2,6 +2,7 @@ package mod.acgaming.spackenmobs.entities;
 
 import java.util.UUID;
 
+import mod.acgaming.spackenmobs.misc.ModSoundEvents;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityCreeper;
@@ -10,6 +11,7 @@ import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
 public class EntityMZTEWolf extends EntityWolf
@@ -19,6 +21,12 @@ public class EntityMZTEWolf extends EntityWolf
         super(worldIn);
         this.setSize(0.6F, 0.85F);
         this.setTamed(false);
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound()
+    {
+        return ModSoundEvents.ENTITY_MZTEWOLF_AMBIENT;
     }
 
     @Override
