@@ -14,9 +14,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import mod.acgaming.spackenmobs.misc.ModLootTableList;
 
 public class EntityHolzstammhuhn extends EntityChicken
 {
@@ -65,6 +68,12 @@ public class EntityHolzstammhuhn extends EntityChicken
     protected void playStepSound(BlockPos pos, Block blockIn)
     {
         this.playSound(SoundEvents.BLOCK_WOOD_STEP, 0.15F, 1.0F);
+    }
+
+    @Override
+    protected ResourceLocation getLootTable()
+    {
+        return ModLootTableList.ENTITIES_HOLZSTAMMHUHN;
     }
 
     @Override
