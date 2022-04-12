@@ -16,7 +16,7 @@ import mod.acgaming.spackenmobs.misc.ModEntities;
 public class Spackenmobs
 {
     public static final String MODID = "spackenmobs";
-    public static final String VERSION = "1.8-CF";
+    public static final String VERSION = "1.12.2-1.9.0-CF";
 
     public static final CreativeTabs SPACKENMOBS_TAB = new SpackenmobsTab();
 

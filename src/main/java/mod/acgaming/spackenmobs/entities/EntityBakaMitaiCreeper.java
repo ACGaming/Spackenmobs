@@ -1,6 +1,5 @@
 package mod.acgaming.spackenmobs.entities;
 
-import java.util.Collection;
 import javax.annotation.Nullable;
 
 import net.minecraft.entity.Entity;
@@ -13,6 +12,7 @@ import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -66,6 +66,7 @@ public class EntityBakaMitaiCreeper extends EntityMob
 
             if (i > 0 && this.timeSinceIgnited == 0)
             {
+                this.spawnLingeringCloud();
                 this.playSound(ModSoundEvents.ENTITY_BAKAMITAICREEPER_FUSE, 1.0F, 1.0F);
             }
 
@@ -296,29 +297,19 @@ public class EntityBakaMitaiCreeper extends EntityMob
             this.world.playSound(null, getPosition(), ModSoundEvents.ENTITY_BAKAMITAICREEPER_BLOW, getSoundCategory(), 2.0F, 1.0F);
             this.world.createExplosion(this, this.posX, this.posY, this.posZ, (float) this.explosionRadius * f, flag);
             this.setDead();
-            this.spawnLingeringCloud();
         }
     }
 
     private void spawnLingeringCloud()
     {
-        Collection<PotionEffect> collection = this.getActivePotionEffects();
-
-        if (!collection.isEmpty())
-        {
-            EntityAreaEffectCloud entityareaeffectcloud = new EntityAreaEffectCloud(this.world, this.posX, this.posY, this.posZ);
-            entityareaeffectcloud.setRadius(2.5F);
-            entityareaeffectcloud.setRadiusOnUse(-0.5F);
-            entityareaeffectcloud.setWaitTime(10);
-            entityareaeffectcloud.setDuration(entityareaeffectcloud.getDuration() / 2);
-            entityareaeffectcloud.setRadiusPerTick(-entityareaeffectcloud.getRadius() / (float) entityareaeffectcloud.getDuration());
-
-            for (PotionEffect potioneffect : collection)
-            {
-                entityareaeffectcloud.addEffect(new PotionEffect(potioneffect));
-            }
-
-            this.world.spawnEntity(entityareaeffectcloud);
-        }
+        EntityAreaEffectCloud cloud = new EntityAreaEffectCloud(this.world, this.posX, this.posY, this.posZ);
+        cloud.setOwner(this);
+        cloud.setRadius(10.0F);
+        cloud.setRadiusOnUse(-0.5F);
+        cloud.setWaitTime(10);
+        cloud.setDuration(cloud.getDuration() / 2);
+        cloud.setRadiusPerTick(-cloud.getRadius() / (float) cloud.getDuration());
+        cloud.addEffect(new PotionEffect(MobEffects.SLOWNESS, 100, 3));
+        this.world.spawnEntity(cloud);
     }
 }

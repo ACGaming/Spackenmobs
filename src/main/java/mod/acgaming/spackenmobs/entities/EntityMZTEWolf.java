@@ -10,7 +10,11 @@ import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+
+import mod.acgaming.spackenmobs.misc.ModSoundEvents;
 
 public class EntityMZTEWolf extends EntityWolf
 {
@@ -19,6 +23,30 @@ public class EntityMZTEWolf extends EntityWolf
         super(worldIn);
         this.setSize(0.6F, 0.85F);
         this.setTamed(false);
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound()
+    {
+        return ModSoundEvents.ENTITY_MZTEWOLF_AMBIENT;
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn)
+    {
+        return ModSoundEvents.ENTITY_MZTEWOLF_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound()
+    {
+        return ModSoundEvents.ENTITY_MZTEWOLF_DEATH;
+    }
+
+    @Override
+    protected float getSoundVolume()
+    {
+        return 1.0F;
     }
 
     @Override
@@ -85,8 +113,7 @@ public class EntityMZTEWolf extends EntityWolf
                 }
             }
 
-            if (target instanceof EntityPlayer && owner instanceof EntityPlayer
-                && !((EntityPlayer) owner).canAttackPlayer((EntityPlayer) target))
+            if (target instanceof EntityPlayer && owner instanceof EntityPlayer && !((EntityPlayer) owner).canAttackPlayer((EntityPlayer) target))
             {
                 return false;
             }

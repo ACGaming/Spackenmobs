@@ -3,8 +3,8 @@
     "modid": "spackenmobs",
     "name": "Spackenmobs",
     "description": "The most important mobs in the history of Minecraft! [citation needed]",
-    "version": "1.8-CF",
-    "mcversion": "1.12.2",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
     "url": "https://github.com/ACGaming/Spackenmobs",
     "updateUrl": "",
     "authorList": [

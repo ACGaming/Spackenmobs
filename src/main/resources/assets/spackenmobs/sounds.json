@@ -1005,6 +1005,38 @@
       },
       {
         "name": "spackenmobs:mztewolf/say3"
+      },
+      {
+        "name": "spackenmobs:mztewolf/say4"
+      },
+      {
+        "name": "spackenmobs:mztewolf/say5"
+      },
+      {
+        "name": "spackenmobs:mztewolf/say6"
+      },
+      {
+        "name": "spackenmobs:mztewolf/say7"
+      },
+      {
+        "name": "spackenmobs:mztewolf/say8"
+      }
+    ]
+  },
+  "entities.mztewolf.death": {
+    "sounds": [
+      {
+        "name": "spackenmobs:mztewolf/death1"
+      }
+    ]
+  },
+  "entities.mztewolf.hurt": {
+    "sounds": [
+      {
+        "name": "spackenmobs:mztewolf/hurt1"
+      },
+      {
+        "name": "spackenmobs:mztewolf/hurt2"
       }
     ]
   }
