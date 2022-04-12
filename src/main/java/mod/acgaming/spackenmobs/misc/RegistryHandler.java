@@ -325,8 +325,12 @@ public class RegistryHandler
         ModSoundEvents.ENTITY_GISELA_HURT.setRegistryName(new ResourceLocation("spackenmobs:entities.gisela.hurt"));
         event.getRegistry().register(ModSoundEvents.ENTITY_GISELA_HURT);
 
-	    //MZTEWolf
-	    ModSoundEvents.ENTITY_MZTEWOLF_AMBIENT.setRegistryName(new ResourceLocation("spackenmobs:entities.mztewolf.ambient"));
-	    event.getRegistry().register(ModSoundEvents.ENTITY_MZTEWOLF_AMBIENT);
+        //MZTEWolf
+        ModSoundEvents.ENTITY_MZTEWOLF_AMBIENT.setRegistryName(new ResourceLocation("spackenmobs:entities.mztewolf.ambient"));
+        event.getRegistry().register(ModSoundEvents.ENTITY_MZTEWOLF_AMBIENT);
+        ModSoundEvents.ENTITY_MZTEWOLF_HURT.setRegistryName(new ResourceLocation("spackenmobs:entities.mztewolf.hurt"));
+        event.getRegistry().register(ModSoundEvents.ENTITY_MZTEWOLF_HURT);
+        ModSoundEvents.ENTITY_MZTEWOLF_DEATH.setRegistryName(new ResourceLocation("spackenmobs:entities.mztewolf.death"));
+        event.getRegistry().register(ModSoundEvents.ENTITY_MZTEWOLF_DEATH);
     }
 }

@@ -2,7 +2,6 @@ package mod.acgaming.spackenmobs.entities;
 
 import java.util.UUID;
 
-import mod.acgaming.spackenmobs.misc.ModSoundEvents;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityCreeper;
@@ -11,8 +10,11 @@ import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+
+import mod.acgaming.spackenmobs.misc.ModSoundEvents;
 
 public class EntityMZTEWolf extends EntityWolf
 {
@@ -27,6 +29,18 @@ public class EntityMZTEWolf extends EntityWolf
     protected SoundEvent getAmbientSound()
     {
         return ModSoundEvents.ENTITY_MZTEWOLF_AMBIENT;
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn)
+    {
+        return ModSoundEvents.ENTITY_MZTEWOLF_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound()
+    {
+        return ModSoundEvents.ENTITY_MZTEWOLF_DEATH;
     }
 
     @Override
@@ -93,8 +107,7 @@ public class EntityMZTEWolf extends EntityWolf
                 }
             }
 
-            if (target instanceof EntityPlayer && owner instanceof EntityPlayer
-                && !((EntityPlayer) owner).canAttackPlayer((EntityPlayer) target))
+            if (target instanceof EntityPlayer && owner instanceof EntityPlayer && !((EntityPlayer) owner).canAttackPlayer((EntityPlayer) target))
             {
                 return false;
             }

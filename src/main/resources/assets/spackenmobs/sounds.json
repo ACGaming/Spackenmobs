@@ -1077,5 +1077,22 @@
         "name": "spackenmobs:mztewolf/say8"
       }
     ]
+  },
+  "entities.mztewolf.death": {
+    "sounds": [
+      {
+        "name": "spackenmobs:mztewolf/death1"
+      }
+    ]
+  },
+  "entities.mztewolf.hurt": {
+    "sounds": [
+      {
+        "name": "spackenmobs:mztewolf/hurt1"
+      },
+      {
+        "name": "spackenmobs:mztewolf/hurt2"
+      }
+    ]
   }
 }
