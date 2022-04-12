@@ -44,6 +44,12 @@ public class EntityMZTEWolf extends EntityWolf
     }
 
     @Override
+    protected float getSoundVolume()
+    {
+        return 1.0F;
+    }
+
+    @Override
     public EntityMZTEWolf createChild(EntityAgeable ageable)
     {
         EntityMZTEWolf entitymztewolf = new EntityMZTEWolf(this.world);
