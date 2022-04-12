@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 
 import mod.acgaming.spackenmobs.Spackenmobs;
 import mod.acgaming.spackenmobs.entities.*;
@@ -224,6 +225,9 @@ public class RegistryHandler
     public static void registerItems(Register<Item> event)
     {
         event.getRegistry().registerAll(ModItems.ITEMS.toArray(new Item[0]));
+
+        OreDictionary.registerOre("dustRedstone", ModItems.MODEM);
+        OreDictionary.registerOre("ingotIron", ModItems.RAM);
     }
 
     @SubscribeEvent

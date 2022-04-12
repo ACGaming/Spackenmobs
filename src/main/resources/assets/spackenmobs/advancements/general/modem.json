@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "spackenmobs:modem"
+    },
+    "title": {
+      "translate": "advancements.general.modem.title"
+    },
+    "description": {
+      "translate": "advancements.general.modem.description"
+    }
+  },
+  "parent": "spackenmobs:general/root",
+  "criteria": {
+    "ram": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "spackenmobs:modem"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -14,6 +14,7 @@ public class ModLootTableList
     public static final ResourceLocation EMPTY = register("empty");
     public static final ResourceLocation ENTITIES_JENS = register("entities/jens");
     public static final ResourceLocation ENTITIES_FRIEDRICH = register("entities/friedrich");
+    public static final ResourceLocation ENTITIES_MARCELL_DAVIS = register("entities/marcell_davis");
     private static final Set<ResourceLocation> READ_ONLY_LOOT_TABLES = Collections.unmodifiableSet(LOOT_TABLES);
 
     public static Set<ResourceLocation> getAll()
